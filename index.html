@@ -1,1586 +1,1235 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Athlon - Il Ragnarok: Il Libro delle Memorie</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;600;700;800&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-obsidian: #0b0e14;
-      --bg-deep: #101520;
-      --bg-card: #151c28;
-      --bg-card-hover: #1b2434;
-      --bg-elevated: rgba(21, 28, 40, 0.88);
-      --gold-runic: #d4af37;
-      --gold-light: #f3dc8a;
-      --gold-dim: rgba(212, 175, 55, 0.28);
-      --bifrost-cyan: #38bdf8;
-      --bifrost-violet: #a855f7;
-      --bifrost-magenta: #ec4899;
-      --crimson: #dc2626;
-      --crimson-glow: rgba(220, 38, 38, 0.25);
-      --emerald-free: #10b981;
-      --amber-warn: #f59e0b;
-      --text-main: #e2e8f0;
-      --text-muted: #94a3b8;
-      --text-bright: #f8fafc;
-      --border-subtle: rgba(212, 175, 55, 0.22);
-      --shadow-epic: 0 12px 32px -8px rgba(0, 0, 0, 0.75);
-      --radius-md: 12px;
-      --radius-lg: 16px;
-      --reading-size: 1.04rem;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      background-color: var(--bg-obsidian);
-      color: var(--text-main);
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      line-height: 1.75;
-    }
-
-    body {
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at 15% 10%, rgba(56, 189, 248, 0.07) 0%, transparent 40%),
-        radial-gradient(circle at 85% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 45%),
-        radial-gradient(circle at 50% 85%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
-        var(--bg-obsidian);
-      overflow-x: hidden;
-      transition: all 0.35s ease;
-    }
-
-    /* Bifröst Top Shimmer Bar */
-    .bifrost-bar {
-      height: 4px;
-      width: 100%;
-      background: linear-gradient(90deg, var(--gold-runic), var(--bifrost-cyan), var(--bifrost-violet), var(--bifrost-magenta), var(--crimson), var(--gold-runic));
-      background-size: 300% 100%;
-      animation: bifrostFlow 12s ease infinite;
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1000;
-    }
-
-    @keyframes bifrostFlow {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* Sticky Top Utility Navbar */
-    .top-toolbar {
-      position: sticky;
-      top: 4px;
-      z-index: 900;
-      background: rgba(11, 14, 20, 0.92);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border-subtle);
-      padding: 0.75rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .brand-mini {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-      font-family: 'Cinzel', serif;
-      font-weight: 700;
-      color: var(--gold-runic);
-      letter-spacing: 0.06em;
-      font-size: 0.95rem;
-      text-decoration: none;
-    }
-
-    .brand-mini span.rune {
-      font-size: 1.25rem;
-      color: var(--bifrost-cyan);
-      text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
-    }
-
-    /* Search & Controls */
-    .toolbar-controls {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      flex: 1;
-      max-width: 780px;
-      justify-content: flex-end;
-    }
-
-    .search-wrapper {
-      position: relative;
-      flex: 1;
-      max-width: 380px;
-    }
-
-    .search-input {
-      width: 100%;
-      background: var(--bg-deep);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-bright);
-      padding: 0.55rem 2.4rem 0.55rem 2.2rem;
-      border-radius: 999px;
-      font-size: 0.88rem;
-      outline: none;
-      transition: all 0.25s ease;
-    }
-
-    .search-input:focus {
-      border-color: var(--gold-runic);
-      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
-    }
-
-    .search-icon {
-      position: absolute;
-      left: 0.8rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--gold-runic);
-      font-size: 0.9rem;
-      pointer-events: none;
-    }
-
-    .search-clear {
-      position: absolute;
-      right: 0.75rem;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      cursor: pointer;
-      font-size: 0.9rem;
-      display: none;
-    }
-
-    .search-count {
-      font-size: 0.78rem;
-      color: var(--gold-light);
-      white-space: nowrap;
-      padding: 0.2rem 0.55rem;
-      border-radius: 6px;
-      background: rgba(212, 175, 55, 0.12);
-      display: none;
-    }
-
-    .btn-action {
-      background: var(--bg-card);
-      color: var(--text-main);
-      border: 1px solid var(--border-subtle);
-      padding: 0.5rem 0.9rem;
-      border-radius: 8px;
-      font-family: 'Cinzel', serif;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-    }
-
-    .btn-action:hover, .btn-action.active {
-      background: rgba(212, 175, 55, 0.16);
-      border-color: var(--gold-runic);
-      color: var(--gold-light);
-    }
-
-    /* Hero Header */
-    .hero-header {
-      position: relative;
-      padding: 4.5rem 1.5rem 3.5rem;
-      text-align: center;
-      border-bottom: 1px solid var(--border-subtle);
-      background:
-        radial-gradient(ellipse at center top, rgba(212, 175, 55, 0.14), transparent 65%),
-        radial-gradient(ellipse at 80% 50%, rgba(168, 85, 247, 0.1), transparent 60%),
-        linear-gradient(180deg, rgba(16, 21, 32, 0.95) 0%, var(--bg-obsidian) 100%);
-      overflow: hidden;
-    }
-
-    .hero-runes {
-      font-family: 'Cinzel', serif;
-      letter-spacing: 0.45em;
-      color: rgba(212, 175, 55, 0.45);
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-    }
-
-    .hero-title {
-      font-family: 'Cinzel Decorative', 'Cinzel', serif;
-      font-size: clamp(2rem, 4.8vw, 3.6rem);
-      font-weight: 900;
-      line-height: 1.18;
-      background: linear-gradient(135deg, #fff6d1 0%, var(--gold-runic) 50%, #b38728 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
-      margin-bottom: 0.85rem;
-    }
-
-    .hero-subtitle {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(1rem, 2.2vw, 1.35rem);
-      color: var(--bifrost-cyan);
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      margin-bottom: 1.75rem;
-      text-shadow: 0 0 18px rgba(56, 189, 248, 0.25);
-    }
-
-    .hero-intro {
-      max-width: 820px;
-      margin: 0 auto 2rem;
-      font-size: 1.02rem;
-      color: var(--text-main);
-      background: rgba(21, 28, 40, 0.65);
-      border: 1px solid var(--border-subtle);
-      border-left: 4px solid var(--gold-runic);
-      padding: 1.35rem 1.75rem;
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-epic);
-      text-align: left;
-    }
-
-    .hero-quote {
-      margin-top: 0.85rem;
-      font-style: italic;
-      color: var(--gold-light);
-      font-size: 0.93rem;
-      text-align: right;
-    }
-
-    /* Quick Jump Pills */
-    .quick-nav-pills {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.6rem;
-      max-width: 960px;
-      margin: 0 auto;
-    }
-
-    .nav-pill {
-      text-decoration: none;
-      font-family: 'Cinzel', serif;
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 0.5rem 1rem;
-      border-radius: 999px;
-      background: var(--bg-card);
-      color: var(--text-main);
-      border: 1px solid var(--border-subtle);
-      transition: all 0.25s ease;
-    }
-
-    .nav-pill:hover {
-      border-color: var(--gold-runic);
-      color: var(--gold-light);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
-    }
-
-    /* Main Layout Grid */
-    .layout-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem 4rem;
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 2.25rem;
-      align-items: start;
-    }
-
-    /* Immersive Reading Mode Overrides */
-    body.immersive-mode .sidebar-toc {
-      display: none;
-    }
-
-    body.immersive-mode .layout-container {
-      grid-template-columns: 1fr;
-      max-width: 900px;
-    }
-
-    body.immersive-mode {
-      --reading-size: 1.15rem;
-    }
-
-    /* Sticky Sidebar TOC */
-    .sidebar-toc {
-      position: sticky;
-      top: 4.5rem;
-      background: var(--bg-elevated);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      padding: 1.35rem;
-      box-shadow: var(--shadow-epic);
-      max-height: calc(100vh - 6rem);
-      overflow-y: auto;
-    }
-
-    .toc-title {
-      font-family: 'Cinzel', serif;
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: var(--gold-runic);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding-bottom: 0.75rem;
-      margin-bottom: 0.85rem;
-      border-bottom: 1px solid var(--border-subtle);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .toc-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-    }
-
-    .toc-link {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.55rem 0.75rem;
-      border-radius: 8px;
-      text-decoration: none;
-      color: var(--text-muted);
-      font-size: 0.86rem;
-      font-weight: 500;
-      transition: all 0.2s ease;
-      border-left: 2px solid transparent;
-    }
-
-    .toc-link:hover, .toc-link.active {
-      background: rgba(212, 175, 55, 0.12);
-      color: var(--gold-light);
-      border-left-color: var(--gold-runic);
-    }
-
-    .toc-badge {
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--gold-runic);
-      background: rgba(212, 175, 55, 0.14);
-      padding: 0.1rem 0.45rem;
-      border-radius: 4px;
-      min-width: 28px;
-      text-align: center;
-    }
-
-    /* Content Column */
-    .main-content {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      min-width: 0;
-    }
-
-    /* Chronicle Section Cards */
-    .chronicle-card {
-      background: var(--bg-elevated);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-epic);
-      overflow: hidden;
-      transition: border-color 0.3s ease;
-      scroll-margin-top: 5rem;
-    }
-
-    .chronicle-card:hover {
-      border-color: rgba(212, 175, 55, 0.42);
-    }
-
-    .chronicle-header {
-      padding: 1.5rem 1.85rem;
-      background: linear-gradient(90deg, rgba(212, 175, 55, 0.12) 0%, rgba(21, 28, 40, 0.4) 100%);
-      border-bottom: 1px solid var(--border-subtle);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      user-select: none;
-    }
-
-    .chronicle-header-left {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-
-    .chronicle-eyebrow {
-      font-family: 'Cinzel', serif;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--bifrost-cyan);
-    }
-
-    .chronicle-title {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(1.25rem, 2.2vw, 1.65rem);
-      font-weight: 700;
-      color: var(--gold-light);
-      line-height: 1.3;
-    }
-
-    .chronicle-toggle-btn {
-      background: rgba(212, 175, 55, 0.12);
-      border: 1px solid var(--border-subtle);
-      color: var(--gold-runic);
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-      transition: transform 0.3s ease;
-      flex-shrink: 0;
-    }
-
-    .chronicle-card.collapsed .chronicle-toggle-btn {
-      transform: rotate(-90deg);
-    }
-
-    .chronicle-card.collapsed .chronicle-body {
-      display: none;
-    }
-
-    .chronicle-body {
-      padding: 1.85rem;
-      font-size: var(--reading-size);
-      display: flex;
-      flex-direction: column;
-      gap: 1.65rem;
-    }
-
-    /* Subsections inside a Chronicle */
-    .sub-chapter {
-      padding-left: 1.15rem;
-      border-left: 2px solid rgba(212, 175, 55, 0.3);
-    }
-
-    .sub-chapter h3 {
-      font-family: 'Cinzel', serif;
-      font-size: 1.18rem;
-      font-weight: 700;
-      color: var(--text-bright);
-      margin-bottom: 0.65rem;
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-    }
-
-    .sub-chapter h3 .step-num {
-      color: var(--gold-runic);
-      font-size: 0.95rem;
-    }
-
-    .sub-chapter p {
-      margin-bottom: 0.85rem;
-      color: var(--text-main);
-    }
-
-    .sub-chapter p:last-child {
-      margin-bottom: 0;
-    }
-
-    .sub-chapter ul {
-      margin: 0.65rem 0 0.85rem 1.35rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
-    }
-
-    .sub-chapter li strong {
-      color: var(--gold-light);
-    }
-
-    p strong {
-      color: var(--text-bright);
-      font-weight: 600;
-    }
-
-    /* Runic / Qualith Quote Block */
-    .lore-quote {
-      background: rgba(168, 85, 247, 0.08);
-      border: 1px solid rgba(168, 85, 247, 0.35);
-      border-left: 4px solid var(--bifrost-violet);
-      padding: 1.1rem 1.4rem;
-      border-radius: var(--radius-md);
-      font-style: italic;
-      color: #e9d5ff;
-      margin: 0.85rem 0;
-    }
-
-    /* Box Riassuntivo "Eredità della Cronaca" */
-    .legacy-box {
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.11) 0%, rgba(16, 21, 32, 0.92) 100%);
-      border: 1px solid var(--gold-runic);
-      border-radius: var(--radius-md);
-      padding: 1.4rem 1.6rem;
-      margin-top: 0.5rem;
-      position: relative;
-    }
-
-    .legacy-box-header {
-      font-family: 'Cinzel', serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--gold-runic);
-      margin-bottom: 0.95rem;
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .legacy-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1rem;
-    }
-
-    .legacy-col {
-      background: rgba(11, 14, 20, 0.65);
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      border-radius: 8px;
-      padding: 0.95rem 1.1rem;
-    }
-
-    .legacy-col h4 {
-      font-family: 'Cinzel', serif;
-      font-size: 0.84rem;
-      color: var(--bifrost-cyan);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 0.55rem;
-    }
-
-    .legacy-col ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.45rem;
-      font-size: 0.92rem;
-    }
-
-    .legacy-col li {
-      position: relative;
-      padding-left: 1.1rem;
-    }
-
-    .legacy-col li::before {
-      content: "✦";
-      position: absolute;
-      left: 0;
-      color: var(--gold-runic);
-      font-size: 0.78rem;
-    }
-
-    /* Compendium Section (Tabs / Accordions / Cards) */
-    .compendium-section {
-      background: var(--bg-elevated);
-      border: 1px solid var(--gold-runic);
-      border-radius: var(--radius-lg);
-      padding: 1.85rem;
-      box-shadow: var(--shadow-epic);
-      scroll-margin-top: 5rem;
-    }
-
-    .compendium-tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.65rem;
-      margin: 1.25rem 0 1.65rem;
-      border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 1rem;
-    }
-
-    .compendium-tab {
-      background: var(--bg-deep);
-      border: 1px solid var(--border-subtle);
-      color: var(--text-muted);
-      padding: 0.65rem 1.2rem;
-      border-radius: 10px;
-      font-family: 'Cinzel', serif;
-      font-size: 0.86rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-
-    .compendium-tab.active, .compendium-tab:hover {
-      background: linear-gradient(135deg, rgba(212, 175, 55, 0.22), rgba(56, 189, 248, 0.12));
-      border-color: var(--gold-runic);
-      color: var(--gold-light);
-    }
-
-    .compendium-panel {
-      display: none;
-    }
-
-    .compendium-panel.active {
-      display: block;
-    }
-
-    /* Champions Grid */
-    .champions-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-      gap: 1.15rem;
-    }
-
-    .entity-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
-      transition: all 0.25s ease;
-      display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
-    }
-
-    .entity-card:hover {
-      border-color: var(--gold-runic);
-      transform: translateY(-3px);
-      background: var(--bg-card-hover);
-    }
-
-    .entity-role {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--bifrost-cyan);
-    }
-
-    .entity-name {
-      font-family: 'Cinzel', serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--gold-light);
-    }
-
-    .entity-desc {
-      font-size: 0.92rem;
-      color: var(--text-main);
-    }
-
-    /* Valkyries Tracker */
-    .valkyrie-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1rem;
-    }
-
-    .valkyrie-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 1.15rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.74rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      padding: 0.25rem 0.65rem;
-      border-radius: 999px;
-      width: fit-content;
-    }
-
-    .status-free {
-      background: rgba(16, 185, 129, 0.16);
-      color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.4);
-    }
-
-    .status-active {
-      background: rgba(56, 189, 248, 0.16);
-      color: var(--bifrost-cyan);
-      border: 1px solid rgba(56, 189, 248, 0.4);
-    }
-
-    .status-captive {
-      background: rgba(245, 158, 11, 0.15);
-      color: #fbbf24;
-      border: 1px solid rgba(245, 158, 11, 0.4);
-    }
-
-    .status-danger {
-      background: rgba(220, 38, 38, 0.18);
-      color: #f87171;
-      border: 1px solid rgba(220, 38, 38, 0.4);
-    }
-
-    /* Search Highlight */
-    mark.search-hit {
-      background: rgba(212, 175, 55, 0.35);
-      color: #fff;
-      padding: 0.05rem 0.25rem;
-      border-radius: 4px;
-      border-bottom: 2px solid var(--gold-runic);
-    }
-
-    /* Footer */
-    .site-footer {
-      text-align: center;
-      padding: 2.5rem 1.5rem;
-      border-top: 1px solid var(--border-subtle);
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      font-family: 'Cinzel', serif;
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 980px) {
-      .layout-container {
-        grid-template-columns: 1fr;
-      }
-      .sidebar-toc {
-        position: static;
-        max-height: none;
-      }
-      .toc-list {
-        flex-direction: row;
-        flex-wrap: wrap;
-      }
-      .toc-link {
-        background: var(--bg-deep);
-        border: 1px solid var(--border-subtle);
-      }
-    }
-
-    @media (max-width: 640px) {
-      .top-toolbar {
-        padding: 0.65rem 1rem;
-      }
-      .toolbar-controls {
-        width: 100%;
-        justify-content: space-between;
-      }
-      .search-wrapper {
-        max-width: none;
-      }
-      .chronicle-header {
-        padding: 1.15rem 1.25rem;
-      }
-      .chronicle-body {
-        padding: 1.25rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athlon: Il Ragnarok — Cronache Enciclopediche dei Nove Regni</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-obsidian: #080b10;
+            --bg-panel: #101520;
+            --bg-card: #151c2b;
+            --bg-card-hover: #1b2438;
+            --gold-runic: #d4af37;
+            --gold-bright: #f5d76e;
+            --gold-dim: rgba(212, 175, 55, 0.25);
+            --bifrost-cyan: #38bdf8;
+            --bifrost-glow: rgba(56, 189, 248, 0.2);
+            --crimson-ruin: #dc2626;
+            --crimson-glow: rgba(220, 38, 38, 0.25);
+            --emerald-life: #10b981;
+            --violet-psionic: #a855f7;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border-subtle: rgba(212, 175, 55, 0.22);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-obsidian);
+            background-image:
+                radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 85% 25%, rgba(220, 38, 38, 0.07) 0%, transparent 45%),
+                radial-gradient(circle at 50% 85%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.75;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* HEADER / HERO */
+        .hero {
+            position: relative;
+            padding: 4.5rem 1.5rem 3rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-subtle);
+            background: linear-gradient(180deg, rgba(16, 21, 32, 0.95) 0%, rgba(8, 11, 16, 0.98) 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "ᛉ ᛟ ᛞ ᚨ ᚱ ᚦ ᚢ ᚷ ᚹ ᚺ ᚾ ᛁ ᛃ ᛇ ᛈ ᛉ ᛊ ᛏ ᛒ ᛖ ᛗ ᛚ ᛜ ᛞ ᛟ";
+            position: absolute;
+            top: 0.85rem;
+            left: 0;
+            right: 0;
+            font-size: 0.85rem;
+            letter-spacing: 0.45rem;
+            color: rgba(212, 175, 55, 0.18);
+            white-space: nowrap;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .eclipse-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0.45rem 1.1rem;
+            border-radius: 999px;
+            background: rgba(220, 38, 38, 0.14);
+            border: 1px solid rgba(220, 38, 38, 0.45);
+            color: #fca5a5;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
+            box-shadow: 0 0 20px var(--crimson-glow);
+        }
+
+        .eclipse-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #000;
+            border: 2px solid #ef4444;
+            box-shadow: 0 0 8px #ef4444;
+            animation: pulse-eclipse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-eclipse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 8px #ef4444; }
+            50% { transform: scale(1.25); box-shadow: 0 0 16px #f87171; }
+        }
+
+        .hero h1 {
+            font-family: 'Cinzel Decorative', 'Cinzel', serif;
+            font-size: clamp(2rem, 5vw, 3.6rem);
+            color: var(--gold-runic);
+            text-shadow: 0 2px 24px rgba(212, 175, 55, 0.35);
+            letter-spacing: 0.06em;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero p.subtitle {
+            max-width: 820px;
+            margin: 0 auto 1.75rem;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* SEARCH & FILTER BAR */
+        .top-controls {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1.1rem 0.75rem 2.6rem;
+            border-radius: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--gold-runic);
+            box-shadow: 0 0 14px var(--gold-dim);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.9rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gold-runic);
+            font-size: 0.95rem;
+        }
+
+        /* STICKY NAV TABS */
+        .nav-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(11, 14, 20, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 0.65rem 1rem;
+        }
+
+        .nav-container {
+            max-width: 1360px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0.45rem;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            padding-bottom: 2px;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            font-size: 0.82rem;
+            letter-spacing: 0.05em;
+            padding: 0.55rem 0.95rem;
+            border-radius: 6px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            color: var(--gold-bright);
+            background: rgba(212, 175, 55, 0.08);
+        }
+
+        .nav-btn.active {
+            color: #080b10;
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold-runic));
+            font-weight: 700;
+            box-shadow: 0 0 15px var(--gold-dim);
+        }
+
+        /* MAIN CONTAINER */
+        .main-container {
+            max-width: 1280px;
+            margin: 2.25rem auto 4rem;
+            padding: 0 1.25rem;
+        }
+
+        .chapter-section {
+            display: none;
+            animation: fadeIn 0.35s ease;
+        }
+
+        .chapter-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* CHAPTER HEADER BANNER */
+        .chapter-banner {
+            background: linear-gradient(135deg, rgba(21, 28, 43, 0.95), rgba(16, 21, 32, 0.98));
+            border: 1px solid var(--border-subtle);
+            border-left: 4px solid var(--gold-runic);
+            border-radius: 12px;
+            padding: 1.75rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+        }
+
+        .chapter-tag {
+            display: inline-block;
+            font-family: 'Cinzel', serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--bifrost-cyan);
+            margin-bottom: 0.4rem;
+        }
+
+        .chapter-banner h2 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.45rem, 3vw, 2.1rem);
+            color: var(--gold-bright);
+            margin-bottom: 0.65rem;
+        }
+
+        .chapter-banner p.chapter-lead {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+        }
+
+        /* SUBCHAPTER / SCENE CARDS */
+        .chronicle-card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 1.85rem 2rem;
+            margin-bottom: 1.65rem;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+            position: relative;
+        }
+
+        .chronicle-card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.28rem;
+            color: var(--gold-runic);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            padding-bottom: 0.65rem;
+        }
+
+        .chronicle-card p {
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            font-size: 0.98rem;
+            text-align: justify;
+        }
+
+        .chronicle-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .chronicle-card ul {
+            margin: 0.85rem 0 1.1rem 1.35rem;
+        }
+
+        .chronicle-card li {
+            margin-bottom: 0.65rem;
+            color: var(--text-main);
+            font-size: 0.96rem;
+        }
+
+        strong {
+            color: var(--gold-bright);
+            font-weight: 600;
+        }
+
+        .ruin-term {
+            color: #38bdf8;
+            font-weight: 700;
+            border-bottom: 1px dotted #38bdf8;
+        }
+
+        .rovina-term {
+            color: #f87171;
+            font-weight: 700;
+        }
+
+        /* LORE CALLOUTS & ENIGMAS */
+        .lore-quote {
+            margin: 1.25rem 0;
+            padding: 1.15rem 1.5rem;
+            background: rgba(212, 175, 55, 0.06);
+            border-left: 3px solid var(--gold-runic);
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: #fef08a;
+        }
+
+        .danger-box {
+            margin: 1.25rem 0;
+            padding: 1.15rem 1.5rem;
+            background: rgba(220, 38, 38, 0.08);
+            border: 1px solid rgba(220, 38, 38, 0.35);
+            border-left: 4px solid var(--crimson-ruin);
+            border-radius: 8px;
+        }
+
+        .bifrost-box {
+            margin: 1.25rem 0;
+            padding: 1.15rem 1.5rem;
+            background: rgba(56, 189, 248, 0.07);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            border-left: 4px solid var(--bifrost-cyan);
+            border-radius: 8px;
+        }
+
+        /* LOCATION PILLS */
+        .loc-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.1rem;
+        }
+
+        .loc-pill {
+            font-size: 0.76rem;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.06em;
+            padding: 0.25rem 0.7rem;
+            border-radius: 4px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: #7dd3fc;
+        }
+
+        /* DASHBOARD GRIDS */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.25rem;
+        }
+
+        .status-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            padding: 1.35rem;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .status-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--gold-runic);
+        }
+
+        .status-badge {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.2rem 0.6rem;
+            border-radius: 99px;
+            margin-bottom: 0.6rem;
+        }
+
+        .badge-freed { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+        .badge-slain { background: rgba(220, 38, 38, 0.15); color: #f87171; border: 1px solid rgba(220, 38, 38, 0.4); }
+        .badge-fallen { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
+        .badge-active { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
+
+        .status-card h4 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold-bright);
+            font-size: 1.1rem;
+            margin-bottom: 0.45rem;
+        }
+
+        .status-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-align: left;
+        }
+
+        /* DILEMMA BOX */
+        .dilemma-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .choice-card {
+            padding: 1.6rem;
+            border-radius: 12px;
+            background: linear-gradient(145deg, rgba(21, 28, 43, 0.95), rgba(11, 15, 25, 0.98));
+            border: 1px solid var(--gold-runic);
+        }
+
+        .choice-card.kandra {
+            border-color: var(--bifrost-cyan);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.12);
+        }
+
+        .choice-card.asgard {
+            border-color: var(--crimson-ruin);
+            box-shadow: 0 0 25px rgba(220, 38, 38, 0.12);
+        }
+
+        .choice-card h4 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        @media (max-width: 768px) {
+            .chronicle-card { padding: 1.35rem 1.2rem; }
+            .chapter-banner { padding: 1.35rem 1.2rem; }
+            .chronicle-card p { text-align: left; }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="bifrost-bar"></div>
+    <header class="hero">
+        <div class="eclipse-badge">
+            <span class="eclipse-dot"></span>
+            <span>Orologio dell'Apocalisse: 48 Ore al Terzo Ragnarok — Occhio di Isacco Attivo</span>
+        </div>
+        <h1>ATHLON: IL RAGNAROK</h1>
+        <p class="subtitle">
+            Diario di Bordo Enciclopedico e Libro delle Cronache Ufficiali — Dalle Origini di Preservazione e Rovina fino alla Riaccensione del Bifröst e alla Piana di Ida.
+        </p>
+        <div class="top-controls">
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" class="search-input" placeholder="Cerca luogo, PNG, boss, il Ruin, Rovina, Mjölnir, Hafgufa...">
+            </div>
+            <button class="nav-btn" onclick="showAllChapters()" style="border: 1px solid var(--gold-runic); color: var(--gold-bright);">
+                📜 Mostra Tutte le Cronache (Vista Unica)
+            </button>
+        </div>
+    </header>
 
-  <!-- Top Interactive Toolbar -->
-  <header class="top-toolbar">
-    <a href="#top" class="brand-mini">
-      <span class="rune">ᛉ</span>
-      <span>ATHLON: IL LIBRO DELLE MEMORIE</span>
-    </a>
-
-    <div class="toolbar-controls">
-      <div class="search-wrapper">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="searchInput" class="search-input" placeholder="Cerca dèi, luoghi, eroi, reliquie (es. Mimir, Baldr, Koddak)..." aria-label="Cerca nelle cronache">
-        <button id="searchClear" class="search-clear" title="Cancella ricerca">✕</button>
-      </div>
-      <span id="searchCount" class="search-count">0 risultati</span>
-
-      <button id="toggleAllBtn" class="btn-action" title="Espandi o comprimi tutti i capitoli">
-        <span>↕</span> <span id="toggleAllLabel">Comprimi Tutto</span>
-      </button>
-
-      <button id="immersiveBtn" class="btn-action" title="Attiva o disattiva la Modalità Lettura Immersiva">
-        <span>📖</span> <span>Modalità Immersiva</span>
-      </button>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section id="top" class="hero-header">
-    <div class="hero-runes">ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ ᚷ ᚹ ᚺ ᚾ ᛁ ᛃ ᛇ ᛈ ᛉ ᛊ ᛏ ᛒ ᛖ ᛗ ᛚ ᛜ ᛞ ᛟ</div>
-    <h1 class="hero-title">Athlon - Il Ragnarok: Il Libro delle Memorie</h1>
-    <p class="hero-subtitle">Le Cronache dei Sei Campioni dal Buio di Helheim alle Soglie di Asgard</p>
-
-    <div class="hero-intro">
-      <p>
-        I Nove Mondi tremano sull'orlo della Grande Frattura. Dietro il manto dorato della Chiesa dell'Altissimo si cela <strong>Rovina</strong>, l'entità primordiale dell'entropia che ha incatenato gli antichi <strong>Dèi Æsir</strong> per caricare l'blasfemo <strong>Occhio di Isacco</strong> e violare il <strong>Pozzo dell'Eternità</strong>. Dalle nebbie gelide di Helgrind alle fucine stellari di Nidavellir, fino alle vette proibite del Silenzio Bianco, questo codice custodisce le gesta, i sacrifici e le conquiste dei Campioni che hanno osato sfidare la fine del creato.
-      </p>
-      <div class="hero-quote">
-        «Quando le radici del Frassino marciscono e il cielo si spezza come vetro antico, non sono gli dèi a decidere la sorte del creato, ma coloro che osano camminare nella cenere.» — <strong>Mimir</strong>
-      </div>
-    </div>
-
-    <nav class="quick-nav-pills" aria-label="Accesso rapido ai capitoli">
-      <a href="#prologo" class="nav-pill">🌌 Prologo</a>
-      <a href="#cronaca-1" class="nav-pill">❄️ Cronaca I: Helheim</a>
-      <a href="#cronaca-2" class="nav-pill">🩸 Cronaca II: Skadi &amp; Bjarolf</a>
-      <a href="#cronaca-3" class="nav-pill">⚒️ Cronaca III: Svartálfaheim</a>
-      <a href="#cronaca-4" class="nav-pill">⚡ Cronaca IV: Consiglio dei Re</a>
-      <a href="#cronaca-5" class="nav-pill">🌩️ Cronaca V: Verso Asgard</a>
-      <a href="#compendio" class="nav-pill">🛡️ Compendio &amp; Reliquie</a>
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <button class="nav-btn active" onclick="switchTab('prologo', this)">0. Prologo &amp; Cosmologia</button>
+            <button class="nav-btn" onclick="switchTab('atto1', this)">I. Athlon, Tesla &amp; Helheim</button>
+            <button class="nav-btn" onclick="switchTab('atto2', this)">II. Nandun, I Ruin &amp; Mikkel</button>
+            <button class="nav-btn" onclick="switchTab('atto3', this)">III. Svartálfaheim &amp; Fafnir</button>
+            <button class="nav-btn" onclick="switchTab('atto4', this)">IV. Jötunheim &amp; Re Thrym</button>
+            <button class="nav-btn" onclick="switchTab('atto5', this)">V. Asgard, Pozzo di Urd &amp; Ida</button>
+            <button class="nav-btn" onclick="switchTab('atlante', this)">⚔️ Atlante degli Dei, Caduti &amp; Alleanze</button>
+        </div>
     </nav>
-  </section>
 
-  <!-- Main Content Layout -->
-  <div class="layout-container">
+    <main class="main-container" id="chroniclesContainer">
 
-    <!-- Sticky Sidebar Navigation -->
-    <aside class="sidebar-toc" aria-label="Indice delle Cronache">
-      <div class="toc-title">
-        <span>Indice Canonico</span>
-        <span>ᛟ</span>
-      </div>
-      <ul class="toc-list">
-        <li><a href="#prologo" class="toc-link active"><span class="toc-badge">00</span> Prologo Cosmologico</a></li>
-        <li><a href="#cronaca-1" class="toc-link"><span class="toc-badge">I</span> Discesa ad Helheim</a></li>
-        <li><a href="#cronaca-2" class="toc-link"><span class="toc-badge">II</span> Tempio di Skadi &amp; Nandùn</a></li>
-        <li><a href="#cronaca-3" class="toc-link"><span class="toc-badge">III</span> Spedizione a Svartálfaheim</a></li>
-        <li><a href="#cronaca-4" class="toc-link"><span class="toc-badge">IV</span> Consiglio di Guerra</a></li>
-        <li><a href="#cronaca-5" class="toc-link"><span class="toc-badge">V</span> Ascensione ad Asgard</a></li>
-        <li><a href="#compendio" class="toc-link"><span class="toc-badge">★</span> Compendio Rapido</a></li>
-      </ul>
-    </aside>
+        <!-- ==================== PROLOGO ==================== -->
+        <section id="prologo" class="chapter-section active">
+            <div class="chapter-banner">
+                <span class="chapter-tag">Genesi Cosmica • Il Doppio Inganno</span>
+                <h2>PROLOGO: IL CREPUSCOLO DEL MONDO, I KANDRA E IL PRIMO CONTRATTO</h2>
+                <p class="chapter-lead">
+                    La guerra eterna tra Preservazione e Rovina, la nascita dei Kandra e dei sacri Ruin, l'usurpazione del cadavere dell'Altissimo e la maledizione dell'Occhio di Isacco.
+                </p>
+            </div>
 
-    <!-- Chronicles Feed -->
-    <main class="main-content" id="searchableContent">
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Cosmo Primordiale</span>
+                    <span class="loc-pill">Primo e Secondo Ragnarok</span>
+                    <span class="loc-pill">La Trama</span>
+                </div>
+                <h3>1. Il Primo e il Secondo Ragnarok: Preservazione e Rovina</h3>
+                <p>
+                    All'alba del tempo, prima che i mortali calpestassero le terre di Athlon, il cosmo era retto dall'equilibrio dinamico di due entità primordiali e antitetiche: <strong>Preservazione</strong>, principio di creazione, vita, memoria e armonia, e <span class="rovina-term">Rovina</span>, incarnazione dell'entropia, della fame divoratrice e del disfacimento. Il <strong>Primo Ragnarok</strong> esplose quando Rovina tentò di inghiottire l'intero creato. Lo scontro fra i due titani fu così catastrofico da frantumare parte delle loro essenze divine: i frammenti caduti sul mondo generarono i filamenti della <strong>Trama</strong> e la magia stessa.
+                </p>
+                <p>
+                    Per guidare e proteggere le razze mortali nate dopo quel cataclisma, Preservazione inviò sul piano materiale il proprio figlio unigenito, <strong>L'Altissimo</strong>. Ma l'invidia, la paura e la corruzione serpeggiante nel cuore degli uomini portarono al più vile dei tradimenti: L'Altissimo venne ingannato e assassinato dai mortali stessi che era venuto a salvare. Addolorato ma incapace di abbandonare le sue creature all'estinzione, Preservazione affrontò nuovamente la sua nemesi nel <strong>Secondo Ragnarok</strong>. Consapevole di non poter annientare <span class="rovina-term">Rovina</span> senza distruggere il tessuto stesso della realtà, Preservazione compì l'estremo sacrificio: consumò la propria essenza vitale e la propria coscienza per erigere una prigione metafisica attorno a Rovina, confinandolo oltre il velo del mondo.
+                </p>
+            </article>
 
-      <!-- PROLOGO -->
-      <article id="prologo" class="chronicle-card">
-        <div class="chronicle-header" onclick="toggleCard(this)">
-          <div class="chronicle-header-left">
-            <span class="chronicle-eyebrow">Genesi del Conflitto</span>
-            <h2 class="chronicle-title">Prologo: Il Crepuscolo del Mondo e il Doppio Inganno</h2>
-          </div>
-          <span class="chronicle-toggle-btn">▼</span>
-        </div>
-        <div class="chronicle-body">
-          <div class="sub-chapter">
-            <h3><span class="step-num">01.</span> Il Sacrificio di Preservazione e la Forgiatura dell'Occhio di Isacco</h3>
-            <p>
-              All'alba del cosmo, l'universo era retto dall'equilibrio tra due forze primordiali: <strong>Preservazione</strong>, custode della vita e della stabilità, e <strong>Rovina</strong>, incarnazione dell'entropia e della fine di ogni cosa. Per impedire al fratello oscuro di annientare il creato, Preservazione compì l'estremo sacrificio: consumò la propria coscienza divina per imprigionare Rovina e celare il <strong>Pozzo dell'Eternità</strong> dietro un velo impenetrabile, custodito nella segreta <strong>Patria dei Kandra</strong> attorno al sacro <strong>Frassino Argentato</strong>. Prima di spegnersi, donò una scintilla della propria luce ai <strong>Kandra</strong>, vincolandoli con il <strong>Primo Contratto</strong> a vegliare nell'ombra.
-            </p>
-            <p>
-              Tuttavia, nell'istante finale dello scontro primordiale, Rovina riuscì a strappare un frammento del cuore stesso di Preservazione. Per eoni, nel buio della sua prigione, lo nutrì con il proprio odio abissale fino a corromperlo in un artefatto di pura malvagità: l'<strong>Occhio di Isacco</strong>. Poiché l'Occhio è composto della stessa essenza di Preservazione, se caricato al massimo della potenza tramite la linfa vitale degli <strong>Dèi Æsir</strong>, esso può entrare in risonanza con il Velo della Patria dei Kandra e squarciarlo dall'interno.
-            </p>
-          </div>
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Patria dei Kandra</span>
+                    <span class="loc-pill">Frassino Argentato</span>
+                    <span class="loc-pill">Pozzo dell'Eternità</span>
+                    <span class="loc-pill">Flusso d'Argento</span>
+                </div>
+                <h3>2. Il Sacrificio degli Angeli, la Patria dei Kandra e i Ruin</h3>
+                <p>
+                    Con la morte di Preservazione, le schiere celesti degli <strong>Angeli</strong> rimasero orfane del loro Creatore, mentre sul mondo piovevano i frammenti residui dello scontro divino, carichi di un potere instabile che rischiava di far collassare il piano mortale. Guidati dall'arcangelo <strong>Mikkel</strong>, comandante supremo delle milizie celesti, gli Angeli scelsero di immolare la propria forma corporea e il proprio splendore alato per salvare la creazione. Essi divennero i <strong>Kandra</strong> (i <em>"Senza Forma"</em>), esseri eterei di pura luce ed energia primordiale capaci di assumere le sembianze dei mortali.
+                </p>
+                <p>
+                    Ritiratisi in una dimensione celata tra le pieghe del cosmo — la <strong>Patria dei Kandra</strong> — essi edificarono il loro santuario attorno al <strong>Frassino Argentato</strong> e al <strong>Pozzo dell'Eternità</strong>, alimentati dal fiume luminoso del <strong>Flusso d'Argento</strong>. Vincolati dal sacro <strong>Primo Contratto</strong>, i Kandra giurarono di vegliare nell'ombra su Athlon, raccogliendo i frammenti di dolore, sacrificio ed energia metafisica sprigionati dalle tragedie mortali. Attraverso la <strong>Benedizione della Conoscenza</strong>, il <strong>Dono della Forza</strong> e la <strong>Grazia dell'Innocenza</strong>, i Kandra plasmano tali concentrati di pura sofferenza ed energia metafisica nei <span class="ruin-term">Ruin</span>: ninnoli e catalizzatori arcani d'incommensurabile valore, mediante i quali i Kandra stipulano Contratti con i mortali meritevoli o contengono l'avanzata dell'ombra.
+                </p>
+                <div class="bifrost-box">
+                    <strong>Distinzione Canonica Fondamentale — Rovina vs. il Ruin:</strong><br>
+                    • <span class="rovina-term">Rovina</span> (con la maiuscola) è l'Entità/Divinità cosmica della distruzione, opposta a Preservazione, che agisce attraverso il falso Altissimo e l'Occhio di Isacco.<br>
+                    • <span class="ruin-term">Il Ruin / I Ruin</span> (sostantivo proprio invariabile) sono i frammenti e ninnoli metafisici di pura sofferenza, resilienza ed energia primordiale che Koddak e i Kandra estraggono e manipolano per siglare i Contratti.
+                </div>
+            </article>
 
-          <div class="sub-chapter">
-            <h3><span class="step-num">02.</span> Il Falso Culto dell'Altissimo e i Quattro Cavalieri</h3>
-            <p>
-              Per preparare il collasso dei Nove Mondi, Rovina orchestrò il più grande inganno della storia di <strong>Athlon</strong>: istituì tra gli uomini il culto dell'<strong>Altissimo</strong> e la potente <strong>Chiesa della Luce</strong>, facendosi venerare come unico dio salvatore e bollando gli antichi Æsir come falsi idoli o demoni. Al suo servizio pose i <strong>Quattro Cavalieri dell'Apocalisse</strong> (i supremi Arcidemoni degli Inferi):
-            </p>
-            <ul>
-              <li><strong>Mammon</strong>, Signore dell'Avidità, infiltrato ai vertici della Chiesa sotto la pelle umana del <strong>Vescovo Throka</strong> e detentore della blasfema <em>Coppa dell'Immortalità</em>;</li>
-              <li><strong>Asmodeus</strong>, Signore della Tirannia e degli inganni abissali;</li>
-              <li><strong>Legione</strong>, l'Orda vivente della devastazione bellica;</li>
-              <li><strong>Belzebù</strong>, Signore della Putrefazione e della Fame.</li>
-            </ul>
-          </div>
-        </div>
-      </article>
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Occhio di Isacco</span>
+                    <span class="loc-pill">Chiesa dell'Altissimo</span>
+                    <span class="loc-pill">Sacro Graal</span>
+                </div>
+                <h3>3. L'Occhio di Isacco, il Falso Altissimo e il Sacro Graal</h3>
+                <p>
+                    Il sacrificio di Preservazione non fu privo di una ferita fatale. Un istante prima che i sigilli della sua prigione si chiudessero, <span class="rovina-term">Rovina</span> allungò gli artigli e strappò un lembo del cuore pulsante di Preservazione. Corrompendolo con la propria essenza entropica, lo trasformò nell'<strong>Occhio di Isacco</strong>: un artefatto blasfemo capace di piegare il flusso del tempo in un anello ricorsivo di <strong>tre giorni</strong> e di proiettare sul mondo un'eclissi cremisi.
+                </p>
+                <p>
+                    Attraverso quella breccia, Rovina compì il più atroce degli inganni: proiettò un frammento della propria coscienza dentro il <strong>cadavere profanato dell'Altissimo</strong>, rianimandolo come un involucro divino corrotto. Sotto le spoglie del falso <strong>Altissimo</strong>, Rovina fondò su Athlon la <strong>Chiesa dell'Altissimo</strong>, trasformando la fede degli uomini in uno strumento di tirannia, inquisizione, caccia alle streghe (le <em>Streghe del Bosco</em>) e fanatismo cieco. Mentre il mondo veniva lentamente avvelenato, Rovina sguinzagliò i suoi quattro Arcidemoni — <strong>Mammon</strong> (l'Avidità), <strong>Asmodeus</strong> (la Lussuria e l'Inganno), <strong>Legione</strong> (l'Ira e la Guerra) e <strong>Belzebù</strong> (la Gola e la Pestilenza) — e orchestrò la caduta e l'imprigionamento degli <strong>Æsir</strong> superstiti (<strong>Hel, Baldr, Víðarr, Magni, Modi e Freya</strong>) e delle nove <strong>Valchirie</strong>.
+                </p>
+                <p>
+                    A capo della Chiesa su Athlon si insediò l'arcidemone <strong>Mammon</strong>, celato dietro le vesti mortali del <strong>Vescovo Throka</strong>. Nelle sue mani cadde il <strong>Sacro Graal</strong>, il calice in cui Preservazione aveva bevuto il suo ultimo sorso di vino prima dell'immolazione: una reliquia suprema che conferiva a Throka il potere di squarciare lo spazio-tempo con portali dimensionali, dominare le menti, rianimare i caduti in forme oscure e scrutare i fili del futuro.
+                </p>
+            </article>
+        </section>
 
-      <!-- CRONACA I -->
-      <article id="cronaca-1" class="chronicle-card">
-        <div class="chronicle-header" onclick="toggleCard(this)">
-          <div class="chronicle-header-left">
-            <span class="chronicle-eyebrow">Cronaca I</span>
-            <h2 class="chronicle-title">La Discesa ad Helheim e la Rugiada di Mimir</h2>
-          </div>
-          <span class="chronicle-toggle-btn">▼</span>
-        </div>
-        <div class="chronicle-body">
-          <div class="sub-chapter">
-            <h3><span class="step-num">1.</span> La Guerra d'Inverno e la Caduta</h3>
-            <p>
-              Durante la sanguinosa <strong>Guerra d'Inverno</strong> tra il regno degli Orgrim e il clan nanico dei Krivor, il nobile <strong>Re Branvir Krivor</strong> affrontò in duello il proprio primogenito <strong>Ulog</strong>, la cui anima era stata segretamente posseduta da un demone di Rovina. Un solo istante di esitazione paterna costò la vita a Branvir, trafitto dal figlio. <strong>Bjior Krivor</strong>, colosso del clan e fratello di Ulog, reagì con furia cieca ma il trauma squassò la sua memoria; in cerca della verità, consultò la sibilla <strong>Vala</strong> (poi torturata dagli inquisitori di Throka) e si calò nelle <strong>Guglie Spettrali</strong>, finendo prigioniero nelle radici dell'Albero del Mondo.
-            </p>
-            <p>
-              Nel frattempo, gli eroi approdarono nella Distesa Glaciale a bordo de <em>Il Pugnale</em>, l'aeronave dell'artefice <strong>Doring</strong>, traendo in salvo la spedizione di <strong>Ross Royce</strong>. Accolti a <strong>Iceburg</strong> da <strong>Re Odor</strong> e dalla scienziata <strong>Rasha Dandot</strong> (che custodiva e studiava l'Occhio di Isacco nel proprio laboratorio), i campioni indagarono sul laboratorio di Tesla Stormgazer e marciarono verso le Guglie Spettrali per soccorrere Bjior e sventare le mire della Chiesa su Ross e Rasha.
-            </p>
-          </div>
+        <!-- ==================== ATTO I ==================== -->
+        <section id="atto1" class="chapter-section">
+            <div class="chapter-banner">
+                <span class="chapter-tag">Atto I • Il Fronte del Nord e l'Oltretomba</span>
+                <h2>IL FRONTE DI ATHLON, IL LABORATORIO DI TESLA E LA DISCESA AD HELHEIM</h2>
+                <p class="chapter-lead">
+                    Dallo schianto del vascello volante "Il Pugnale" tra i ghiacci di Iceburg all'esplorazione di Frostforge Island, fino alla discesa lungo le radici di Yggdrasil per spezzare le catene della dea Hel.
+                </p>
+            </div>
 
-          <div class="sub-chapter">
-            <h3><span class="step-num">2.</span> Le Radici di Yggdrasil, Nidhorg e il Ponte di Modgud</h3>
-            <p>
-              Sulla vetta delle Guglie Spettrali, l'Aquila Sacra <strong>Vedfolnir</strong> permise agli eroi di discendere nel tronco cavo di <strong>Yggdrasil</strong>. Lungo la discesa, il gruppo trovò il cadavere avvelenato dello scoiattolo messaggero <strong>Ratatoskr</strong>, sterminò i cinque Linnorm che tenevano incatenato <strong>Bjior</strong> e raggiunse l'abisso radicale presidiato da <strong>Nidhorg</strong>, il Linnorm Supremo. Piegata in battaglia la ferocia del drago primordiale, Nidhorg lasciò passare i campioni fino alla <strong>Fonte Primordiale</strong> di <strong>Mimir</strong>, il quale aprì loro la soglia del <strong>Niflheim (Helheim)</strong>.
-            </p>
-            <p>
-              Elusa la guardia del segugio infernale a quattro occhi <strong>Garmr</strong> e attraversati il fiume di lame <strong>Gjöll</strong> e la Spiaggia dei Dannati (<strong>Nástrandir</strong>), la compagnia affrontò sul Ponte d'Oro la gigantessa guardiana <strong>Modgud</strong>, corrotta da un parassita d'ombra di Mammon. Sconfitta e purificata senza essere uccisa, Modgud si schierò a difesa dei cancelli, mentre lo spirito di <strong>Re Branvir</strong> apparve a Bjior assolvendolo da ogni colpa per la tragedia familiare.
-            </p>
-          </div>
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Distesa Glaciale</span>
+                    <span class="loc-pill">Vascello "Il Pugnale"</span>
+                    <span class="loc-pill">Catena Ultima</span>
+                    <span class="loc-pill">Foresta degli Alberi Bianchi</span>
+                </div>
+                <h3>1. L'Arrivo sulla Distesa Glaciale e il Salvataggio col "Pugnale"</h3>
+                <p>
+                    Catapultati attraverso uno squarcio spazio-temporale nel gelido continente settentrionale di <strong>Athlon</strong>, gli eroi — affiancati inizialmente da compagni e superstiti quali <strong>Oliver, Remy Leon, Theo, Melarn, Adrian, Panmon</strong> e il barbaro <strong>Zormannu</strong> — si ritrovano a bordo del vascello volante <strong><em>Il Pugnale</em></strong>, governato dal capitano <strong>Doring</strong>. Sotto di loro si estende la <strong>Distesa Glaciale</strong> al confine delle terre degli <strong>Orgrim</strong>, dove una furiosa tormenta di neve fa da teatro a un massacro.
+                </p>
+                <p>
+                    Sulla banchisa ghiacciata, un manipolo di fuggitivi — tra cui il bardo e scienziato <strong>Ross Royce</strong>, il saggio <strong>Maestro Kederian</strong>, il medico <strong>Dottor Redrum</strong>, il condottiero <strong>Roman Stark</strong> (in realtà l'angelo caduto <strong>Azriel</strong>), l'incantatrice <strong>Lenya Jarris</strong> e i guerrieri <strong>Dralaf</strong> e <strong>Ragand</strong> — è accerchiato da un'orda sterminata di non-morti guidata da uno degli <strong>Apostoli del Cavaliere della Morte</strong>, un'entità corazzata che emana un campo gravitazionale schiacciante generato da una scheggia dell'Occhio di Isacco.
+                </p>
+                <p>
+                    Con una manovra disperata, <em>Il Pugnale</em> cala le cime tra i ghiacci per trarre in salvo i superstiti. Per sfuggire alla morsa gravitazionale dell'Apostolo, <strong>Ross Royce</strong> corre nella sala macchine del vascello e inserisce nel nucleo di propulsione un minuscolo cubo di <strong>Materia Oscura (Antimateria)</strong> custodito in una fiala schermata. Mentre la nave balza in avanti con una spinta innaturale, l'Apostolo scaglia una titanica <strong>lancia di ghiaccio nero</strong> che squarcia lo scafo del <em>Pugnale</em>; il vascello, avvolto dalle fiamme e dal gelo, riesce a superare la <strong>Catena Ultima</strong> prima di schiantarsi nella <strong>Foresta degli Alberi Bianchi</strong>, ai piedi della fortezza montana di <strong>Iceburg</strong>.
+                </p>
+            </article>
 
-          <div class="sub-chapter">
-            <h3><span class="step-num">3.</span> L'Assalto a Helgrind, la Liberazione di Hel e la Fune di Mimir</h3>
-            <p>
-              Irrompendo nella sala del trono di <strong>Helgrind</strong>, gli eroi scoprirono la dea dei morti <strong>Hel</strong> incatenata da pesanti catene d'ombra forgiate da <strong>Mammon</strong> e sorvegliata da un <strong>Demone d'Ombra</strong>, mentre sulle rive spettrali veniva ultimata <strong>Naglfar</strong>, la nave costruita con le unghie dei defunti. Spezzate le catene in uno scontro furioso, Hel riacquistò il proprio potere divino, schiantò il Demone d'Ombra e scatenò la tempesta sul reame, intimando ai suoi liberatori di fuggire mentre Naglfar spiegava le vele.
-            </p>
-            <p>
-              Dal cielo squarciato del Niflheim, <strong>Mimir</strong> calò una <strong>fune di pura luce</strong> e trasse in salvo la compagnia presso il Pozzo della Conoscenza. Qui donò loro la <strong>Rugiada di Yggdrasil</strong> e svelò il conflitto cosmico tra Preservazione e Rovina. Durante il volo di ritorno verso Iceburg sul dorso delle aquile di Vedfolnir, il gruppo respinse infine la letale imboscata aerea di <strong>Thormund il Corvo Bianco</strong> (Gran Maestro del Quarto Ordine) e dei suoi quindici Purificati.
-            </p>
-          </div>
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Rocca di Iceburg</span>
+                    <span class="loc-pill">Regno degli Orgrim</span>
+                    <span class="loc-pill">Laboratorio di Rasha Dandot</span>
+                </div>
+                <h3>2. La Rocca di Iceburg, il Laboratorio di Rasha e il Segreto dell'Antimateria</h3>
+                <p>
+                    Condotti all'interno di <strong>Iceburg</strong>, capitale del regno degli <strong>Orgrim</strong> governata dal fiero <strong>Re Odor</strong>, gli eroi scoprono l'esistenza di una fragile alleanza clandestina che resiste allo strapotere della Chiesa dell'Altissimo: gli <strong>Illuminati</strong> — ordine scientifico ed eretico fondato dai pensatori <strong>James Luther, Ryan Knox e Jonar Hus</strong> — e i <strong>Guardiani della Notte</strong>.
+                </p>
+                <p>
+                    Nelle profondità della rocca, la compagnia visita il laboratorio alchemico di <strong>Rasha Dandot</strong>, brillante scienziata che lavora fianco a fianco con <strong>Lucius</strong>, il <strong>Dottor Redrum</strong>, <strong>Lenya Jarris</strong> e il mago Yarl <strong>Alaf</strong>. Qui Rasha svela agli eroi la macabra natura della nuova tecnologia bellica: i non-morti che infestano il Nord secernono un denso <strong>liquido nero</strong> corrotto; sottoponendo le creature a camere di compressione estrema (o, come fa il Vescovo Throka a Snowshade, trafiggendole con chiodi rituali di tortura), quel fluido viene raffinato in <strong>Antimateria</strong>, capace di alimentare motori prodigiosi o armi d'annientamento. Rasha spiega inoltre che gli <strong>Apostoli</strong> sono resi invulnerabili da un campo di distorsione gravitazionale derivato dall'Occhio di Isacco: l'unico modo per annullarlo consiste nel recuperare l'<strong>Inversore Gravitazionale</strong> progettato da <strong>Tesla Stormgazer</strong>, uno scienziato pazzo un tempo membro degli Illuminati, esiliato sulla remota e vulcanica <strong>Frostforge Island</strong>.
+                </p>
+            </article>
 
-          <div class="legacy-box">
-            <div class="legacy-box-header">🏆 Eredità della Cronaca I</div>
-            <div class="legacy-grid">
-              <div class="legacy-col">
-                <h4>Reliquie &amp; Doni</h4>
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Frostforge Island</span>
+                    <span class="loc-pill">Hall della Sfera di Tesla</span>
+                    <span class="loc-pill">Laboratorio dei Cloni</span>
+                    <span class="loc-pill">Gabbia di Faraday</span>
+                </div>
+                <h3>3. L'Incursione a Frostforge Island e il Laboratorio di Tesla Stormgazer</h3>
+                <p>
+                    Raggiunta <strong>Frostforge Island</strong> — un'isola aspra dove i ghiacciai perenni si scontrano con bocche vulcaniche fumanti — gli eroi vengono immediatamente assaliti da una nidiata infinita di <strong>Remorhaz</strong> che emergono dalla neve bollente. Costretti a una corsa disperata verso il portone blindato del complesso di Tesla, i campioni assistono all'attivazione delle <strong>torrette automatiche arcane</strong> poste a difesa dell'ingresso, che polverizzano i mostri inseguitori con scariche di plasma elettrico.
+                </p>
+                <p>
+                    Per varcare la porta d'accesso, il gruppo deve risolvere l'iscrizione incisa sull'architrave: <em>"Il sacrificio porta sempre guadagno"</em>. Toccando il ricettacolo d'ingresso, gli eroi pagano un tributo mentale (<strong>1d4 punti di Intelligenza</strong> drenati e immagazzinati in un accumulatore psichico) che sblocca i chiavistelli. L'esplorazione del complesso si snoda attraverso quattro aree letali:
+                </p>
                 <ul>
-                  <li><strong>Benedizione di Mimir:</strong> Rugiada di Yggdrasil (+2 permanente a una caratteristica).</li>
-                  <li><strong>Lacrime di Isacco:</strong> Frammenti cristallizzati consegnati da Rasha Dandot a Iceburg.</li>
+                    <li><strong>La Hall Circolare e la Sfera di Tesla:</strong> Un salone sormontato da affreschi astronomici e da un grande <strong>planetario meccanico (orrery)</strong> rotante al cui centro pulsa una <strong>Sfera di Tesla</strong> che scaglia archi voltaici; qui gli eroi studiano le traiettorie planari e disinnescano i primi sistemi difensivi.</li>
+                    <li><strong>La Camera da Letto, l'Enigma del Lucchetto e le Creepy Dolls:</strong> Nella stanza privata dello scienziato, una cassaforte è protetta da un complesso <strong>Enigma del Lucchetto</strong> accompagnato da un biglietto beffardo in cui Tesla deride il suo rivale <em>Edison</em>. Mentre cercano la combinazione, otto <strong>Bambole Inquietanti (<em>Creepy Dolls</em>)</strong> animate si scagliano contro il gruppo, bersagliando le menti degli eroi con attacchi di <em>Assalto Psichico</em> e tentando di intrappolarli tramite lo <em>Scambio di Corpi</em> (<em>Body Exchange</em>).</li>
+                    <li><strong>Il Laboratorio dei Cloni:</strong> Una galleria di cilindri di vetro pieni di liquido amniotico ed elettrico in cui fluttuano corpi clonati ed esperimenti falliti di trasferimento della coscienza, testimonianza dell'ossessione di Tesla per l'immortalità.</li>
+                    <li><strong>La Gabbia di Faraday e lo Scontro con Tesla Stormgazer:</strong> Nel sancta sanctorum schermato da una gigantesca <strong>Gabbia di Faraday</strong>, la compagnia affronta ciò che resta di <strong>Tesla Stormgazer</strong>: lo scienziato ha abbandonato la carne mortale per trasferire il proprio intelletto in un <strong>costrutto biomeccanico immortale</strong>, scortato da un massiccio <strong>Golem Canopico</strong> (<em>Canopic Golem</em>). Mentre Tesla satura la gabbia con devastanti <em>Catene di Fulmini</em> (<em>Chain Lightning</em>) e campi magnetici, gli eroi riescono infine a sovraccaricare e abbattere il suo telaio meccanico, estraendo dal suo torace il prezioso <strong>Generatore/Inversore Gravitazionale</strong>.</li>
                 </ul>
-              </div>
-              <div class="legacy-col">
-                <h4>Alleati &amp; Liberazioni</h4>
+            </article>
+
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Guerra d'Inverno</span>
+                    <span class="loc-pill">Bosco Umido</span>
+                    <span class="loc-pill">Snowshade</span>
+                </div>
+                <h3>4. Il Non-Morto "Innocuo", il Sangue Reale Krivor e il Rapimento verso Snowshade</h3>
+                <p>
+                    Rientrati a Iceburg con il dispositivo di Tesla, gli eroi assistono all'arrivo del ranger <strong>Sverand</strong>, di ritorno da una pattuglia oltre la Catena Ultima. Sverand trasporta in una gabbia di ferro una creatura anomala: un <strong>"non-morto innocuo"</strong>, un cadavere rianimato che, a differenza delle belve fameliche dell'orda, si è rifiutato di combattere e conserva negli occhi una straziante scintilla di coscienza umana.
+                </p>
+                <p>
+                    In quelle stesse ore emerge in tutta la sua tragicità la verità sulla <strong>Guerra d'Inverno</strong> e sulla caduta della dinastia <strong>Krivor</strong>: durante la battaglia decisiva nelle nevi, il nobile <strong>Re Branvir Krivor</strong> si era trovato faccia a faccia in duello con il proprio figlio primogenito, <strong>Ulog</strong>, la cui mente e il cui corpo erano stati posseduti dai demoni di <span class="rovina-term">Rovina</span>. Nel momento in cui avrebbe potuto vibrare il colpo fatale, l'amore paterno aveva fatto esitare Branvir per una frazione di secondo; Ulog ne aveva approfittato per trafiggerlo a morte. Il secondogenito <strong>Bjior Krivor</strong>, tramortito nella mischia, si era risvegliato prigioniero assistendo all'orrore del fratello Ulog che giustiziava sul rogo la propria stessa moglie; fuggito dalle fiamme, Bjior aveva cercato consiglio presso la veggente <strong>Vala</strong> nel <strong>Bosco Umido</strong> (poco prima che la sibilla venisse catturata e torturata dal Vescovo Throka) e si era poi diretto in solitaria verso le <strong>Guglie Spettrali</strong>, determinato a scendere nel regno dei morti per salvare l'anima del padre Branvir.
+                </p>
+                <p>
+                    Improvvisamente, la quiete di Iceburg viene squarciata da un attacco chirurgico: una schiera di <strong>servitori incappucciati e senza volto</strong> inviati dal Vescovo Throka irrompe nella fortezza attraverso varchi d'ombra, rapendo <strong>Ross Royce, Rasha Dandot e Lenya Jarris</strong> per deportarli nelle prigioni inquisitoriali di <strong>Snowshade</strong>. Alla vista del rapimento di Ross e Rasha, il misterioso "non-morto innocuo" rinchiuso nella gabbia lancia un urlo disperato e straziante, spezzando le sbarre per unirsi alla compagnia.
+                </p>
+            </article>
+
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Guglie Spettrali</span>
+                    <span class="loc-pill">Nido di Vedfolnir</span>
+                    <span class="loc-pill">Tronco di Yggdrasil</span>
+                    <span class="loc-pill">Antro di Nidhorg</span>
+                </div>
+                <h3>5. Le Guglie Spettrali, l'Aquila Vedfolnir e la Discesa tra le Radici di Yggdrasil</h3>
+                <p>
+                    Seguendo le tracce di <strong>Bjior Krivor</strong> e le indicazioni per raggiungere l'oltretomba, gli eroi scalano le vette proibite delle <strong>Guglie Spettrali</strong>. Sulla sommità battuta dai venti trovano una caverna scavata direttamente nella corteccia pietrificata di <strong>Yggdrasil</strong>, l'Albero del Mondo. Qui montano la guardia le aquile giganti capeggiate dalla maestosa <strong>Vedfolnir</strong>, l'aquila sacra che veglia sulle sue uova dorate. Dimostrando rispetto e nobiltà d'animo, il gruppo ottiene da Vedfolnir il permesso di discendere nel cavo dell'Albero Cosmico.
+                </p>
+                <p>
+                    L'abisso verticale si snoda attraverso chilometri di <strong>tunnel bioluminescenti</strong> scavati nel legno vivo di Yggdrasil. Lungo la discesa, la compagnia fa una scoperta agghiacciante: il cadavere gigantesco di <strong>Ratatoskr</strong>, il leggendario scoiattolo messaggero che correva lungo il tronco del mondo, giace riverso e <strong>avvelenato</strong> da una corruzione nera che risale dalle profondità. Poco più in basso, in una vasta camera formata da un intrico di radici pensili sopra il vuoto, gli eroi trovano <strong>Bjior Krivor</strong> intrappolato in un bozzolo radicale e circondato da <strong>cinque Linnorm</strong>, feroci draghi primordiali senz'ali. Dopo un brutale combattimento sospeso sull'abisso, i cinque Linnorm vengono abbattuti e <strong>Bjior</strong> viene liberato, unendo la propria spada alla compagnia.
+                </p>
+                <p>
+                    Scendendo lungo la radice maestra fino alla fossa più profonda del pianeta, il gruppo giunge al cospetto di <strong>Nidhorg</strong>, il <strong>Linnorm Supremo</strong>, una colossale serpe draconica che rode incessantemente le radici dell'Albero del Mondo. Nidhorg sbarra il passaggio verso la fonte sottostante e tenta di imporre un patto scellerato: lascerà passare gli eroi solo se essi accetteranno di portare un suo <strong>uovo maledetto</strong> in superficie per nasconderlo nel nido dell'aquila Vedfolnir. Rifiutando e superando con l'astuzia e il valore il ricatto del drago antico, i campioni oltrepassano il varco e raggiungono la <strong>Fonte Primordiale</strong>.
+                </p>
+            </article>
+
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Fonte di Mimir</span>
+                    <span class="loc-pill">Fiume Gjöll</span>
+                    <span class="loc-pill">Nástrandir &amp; Naglfar</span>
+                    <span class="loc-pill">Ponte di Modgud</span>
+                    <span class="loc-pill">Palazzo di Helgrind</span>
+                </div>
+                <h3>6. La Fonte di Mimir, Nástrandir e la Liberazione di Hel a Helgrind</h3>
+                <p>
+                    Presso le acque luminescenti della <strong>Fonte Primordiale</strong>, gli eroi incontrano <strong>Mimir</strong>, il dio decapitato della saggezza infinita, il cui capo custodisce la memoria del cosmo. Mimir mostra a Bjior una visione straziante dell'anima di <strong>Re Branvir</strong> tormentata nell'oltretomba e apre per la compagnia il varco dimensionale verso <strong>Helheim (Niflheim)</strong>, avvertendoli che il regno dei morti è stato violato da <span class="rovina-term">Rovina</span> e dall'arcidemone <strong>Mammon</strong>. Superato lo sguardo del mostruoso segugio a quattro occhi <strong>Garmr</strong>, gli eroi si addentrano nelle brume di Niflheim:
+                </p>
                 <ul>
-                  <li><strong>Hel</strong> liberata dalle catene d'ombra di Mammon a Helgrind.</li>
-                  <li><strong>Modgud</strong> purificata sul Ponte d'Oro e <strong>Bjior Krivor</strong> liberato.</li>
+                    <li><strong>Il Fiume Gjöll e Nástrandir (La Spiaggia dei Dannati):</strong> I campioni costeggiano le acque impetuose del fiume <strong>Gjöll</strong>, la cui corrente è formata da migliaia di lame e spade affilate, e attraversano l'orribile lido di <strong>Nástrandir</strong>. Qui un drago nero mastica senza sosta i corpi degli assassini, dei traditori e degli adulteri, mentre demoni dalle ali di pipistrello strappano le unghie ai cadaveri dei dannati per innalzare lo scafo di <strong>Naglfar</strong>, la colossale nave profana fatta di unghie dei morti destinata a trasportare le legioni dell'abisso durante il Ragnarok. Assaliti da quattro <strong>Spiriti Tormentati</strong>, gli eroi li respingono e avanzano verso il ponte.</li>
+                    <li><strong>Il Ponte d'Oro, la Gigantessa Modgud e lo Spirito di Re Branvir:</strong> Giunti al <strong>Ponte d'Oro</strong> che separa i vivi dai morti, il passo è sbarrato da <strong>Modgud</strong>, la gigantessa guardiana del ponte, la cui mente è stata infettata e asservita da un <strong>parassita d'ombra</strong> inoculato da Mammon. Anziché sterminarla, gli eroi riescono a spezzare la corruzione e a purificare Modgud; per gratitudine, la gigantessa non solo concede loro il passaggio verso la fortezza di <strong>Helgrind</strong>, ma evoca per qualche istante lo spirito di <strong>Re Branvir Krivor</strong>, permettendo a <strong>Bjior</strong> un ultimo, commovente colloquio col padre, che lo assolve da ogni colpa e lo esorta a salvare il proprio popolo.</li>
+                    <li><strong>L'Assedio di Helgrind e la Rottura delle Catene d'Ombra:</strong> Le mura del palazzo di <strong>Helgrind</strong> sono interamente intrecciate di <strong>serpenti vivi</strong> le cui teste, rivolte verso nord, sputano fiumi di veleno acido. Varcata la soglia e fatto irruzione nella <strong>Sala del Trono</strong>, la compagnia assiste al sacrilegio: <strong>Hel</strong>, la dea della morte dal volto per metà fanciulla e per metà cadavere, è sospesa e imprigionata da <strong>pesanti catene d'ombra</strong> forgiate da Mammon e sorvegliate dal suo letale <strong>Servitore d'Ombra</strong>. Le catene drenano incessantemente la linfa divina della dea per alimentare la costruzione di <em>Naglfar</em>.</li>
+                    <li><strong>La Furia di Hel, la Fune di Luce di Mimir e l'Agguato del Corvo Bianco:</strong> Sotto i colpi furiosi del Servitore d'Ombra, gli eroi concentrano i loro attacchi sui vincoli oscuri finché <strong>spezzano le catene d'ombra</strong>. Liberata dalla sua agonia, <strong>Hel</strong> scatena un'ira apocalittica: schiaccia con le proprie mani il Servitore d'Ombra, ma la sua furia cieca fa tremare l'intero Niflheim. <strong>Garmr</strong> ulula, le legioni dei dannati insorgono e la nave <strong>Naglfar</strong> rompe gli ormeggi salpando nelle nebbie. Proprio mentre il regno dei morti sta per inghiottire anche gli eroi, il cielo plumbeo di Helheim si squarcia: <strong>Mimir</strong> cala dall'alto una <strong>fune di pura luce</strong>, afferrando la compagnia e issandola in salvo presso le radici di Yggdrasil, dove dona loro la <strong>Rugiada di Yggdrasil</strong> e rivela la verità cosmica su Preservazione e Rovina.</li>
                 </ul>
-              </div>
-              <div class="legacy-col">
-                <h4>Rivelazioni Sbloccate</h4>
+                <p>
+                    Risaliti in superficie in groppa alle aquile giganti di <strong>Vedfolnir</strong>, i campioni vengono intercettati nei cieli sopra le montagne da <strong>Thormund il Corvo Bianco</strong>, Gran Maestro del <strong>Quarto Ordine</strong> della Chiesa dell'Altissimo, accompagnato da <strong>quindici Purificati</strong> alati. Dopo una disperata battaglia aerea tra le nubi — durante la quale Vedfolnir si sacrifica per coprire la ritirata del gruppo prima di scomparire — gli eroi atterrano a Iceburg, dove ricevono le <strong>Lacrime di Isacco</strong>, pronti a marciare verso sud.
+                </p>
+            </article>
+        </section>
+
+        <!-- ==================== ATTO II ==================== -->
+        <section id="atto2" class="chapter-section">
+            <div class="chapter-banner">
+                <span class="chapter-tag">Atto II • La Pioggia di Sangue, i Kandra e l'Arcangelo</span>
+                <h2>L'OSCURITÀ DI NANDUN, IL RUIN DI LADY ELARA E IL SACRIFICIO DI MIKKEL</h2>
+                <p class="chapter-lead">
+                    Il complotto della Pietra Blu, i sei anni di silenzioso martirio della Regina Elara, la rivelazione angelica di Koddak e l'apocalittico duello celeste tra Mikkel e Caino sopra la Cattedrale della Luce Perpetua.
+                </p>
+            </div>
+
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Metropoli di Nandun</span>
+                    <span class="loc-pill">Montagne di Thundar</span>
+                    <span class="loc-pill">Acquedotti Contaminati</span>
+                </div>
+                <h3>1. L'Assedio di Nandun, la Pioggia di Sangue e la Pietra Blu</h3>
+                <p>
+                    Lasciate le vette degli Orgrim, la compagnia — che vede schierati in prima linea il paladino vampiro <strong>Victor</strong>, suo figlio <strong>Cyric</strong> (paladino/stregone), il guerriero <strong>Bjior Krivor</strong>, il barbaro <strong>Zormannu</strong>, l'incantatore <strong>Orphen</strong>, <strong>Lenya Jarris</strong> e l'enigmatico <strong>Lord Seymour</strong> (dietro le cui sembianze mortali si cela il Kandra <strong>Koddak</strong>) — si dirige verso i regni umani dei <strong>Bjarolf</strong> e degli <strong>Yarl</strong>. Le notizie che giungono da <strong>Nandun</strong>, la maestosa capitale dei Bjarolf governata un tempo da <strong>Re Boradol</strong>, sono apocalittiche: una coltre di nubi nere ha oscurato permanentemente il sole sopra la metropoli, facendo cadere sulle strade una <strong>pioggia incessante di sangue</strong>.
+                </p>
+                <p>
+                    Dietro la caduta di Nandun si cela una cospirazione vampirica guidata da una misteriosa entità nota come <strong>L'Oscurità Innominata</strong> (<strong>Caino</strong>, il Progenitore dei vampiri e antico Kandra ribelle anteriore alla Prima Generazione). I signori vampiri — il <strong>Principe Malachi</strong>, <strong>Lord Vladen</strong>, <strong>Lady Morwenna</strong>, il <strong>Duca Draven</strong> e il <strong>Barone Solomon</strong> — hanno estratto dalle miniere naniche delle montagne di Thundar un minerale maledetto, la <strong>Pietra Blu</strong>. Purificata e infusa con la magia oscura di Caino, la Pietra Blu moltiplica a dismisura la forza, la velocità e il dominio mentale dei vampiri, mentre riversata negli acquedotti di Nandun agisce sui mortali come un contagio abissale, mutando l'intera popolazione civile in un'orda di <strong>aberrazioni deformi e urlanti</strong> prive di senno.
+                </p>
+            </article>
+
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Sala del Consiglio Reale</span>
+                    <span class="loc-pill">Regni di Bjarolf, Yarl e Orgrim</span>
+                </div>
+                <h3>2. Il Tradimento del Falso Re Boradol, il Dolore di Lady Elara e la Morte di Soren</h3>
+                <p>
+                    Raggiunto l'accampamento degli eserciti alleati guidati dai tre sovrani — <strong>Re Odor</strong> degli Orgrim, <strong>Re Jagga Jarris</strong> degli Yarl e <strong>Re Boradol</strong> dei Bjarolf, affiancato dal fratello <strong>Lord Bother</strong> e dalla regina <strong>Lady Elara</strong> (sorella di Jagga Jarris) — gli eroi percepiscono che qualcosa di marcio si annida nel cuore stesso del comando reale.
+                </p>
+                <p>
+                    Le indagini della compagnia svelano un orrore silenzioso durato <strong>sei lunghi anni</strong>: l'uomo che siede sul trono accanto a Lady Elara non è il vero Re Boradol, bensì un <strong>impostore mutaforma</strong> posto dal nemico, mentre il vero <strong>Re Boradol</strong> era stato segretamente catturato e sostituito. Per sei anni, la regina <strong>Lady Elara</strong> aveva compreso che l'uomo nel suo letto non era il suo vero sposo, ma aveva dovuto fingere, tacere e sopportare in solitudine quell'agonia indicibile per impedire che i suoi figli e il suo popolo venissero massacrati, attendendo in silenzio il giorno in cui sarebbero giunti dei campioni capaci di spezzare la catena.
+                </p>
+                <p>
+                    Quando l'inganno viene finalmente smascherato e il vero <strong>Re Boradol</strong> viene liberato e riunito alla sua sposa, la vendetta delle tenebre colpisce nel modo più crudele: il giovane <strong>Principe Soren</strong>, figlio di Boradol ed Elara, viene colpito a morte e spira tra le braccia della madre, proprio mentre l'esploratore <strong>Bender</strong> irrompe nella sala del consiglio annunciando che le acque di Nandun sono state completamente contaminate e che tutti gli abitanti della capitale sono ormai mutati in mostri.
+                </p>
+            </article>
+
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Rivelazione Kandra</span>
+                    <span class="loc-pill">Il Ruin Supremo</span>
+                    <span class="loc-pill">Primo Contratto</span>
+                </div>
+                <h3>3. La Rivelazione di Koddak, il Ruin di Elara e l'Evocazione dell'Arcangelo Mikkel</h3>
+                <p>
+                    Nel silenzio disperato della sala del consiglio, segnato dal cadavere del giovane principe Soren e dalla caduta di Nandun, <strong>Lord Seymour</strong> compie un passo avanti e lascia cadere la propria maschera mortale. Davanti agli occhi sbalorditi di Re Boradol, Re Odor, Re Jagga Jarris e dei suoi stessi compagni d'arme, la sua carne umana si dissolve in un vortice di luce purissima e abbagliante, condensandosi nella sagoma eterea e angelica di <strong>Koddak</strong>, un <strong>Kandra</strong> (sotto lo sguardo consapevole di <strong>Ross Royce</strong>, legato a lui dal Contratto).
+                </p>
+                <p>
+                    Con voce antica e solenne, Koddak rivela che i Kandra non possono più restare nell'ombra, poiché la minaccia di <strong>Caino</strong> attenta alla stessa <strong>Patria dei Kandra</strong>. Poi Koddak apre il proprio palmo di luce e mostra agli eroi un fenomeno straordinario: nell'istante in cui il principe Soren è spirato, i sei anni di sofferenza muta, di lacrime ricacciate indietro, di resilienza e di amore materno covati da <strong>Lady Elara</strong> si sono condensati in <span class="ruin-term">un Ruin</span> — <span class="ruin-term">il Ruin</span> più puro, denso e potente che Koddak abbia mai visto in secoli di esistenza, forgiato nel crogiolo del sacrificio e della disperazione.
+                </p>
+                <p>
+                    Koddak consegna <span class="ruin-term">il Ruin</span> nelle mani tremanti ma fiere della regina <strong>Lady Elara</strong>, spiegandole che attraverso quel <span class="ruin-term">Ruin</span> ella può stipulare un <strong>Contratto</strong> con il più potente membro della <strong>Prima Generazione dei Kandra</strong>: il generale supremo delle armate angeliche che combatterono contro <span class="rovina-term">Rovina</span> nelle ere primordiali, <strong>l'Arcangelo Mikkel</strong>. Stringendo <span class="ruin-term">il Ruin</span> al petto e riversandovi ogni fibra del proprio dolore, Elara pronuncia il richiamo. Una deflagrazione di luce dorata fa vibrare le statue di pietra della sala del trono: dall'alto discende <strong>Mikkel</strong>, maestoso essere di luce dalle immense ali scintillanti, che accetta il Contratto della regina e giura di guidare l'assalto per liberare Nandun.
+                </p>
+            </article>
+
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Cattedrale della Luce Perpetua</span>
+                    <span class="loc-pill">Sotterranei Vampirici</span>
+                    <span class="loc-pill">Cieli di Nandun</span>
+                </div>
+                <h3>4. La Battaglia della Cattedrale della Luce Perpetua e il Sacrificio di Mikkel</h3>
+                <p>
+                    Al grido di <em>"Scegliamo la vita! Per Nandun!"</em>, l'esercito di Re Boradol e Lord Bother viene teletrasportato dai maghi direttamente nella piazza antistante la <strong>Cattedrale della Luce Perpetua</strong>, nel cuore di Nandun. Mentre i soldati formano un quadrato di scudi per reggere l'urto di migliaia di vampiri e cittadini mutati in aberrazioni sotto una pioggia battente di sangue, <strong>Mikkel</strong> solleva la sua lancia di luce verso il cielo: per puro potere divino, <strong>le gocce di sangue si arrestano a mezz'aria</strong>, immobili come rubini sospesi nel tempo.
+                </p>
+                <p>
+                    Mikkel, seguito da <strong>Victor, Zormannu, Cyric, Orphen, Bjior Krivor, Lenya Jarris e Koddak</strong>, varca i portoni spalancati della Cattedrale. Il pavimento della navata è un lago di sangue scuro; sull'altare profanato li attende <strong>Caino</strong> (<em>L'Oscurità Innominata</em>), fratello caduto di Mikkel, composto di tenebra densa e divoratrice. Lo scontro fra i due titani esplode con tale violenza da <strong>sfondare il tetto della Cattedrale</strong>, proiettando Mikkel e Caino in un duello apocalittico nei cieli tempestosi sopra la città.
+                </p>
+                <p>
+                    Nel frattempo, tra le colonne insanguinate della navata, gli eroi affrontano in uno scontro mortale i due vampiri supremi rimasti a guardia del tempio: il <strong>Principe Malachi</strong> e <strong>Lord Vladen</strong> (mentre gli altri signori vampiri — <strong>Lady Morwenna, il Duca Draven e il Barone Solomon</strong> — vengono neutralizzati e imprigionati in forma gassosa dentro le speciali ampolle alchemiche dei <strong>Ventifermanti</strong>). Nel culmine del combattimento, Malachi afferra <strong>Bjior Krivor</strong> e si dissolve nelle ombre, trascinandolo nelle <strong>prigioni sotterranee della Cattedrale</strong> — un mattatoio di celle fatiscenti e canali di scolo colmi di sangue coagulato — dove uccide il guerriero Krivor. Gli eroi si precipitano nei sotterranei, abbattono definitivamente Malachi e riportano in vita Bjior.
+                </p>
+                <div class="lore-quote">
+                    «Koddak... Ricorda, figlio mio... l'oscurità non può vincere. Noi siamo i difensori della luce, coloro che si ergono a baluardo contro le tenebre. Tu che hai camminato tra i mortali e hai compreso il loro coraggio e la loro fragilità... fatti ora baluardo di speranza per questi esseri mortali. Sii la luce che li guida nell'oscurità, il ricordo che anche il sacrificio più grande può portare alla vittoria.»<br>
+                    <strong>— Ultime parole telepatiche dell'Arcangelo Mikkel a Koddak</strong>
+                </div>
+                <p>
+                    Un istante dopo aver trasmesso il suo testamento spirituale a Koddak, <strong>Mikkel esplode in una supernova di luce pura</strong>, disintegrando il corpo oscuro di Caino fino all'ultima particella d'ombra. L'onda d'urto divina investe le gocce di sangue sospese nel cielo e le <strong>cristallizza in miriadi di fiocchi di neve luminosi</strong>: cadendo dolcemente su Nandun, quella neve benedetta purifica le aberrazioni e i cittadini contaminati, restituendo loro forma e ragione umana.
+                </p>
+            </article>
+
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Celle della Cattedrale</span>
+                    <span class="loc-pill">Prigione Antimagia di Iceburg</span>
+                    <span class="loc-pill">Foresta dei Giganti</span>
+                </div>
+                <h3>5. L'Elfo Martoriato Faust, l'Interrogatorio di Lady Morwenna e il Varco del Bifröst</h3>
+                <p>
+                    Nell'angolo più buio delle prigioni sotterranee della Cattedrale, <strong>Victor</strong> e <strong>Lenya</strong> scorgono tra i cadaveri una figura straziata che ancora respira: è un giovane <strong>elfo chiaro (Alfar)</strong> a cui i vampiri hanno mozzato una mano, strappato un braccio, amputato le gambe sotto il ginocchio, asportato le palpebre bruciandogli gli occhi, cavato i denti e tagliato lingua e orecchie. Quando <strong>Orphen</strong> recita su di lui un potente incantesimo di <em>Rigenerazione</em>, facendo ricrescere i suoi arti, la prima parola che l'elfo sussurra tra le lacrime è: <em>"Basta... uccidetemi..."</em>. Solo una volta placato e guarito, il giovane rivela di chiamarsi <strong>Faust</strong>, proveniente dal regno caduto di <strong>Sylvandell</strong> a <strong>Svartálfaheim</strong>, giunto su Athlon seguendo la profezia del suo mentore <strong>Airlik</strong> per cercare gli eroi di un altro piano, prima di cadere nelle grinfie dei torturatori di Caino.
+                </p>
+                <p>
+                    Tornati a <strong>Iceburg</strong>, gli eroi bruciano con il fuoco sacro le essenze gassose dei vampiri racchiuse nei Ventifermanti, ma <strong>Victor</strong> fa allestire da <strong>Merlino, Rasha, Theo e Melarn</strong> una cella protetta da un <strong>campo antimagia</strong> per interrogare <strong>Lady Morwenna</strong>. Sotto torchio, la vampira confessa l'origine della <strong>Pietra Blu</strong> nelle montagne di Thundar e svela che <strong>Caino</strong> era un Kandra antichissimo, ribellatosi al servizio verso i mortali per stringere un patto oscuro e divenire un dio più potente di <span class="rovina-term">Rovina</span> stesso.
+                </p>
+                <p>
+                    Prima della partenza verso sud, due messaggi scuotono il gruppo: <strong>Bjior</strong> riceve nella mente un'illusoria richiesta d'aiuto da parte di suo fratello <strong>Ulog</strong>, che finge di essersi liberato dal controllo di Throka e cerca di attirarlo in una trappola nelle <strong>Grotte del Sussurro Gelido</strong>; <strong>Zormannu</strong>, invece, viene contattato telepaticamente da <strong>Mimir</strong>, il quale lo informa che l'aquila <strong>Vedfolnir</strong> è scomparsa dopo lo scontro col Corvo Bianco, ma che la valchiria <strong>Sigrun</strong> (liberata dagli eroi) ha percepito nel martello del barbaro un potere dormiente legato a <strong>Mjölnir</strong>, esortandolo a cercare la <strong>Fucina di Ivaldi</strong> a Svartálfaheim.
+                </p>
+                <p>
+                    Guidati da <strong>Faust</strong>, gli eroi viaggiano fino alla <strong>Foresta dei Giganti</strong> e scendono in una caverna nascosta dove riposa un'antica radice argentea di <strong>Yggdrasil</strong>. Qui <strong>Koddak</strong>, pronunciando formule nella lingua dei Kandra, risveglia il ponte arcobaleno del <strong>Bifröst</strong>. Proprio mentre il varco si apre, un raggio divinatorio individua Bjior: nella grotta si teletrasportano <strong>Thormund il Corvo Bianco</strong> e <strong>cinque Purificati</strong> dagli occhi ciechi e dagli artigli necrotici (<em>"La fede dell'Altissimo vede ogni cosa!"</em>). Per non restare invischiata in uno scontro d'attrito, la compagnia si lancia attraverso il Bifröst, sparendo tra i bagliori iridescenti verso <strong>Svartálfaheim</strong>.
+                </p>
+            </article>
+        </section>
+
+        <!-- ==================== ATTO III ==================== -->
+        <section id="atto3" class="chapter-section">
+            <div class="chapter-banner">
+                <span class="chapter-tag">Atto III • Il Regno Oscuro di Svartálfaheim</span>
+                <h2>LE CENERI DI SYLVANDELL, LA FUCINA DI IVALDI, L'HAFGUFA E LA CADUTA DI FAFNIR</h2>
+                <p class="chapter-lead">
+                    Dal deserto nero di Joruvellir e il coma di Zormannu fino alla Fiamma della Creazione, la liberazione di Re Amendir dall'Yggdrasil Nero, il risveglio dell'Hafgufa e l'abbattimento del drago divoratore d'anime Fafnir.
+                </p>
+            </div>
+
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Deserto di Joruvellir</span>
+                    <span class="loc-pill">Canyon dei Vermi Bui</span>
+                    <span class="loc-pill">Rifugio di Airlik</span>
+                </div>
+                <h3>1. Il Deserto Nero di Joruvellir, i Vermi Bui e il Coma di Zormannu</h3>
+                <p>
+                    Il Bifröst scaraventa la compagnia nel crepuscolo perenne di <strong>Svartálfaheim</strong>, nel cuore del deserto di sabbia nera di <strong>Joruvellir</strong>: una landa spazzata da venti gelidi e disseminata di armi arrugginite e ossa sbiancate. All'orizzonte si stagliano tre poli geografici: a est l'imponente scultura d'onice dell'<strong>Yggdrasil Nero</strong> (ai cui piedi sorge <strong>Aurvangar</strong>, l'antica capitale nanica ora occupata dagli elfi scuri); a ovest la montagna vulcanica di <strong>Nidavellir</strong>, solcata dai fiumi di lava dell'<strong>Eldrmurra</strong> che scendono da Muspelheim; e nel mezzo i fumi acri di <strong>Sylvandell</strong>, l'oasi degli elfi chiari ridotta in cenere dal drago <strong>Fafnir</strong>.
+                </p>
+                <p>
+                    Mentre attraversano le dune nere, la sabbia esplode sotto i loro piedi: un branco di <strong>Vermi Bui</strong>, colossali serpi abissali di tenebra e roccia, accerchia il gruppo. Nel momento più critico dello scontro, dalle dune emerge una pattuglia mista della <strong>Resistenza</strong> guidata dal saggio elfo chiaro <strong>Airlik</strong> (mentore di Faust), affiancato dall'elfo chiaro <strong>Liran</strong>, dall'elfo scuro <strong>Velaris</strong> e dai nani <strong>Baric</strong> e <strong>Korvin</strong>. Rifugiatisi in un calanco, Airlik rivela l'orrore che ha travolto il regno: i tre sovrani (<strong>Re Gal'El</strong> degli Alfar, <strong>Re Amendir</strong> degli Svartalfar e <strong>Re Timberdolf</strong> dei Duergar) avevano stretto un'alleanza segreta contro <strong>Fafnir</strong>, il drago d'ombra servo di <span class="rovina-term">Rovina</span>. Ma la <strong>Rosa Nera</strong> — una setta fanatica di elfi scuri guidata dal generale traditore <strong>Lord Malazaar</strong> — ha venduto i piani al drago. Fafnir ha raso al suolo Sylvandell e ha <strong>divorato l'anima di Re Gal'El</strong> (poiché per ogni anima d'eroe divorata, sul corpo di Fafnir germoglia una nuova testa rigenerante), mentre <strong>Re Amendir</strong> è stato catturato dalla Rosa Nera e rinchiuso sotto l'Yggdrasil Nero, dove è tenuto prigioniero anche il dio della luce <strong>Baldr</strong>.
+                </p>
+                <p>
+                    Per raggiungere Nidavellir senza attirare altri Vermi Bui con le vibrazioni dei passi, il gruppo vola a bassa quota lungo i canyon rocciosi. Ma in una strettoia <strong>Zormannu</strong> urta accidentalmente una parete con il suo martello: il rimbombo richiama immediatamente <strong>quattro Vermi Bui</strong>. Nella furia disperata della mischia, il martello di Zormannu si risveglia sprigionando una devastante <strong>catena di fulmini</strong> che incenerisce i crani dei mostri; tuttavia, il contraccolpo di quell'energia divina prosciuga il barbaro, che <strong>crolla nella sabbia nera in un coma profondo</strong>, refrattario a ogni incantesimo di guarigione di Orphen.
+                </p>
+            </article>
+
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Nidavellir</span>
+                    <span class="loc-pill">Sale del Picco Echeggiante</span>
+                    <span class="loc-pill">Fucina di Ivaldi</span>
+                    <span class="loc-pill">Piazza Incudine Eterna</span>
+                </div>
+                <h3>2. Nidavellir, la Follia di Sindri e la Strage di Piazza Incudine Eterna</h3>
+                <p>
+                    Trasportando a spalla il corpo inerte di Zormannu, la compagnia giunge nella capitale nanica di <strong>Nidavellir</strong>, attraversando le grandiose <strong>Sale del Picco Echeggiante</strong> fino a scendere nella leggendaria <strong>Fucina di Ivaldi</strong>. Qui, però, le fornaci sono spente e fredde. Le pareti sono interamente ricoperte dal pavimento al soffitto di <strong>rune frenetiche e incomprensibili</strong>, scarabocchiate da <strong>Sindri</strong>, figlio di Ivaldi. Devastato dal dolore perché suo fratello gemello <strong>Brok è stato divorato da Fafnir</strong>, Sindri è ridotto a uno spettro febbricitante che stringe una tavoletta di pietra mormorando frasi sconnesse: rivela che il martello di Zormannu possiede la scintilla di <strong>Mjölnir</strong> ma ha bisogno della <strong>Fiamma della Creazione</strong> per non divorare l'anima del suo portatore, e sussurra la verità proibita che nessuno a Svartálfaheim conosce — ovvero che <strong>l'Yggdrasil Nero è un albero malato e parassitario</strong>, le cui radici nere succhiano la luce e il dolore del mondo per nutrire Fafnir e la Rosa Nera.
+                </p>
+                <div class="danger-box">
+                    <strong>La Tragedia di Piazza Incudine Eterna:</strong><br>
+                    Usciti dalla Fucina per recarsi a rapporto dal consiglio reale, gli eroi attraversano la gremita <strong>Piazza Incudine Eterna</strong>, dove nani ed elfi chiari convivono pacificamente. Vicino a una fontana, <strong>un bambino nano e un bambino elfo chiaro</strong> che si rincorrono ridendo urtano per sbaglio le gambe di <strong>Cyric</strong>; la madre nana si avvicina scusandosi con un sorriso, e Cyric li rassicura. Pochi passi dopo, il cielo nero sopra la piazza si squarcia: un attentato terroristico della <strong>Rosa Nera</strong> fa piovere sulla folla una raffica di <strong>palle di fuoco scarlatte</strong>. Le esplosioni dilaniano le bancarelle e gli innocenti, e i due bambini che un istante prima incarnavano la speranza di pace tra le razze vengono <strong>inghiottiti e inceneriti dalle fiamme</strong> davanti agli occhi impotenti degli eroi.
+                </div>
+            </article>
+
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Sala delle Incoronazioni</span>
+                    <span class="loc-pill">Abissi Magmatici</span>
+                    <span class="loc-pill">Fiamma della Creazione</span>
+                </div>
+                <h3>3. Il Consiglio di Re Timberdolf e il Cuore dell'Antico Elementale del Fuoco</h3>
+                <p>
+                    Colmi di rabbia e cordoglio, i campioni entrano nella <strong>Sala delle Incoronazioni</strong> al cospetto del <strong>Consiglio del Sottosuolo</strong> presieduto da <strong>Re Timberdolf</strong> e composto dai suoi sei consiglieri: il Gran Maestro della Fucina <strong>Bron Stonehand</strong>, il Capitano delle Guardie di Ferro <strong>Grom Hammerfall</strong>, il Custode delle Rune <strong>Eldrin Runescribe</strong>, il Maestro delle Miniere <strong>Borin Deepdelver</strong>, l'Emissario degli Alfar <strong>Faelar Swiftbow</strong> e la Voce dell'Ombra <strong>Goruk Blackaxe</strong>.
+                </p>
+                <p>
+                    Ascoltato il resoconto sul coma di Zormannu e sulle parole di Sindri, Bron Stonehand ed Eldrin Runescribe confermano che per risvegliare il guerriero e completare le armi occorre riaccendere la Fucina di Ivaldi con la <strong>Fiamma della Creazione</strong>: il cuore pulsante di un <strong>Antico Elementale del Fuoco primordiale</strong> che dimora nelle caverne magmatiche più profonde sotto Nidavellir. Seguendo le mappe minerarie di Borin Deepdelver, gli eroi discendono negli abissi incandescenti della montagna, affrontano il calore estremo e il guardiano primordiale, conquistano la <strong>Fiamma della Creazione</strong> e la riportano a <strong>Sindri</strong>: il fuoco sacro restituisce lucidità al fabbro nanico, riaccende la Fucina di Ivaldi e avvia il risveglio di Zormannu e la forgiatura delle armi runiche.
+                </p>
+            </article>
+
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Aurvangar</span>
+                    <span class="loc-pill">Prigioni dell'Yggdrasil Nero</span>
+                    <span class="loc-pill">Torre del Dolore</span>
+                </div>
+                <h3>4. L'Infiltrazione ad Aurvangar: L'Incubo di Bjior, la Torre del Dolore e Re Amendir</h3>
+                <p>
+                    Per salvare <strong>Re Amendir</strong> senza far scattare l'allarme nella roccaforte nemica di <strong>Aurvangar</strong>, <strong>Koddak</strong> utilizza i suoi poteri di Kandra per assumere l'identità e il volto di <strong>Varden</strong>, un ufficiale della Rosa Nera, conducendo <strong>Victor, Orphen, Bjior e Cyric</strong> fin dentro la città costruita ai piedi dell'Yggdrasil Nero. Qui il gruppo è costretto ad assistere a una brutale esecuzione pubblica in piazza, dove i fanatici della Rosa Nera giustiziano i dissidenti per alimentare di terrore le radici dell'albero.
+                </p>
                 <ul>
-                  <li>Svelato l'inganno dell'Altissimo (<strong>Rovina</strong>) e di Throka (<strong>Mammon</strong>).</li>
-                  <li>La nave dei morti <strong>Naglfar</strong> prende il largo dalle coste del Niflheim.</li>
+                    <li><strong>La Trappola Psichica e l'Incubo di Bjior:</strong> Nelle gallerie d'ingresso delle Prigioni dell'Albero Nero, le radici secernono una nebbia allucinogena che attacca i sensi di colpa più profondi degli intrusi. <strong>Bjior Krivor</strong> viene travolto da una visione straziante del proprio passato: rivede il fratello <strong>Ulog</strong> e il cadavere del padre <strong>Re Branvir</strong> che lo accusano di codardia e fallimento per non aver saputo proteggere la famiglia e il regno. Con l'aiuto dei compagni e di una volontà incrollabile, Bjior spezza l'illusione psichica e avanza.</li>
+                    <li><strong>La Torre del Dolore e la liberazione di Re Amendir:</strong> Giunti nel cuore dell'albero, nella <strong>Torre del Dolore</strong>, gli eroi trovano <strong>Re Amendir</strong> sospeso e <strong>trafitto in pieno petto da una grossa radice nera dell'Yggdrasil</strong>, che gli succhia costantemente il sangue, la memoria e la sofferenza per trasmetterli a Fafnir. Quando i campioni recidono la radice e liberano il sovrano degli elfi scuri, la prigione va in stato d'allerta: durante la fuga disperata, i prigionieri e i membri della resistenza rimasti nelle celle scelgono eroicamente di <strong>sacrificare le proprie vite</strong> per bloccare le guardie della Rosa Nera e permettere agli eroi di portare in salvo Re Amendir fino a Nidavellir.</li>
                 </ul>
-              </div>
+            </article>
+
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Porte di Nidavellir</span>
+                    <span class="loc-pill">Rovine di Sylvandell</span>
+                    <span class="loc-pill">Sala dell'Eco di Luce</span>
+                    <span class="loc-pill">Cuore Silente</span>
+                </div>
+                <h3>5. Il Ricatto di Lord Malazaar, l'Enigma delle Sette Rune, Skogul e l'Hafgufa</h3>
+                <p>
+                    Una volta al sicuro a Nidavellir, <strong>Re Amendir</strong> svela il segreto supremo di suo fratello <strong>Re Gal'El</strong>: Fafnir aveva raso al suolo Sylvandell in un attacco preventivo perché Gal'El stava per risvegliare l'<strong>Hafgufa</strong>, una colossale creatura celeste — simile a una <strong>medusa gargantuesca intessuta di pura luce stellare</strong> — sopita nelle profondità del Tempio di Luce di Sylvandell. Solo il canto e il fulgore dell'Hafgufa possono squarciare il manto d'ombra che rende <strong>Fafnir</strong> immortale e invulnerabile.
+                </p>
+                <p>
+                    In quello stesso istante, il cielo sopra Nidavellir si squarcia e fuori dalle porte si presenta il <strong>Consiglio della Rosa Nera</strong> guidato da <strong>Lord Malazaar</strong>. Con calma glaciale, Malazaar espone la cinica filosofia della Rosa Nera: Fafnir è un <em>"male necessario"</em>, e il tormento di Re Amendir trafitto dalla radice dell'Yggdrasil Nero era il tributo quotidiano di sofferenza che teneva placato il drago impedendogli di divorare l'intero Svartálfaheim. Malazaar intima agli eroi di riconsegnare Amendir alle sue catene. La compagnia <strong>rifiuta con sdegno</strong> il ricatto; Malazaar si dissolve nelle ombre pronunciando la loro condanna a morte, mentre sul deserto di Joruvellir si aprono decine di <strong>portali neri</strong> da cui marciano le falangi della Rosa Nera.
+                </p>
+                <p>
+                    Corsi a <strong>Sylvandell</strong> tra nebbie lattiginose e tronchi carbonizzati, gli eroi attraversano l'impenetrabile <strong>Muro di Oscurità Magica</strong> del Tempio di Luce e scendono nella <strong>Sala dell'Eco di Luce</strong>. Qui, assaliti dai <strong>fantasmi dannati degli elfi di Sylvandell</strong>, devono risolvere l'<strong>Enigma delle Sette Rune</strong> sull'altare di marmo (dove toccare una runa inverte lo stato suo e delle due adiacenti con un round di ritardo e impulsi antimagia):
+                </p>
+                <div class="lore-quote">
+                    «La Luce è il Segreto, il Tocco un Giuramento, / Se un Faro si accende, il Buio d'accanto è pronto al mutamento. / Tocca la Runa, e il suo Stato svanirà, / Così le due Rune vicine: la Magia le colpirà. / Sette Fiamme unite, e il Sentiero si aprirà.»
+                </div>
+                <p>
+                    Accese tutte e sette le rune, un fascio di luce placa gli spettri e risucchia gli eroi nel <strong>Cuore Silente di Sylvandell</strong>, affacciato sull'oceano etereo dove dorme l'<strong>Hafgufa</strong>. Al centro della sala un <strong>bozzolo di Luce e Oscurità</strong> esplode rivelando la guardiana posta da <span class="rovina-term">Rovina</span>: la Valchiria corrotta <strong>Skogul</strong>. Al termine di uno scontro estenuante, <strong>Koddak</strong> abbatte l'involucro corrotto di Skogul con una <strong><em>Parola del Potere: Uccidere</em></strong> (<em>Power Word Kill</em>). Dalle ceneri sorge lo spirito luminoso e redento della vera <strong>Skogul</strong>, che parte per raggiungere la sorella <strong>Sigrun</strong> presso <strong>Mimir</strong>, mentre l'<strong>Hafgufa</strong> intona il <strong>Canto della Liberazione</strong> e ascende in cielo.
+                </p>
+            </article>
+
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Campo di Battaglia di Joruvellir</span>
+                    <span class="loc-pill">Cima e Radici dell'Yggdrasil Nero</span>
+                </div>
+                <h3>6. La Battaglia Campale di Joruvellir, la Morte di Fafnir e la Liberazione di Baldr</h3>
+                <p>
+                    Tornati sul fronte di <strong>Joruvellir</strong>, dove gli eserciti uniti di <strong>Re Timberdolf</strong> e <strong>Re Amendir</strong> (affiancati da un <strong>Zormannu</strong> finalmente risvegliato e potenziato dalla Fucina di Ivaldi) affrontano le legioni della Rosa Nera, la luce dell'Hafgufa colpisce <strong>Fafnir</strong> in pieno volo, strappandogli il manto d'invulnerabilità. Il drago multicefalo precipita sul campo di battaglia: nonostante il suo <strong>Soffio d'Ombra</strong> e le teste rigeneranti nate dalle anime di Gal'El e Brok, gli eroi — impugnando le armi runiche forgiate da Sindri — abbattono una testa dopo l'altra fino a trafiggere il cuore corrotto di <strong>Fafnir</strong>, liberando in un'esplosione di luce tutte le anime divorate dal mostro.
+                </p>
+                <p>
+                    Subito dopo, la compagnia guida l'assalto finale contro l'<strong>Yggdrasil Nero</strong>, sradicando e abbattendo il falso albero d'onice che avvelenava il regno. Tra le sue radici spezzate, i campioni liberano dalla sua prigionia <strong>Baldr</strong>, il fulgido dio Æsir della Luce, il quale benedice gli eroi e <strong>concede loro il diritto e le coordinate cosmiche per accedere ad Asgard</strong>, prima di discendere anche lui presso la Fonte di Mimir.
+                </p>
+            </article>
+        </section>
+
+        <!-- ==================== ATTO IV ==================== -->
+        <section id="atto4" class="chapter-section">
+            <div class="chapter-banner">
+                <span class="chapter-tag">Atto IV • Il Gelo e la Putrefazione di Jötunheim</span>
+                <h2>IL PASSO DEL VENTO GELIDO, IL CASTELLO DI BRIMIR E IL TRONO DI RE THRYM</h2>
+                <p class="chapter-lead">
+                    La redenzione della Valchiria Kara, l'alleanza con i Giganti Ribelli di Eliudnir, la discesa nei condotti necrotici di Belzebù, la liberazione di Magni, Modi e Alfhild e la caduta di Re Thrym.
+                </p>
             </div>
-          </div>
-        </div>
-      </article>
 
-      <!-- CRONACA II -->
-      <article id="cronaca-2" class="chronicle-card">
-        <div class="chronicle-header" onclick="toggleCard(this)">
-          <div class="chronicle-header-left">
-            <span class="chronicle-eyebrow">Cronaca II</span>
-            <h2 class="chronicle-title">La Piaga dei Bjarolf e il Tempio di Skadi</h2>
-          </div>
-          <span class="chronicle-toggle-btn">▼</span>
-        </div>
-        <div class="chronicle-body">
-          <div class="sub-chapter">
-            <h3><span class="step-num">1.</span> L'Allerta di MelSor e l'Usurpatore Roonark</h3>
-            <p>
-              Mentre il ranger <strong>Sverand</strong> portava a Iceburg i primi rapporti sull'avanzata dell'Orda dei Defunti oltre l'Ultima Catena, l'anziano della Prima Generazione Kandra <strong>MelSor</strong> contattò telepaticamente <strong>Koddak</strong> (celato sotto le spoglie di <strong>Lord Seymour</strong>). Un Kandra rinnegato della Seconda Generazione, <strong>Roonark</strong>, aveva infranto il Primo Contratto, assassinato in segreto <strong>Re Boradol Bjarolf</strong> e usurpato il trono di <strong>Nandùn</strong>.
-            </p>
-            <p>
-              Roonark aveva stretto un patto con <strong>Caino (L'Oscurità Innominata)</strong>, Progenitore dei Vampiri, e con i signori della Camarilla per contaminare il popolo con la <strong>Pietra Blu</strong> e far piovere sangue sulla capitale, così da distillare una <em>Rovina</em> artificiale. Soccorso e riportato in vita il generale <strong>Haldor Bjarolf</strong> (fratello del Re e guida delle <em>Asce della Corona</em>) e stretta alleanza con l'<strong>Ordine dell'Alba</strong> di Sir Alaric e Bander, gli eroi distrussero la fabbrica del Barone Solomon e, grazie a <strong>Doring</strong>, forgiarono le <strong>Ampolle dei Ventifermanti</strong>.
-            </p>
-          </div>
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Passo del Vento Gelido</span>
+                    <span class="loc-pill">Oasi Termale di Eliudnir</span>
+                </div>
+                <h3>1. Il Passo del Vento Gelido, la Valchiria Kara e l'Oasi di Eliudnir</h3>
+                <p>
+                    Dalle ceneri vittoriose di Svartálfaheim, la compagnia apre un varco planare verso <strong>Jötunheim</strong>, il regno primordiale dei Giganti del Ghiaccio, governato dal tirannico <strong>Re Thrym</strong>. Il sovrano dei giganti ha stretto un patto scellerato con <span class="rovina-term">Rovina</span> e con l'arcidemone <strong>Belzebù</strong>: utilizzando una <strong>forgia profana alimentata da carne putrida e anime corrotte</strong>, Thrym sta fabbricando un esercito inarrestabile di <strong>Draugr</strong> (non-morti del gelo), tenendo inoltre incatenati nelle segrete del suo castello <strong>Magni e Modi</strong>, i figli di Thor e dèi della Forza e del Coraggio.
+                </p>
+                <p>
+                    Lungo il micidiale <strong>Passo del Vento Gelido</strong>, gli eroi cadono in un'imboscata tesa da giganti del gelo e non-morti comandati da <strong>Kara</strong>, un'altra delle nove <strong>Valchirie</strong>, la cui mente è stata piegata dall'influenza di Rovina. Nello scontro tra i crepacci, la compagnia sconfigge Kara e spezza il giogo oscuro che la opprimeva; tornata in sé, la Valchiria rivela ai campioni l'esistenza di un rifugio segreto tra i ghiacci prima di volare verso la Fonte di Mimir.
+                </p>
+                <p>
+                    Seguendo le indicazioni ricevute, gli eroi raggiungono <strong>Eliudnir</strong>, una straordinaria <strong>oasi termale nascosta</strong> nel cuore delle montagne gelate, riscaldata da sorgenti sotterranee e protetta da veli d'illusione. Qui sono accolti dai <strong>Giganti Ribelli</strong> guidati dalla gigantesca guerriera <strong>Bergelmir</strong> e dal saggio <strong>Skadi</strong> (custodi della memoria di <strong>Ymir</strong>), che indicano loro l'unico punto d'accesso al <strong>Castello di Brimir</strong>: i <strong>Condotti di Scarico della Forgia</strong>.
+                </p>
+            </article>
 
-          <div class="sub-chapter">
-            <h3><span class="step-num">2.</span> L'Infiltrazione Alpina al Tempio di Skadi e la Valchiria Sigrun</h3>
-            <p>
-              Per entrare nella roccaforte reale di <strong>Elleboro</strong>, Haldor guidò i campioni lungo le vette ghiacciate delle Montagne Thundar fino alle sorgenti del fiume Frosìn, dove sorgeva l'antico <strong>Tempio di Skadi</strong>, cripta del primo sovrano <strong>Agnar Bjarolf</strong>.
-            </p>
-            <p>
-              Nel santuario sepolto tra i ghiacci, il gruppo affrontò <strong>Sigrun</strong>, la Prima delle cinque Valchirie e antica sposa di Agnar, ridotta in schiavitù da Rovina. Sconfitta con onore senza essere uccisa, Sigrun espulse dal volto una <strong>nube nera e sulfurea</strong> e tornò alla luce: rivelò agli eroi che solo liberando tutte le cinque sorelle Valchirie e riunendole alla Fonte di Mimir sarebbe stato possibile varcare i confini di <strong>Vanaheim</strong> per salvare la regina <strong>Freya</strong>.
-            </p>
-          </div>
-
-          <div class="sub-chapter">
-            <h3><span class="step-num">3.</span> La Purificazione di Elleboro e il Sacrificio di Mikkel</h3>
-            <p>
-              Attraverso il passaggio segreto del Tempio di Skadi, i campioni irruppero a <strong>Elleboro</strong>. Al fianco della coraggiosa <strong>Regina Elara</strong>, smascherarono e abbatterono l'usurpatore <strong>Roonark</strong> e il suo complice <strong>Kork</strong>. Sebbene il giovane <strong>Principe Soren</strong> cadesse tragicamente nello scontro (generando dal dolore puro una suprema essenza di <em>Rovina</em>), l'incantesimo di <em>Resurrezione</em> di <strong>Orphen</strong> riportò in vita il vero <strong>Re Boradol Bjarolf</strong>.
-            </p>
-            <p>
-              Nella battaglia culminante presso la Cattedrale della Luce Perpetua di Nandùn, <strong>Koddak</strong> svelò la propria natura di Kandra di Luce e invocò <strong>Mikkel</strong>, l'Arcangelo della Prima Generazione: nei cieli sopra la città, Mikkel immolò la propria vita per disintegrare <strong>Caino</strong>, mutando la pioggia di sangue in neve purificatrice. Nelle segrete della cattedrale, sconfitti Malachi e Vladen, gli eroi liberarono infine l'Elfo Chiaro mutilato <strong>Faust</strong>.
-            </p>
-          </div>
-
-          <div class="legacy-box">
-            <div class="legacy-box-header">🏆 Eredità della Cronaca II</div>
-            <div class="legacy-grid">
-              <div class="legacy-col">
-                <h4>Reliquie &amp; Strumenti</h4>
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Condotti di Scarico</span>
+                    <span class="loc-pill">Ingranaggi Tritacarne</span>
+                    <span class="loc-pill">Vasca del Verme della Putrefazione</span>
+                </div>
+                <h3>2. L'Infiltrazione nel Castello di Brimir: I Tritacarne e il Verme della Putrefazione</h3>
+                <p>
+                    Calatisi nei <strong>Condotti di Scarico della Forgia</strong> del Castello di Brimir, gli eroi precipitano in un girone infernale dove il gelo artico di Jötunheim si mescola al fetore nauseabondo di <strong>Belzebù</strong>:
+                </p>
                 <ul>
-                  <li><strong>Ampolle dei Ventifermanti:</strong> Create da Doring per imprigionare le essenze corrotte.</li>
-                  <li><strong>Rovina Pura di Soren:</strong> Essenza nata dal sacrificio del principe a Elleboro.</li>
+                    <li><strong>Il Fiume di Liquami Necrotici e gli Ingranaggi Tritacarne:</strong> I tunnel sono percorsi da un fiume denso di sangue congelato, bile, scorie metalliche e carni putrefatte scartate dalla forgia. Avanzando controcorrente tra miasmi tossici, la compagnia deve superare una serie di giganteschi <strong>ingranaggi e pale tritacarne</strong> azionati da catene ciclopiche che macinano i resti organici, sincronizzando i movimenti e bloccando i meccanismi prima di finire stritolati.</li>
+                    <li><strong>La Vasca di Decantazione e il Verme della Putrefazione:</strong> Giunti nel bacino centrale di raccolta degli scarti della forgia, il liquame ribolle ed erompe: dalle viscere della melma necrotica emerge il <strong>Verme della Putrefazione</strong>, una mostruosa aberrazione colossale generata dai parassiti di Belzebù che divora le anime scartate. Dopo una battaglia viscerale tra i vapori pestilenziali, i campioni abbattono l'abominio e risalgono i condotti verticali fino ai livelli interni della fortezza.</li>
                 </ul>
-              </div>
-              <div class="legacy-col">
-                <h4>Valchirie &amp; Sovrani</h4>
+            </article>
+
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Prigioni di Ghiaccio Runico</span>
+                    <span class="loc-pill">Sala del Trono di Ghiaccio</span>
+                </div>
+                <h3>3. Le Prigioni di Ghiaccio (Magni, Modi e Alfhild) e la Caduta di Re Thrym</h3>
+                <p>
+                    Superata la zona delle forge profane dove gli sciamani dei giganti infondono i Draugr, la compagnia penetra nelle <strong>Prigioni di Ghiaccio</strong> del Castello di Brimir. Qui, rinchiusi in celle di <strong>ghiaccio runico che drena incessantemente la forza divina</strong>, giacciono incatenati <strong>Magni</strong> (dio della Forza) e <strong>Modi</strong> (dio del Coraggio).
+                </p>
+                <p>
+                    Spezzati i sigilli runici e liberati i due figli di Thor, gli eroi scoprono in una cella adiacente una prigioniera inattesa: <strong>Alfhild</strong>, una giovane gigantessa del gelo, <strong>figlia dello stesso Re Thrym</strong>, rinchiusa e torturata dal padre perché si era opposta al patto con Belzebù e alla creazione dei Draugr. Posti di fronte a una <strong>scelta morale cruciale</strong>, gli eroi scelgono la <strong>pietà e l'alleanza</strong>: liberano <strong>Alfhild</strong>, la quale rivela i punti deboli della guardia reale del padre e giura di guidare un nuovo futuro di pace per Jötunheim.
+                </p>
+                <p>
+                    Affiancati dalla furia divina appena scatenata di <strong>Magni e Modi</strong>, gli eroi sfondano i portoni ciclopici della <strong>Sala del Trono di Ghiaccio</strong> e affrontano <strong>Re Thrym</strong> e la sua guardia d'élite di Jotun e Draugr. Abbattuto il re tiranno sul pavimento di ghiaccio infranto, la forgia profana di Belzebù collassa. <strong>Alfhild</strong> e i ribelli di <strong>Bergelmir</strong> assumono la guida di Jötunheim, mentre <strong>Magni e Modi</strong> discendono presso la <strong>Fonte di Mimir</strong>.
+                </p>
+            </article>
+        </section>
+
+        <!-- ==================== ATTO V ==================== -->
+        <section id="atto5" class="chapter-section">
+            <div class="chapter-banner">
+                <span class="chapter-tag">Atto V • La Riconquista di Asgard e l'Alba dell'Ultimo Giorno</span>
+                <h2>L'INCUBO PSIONICO DI SERENIA, IL POZZO DI URD, IL BIFRÖST E LA PIANA DI IDA</h2>
+                <p class="chapter-lead">
+                    Dall'infiltrazione nella Serenia occupata dai Mind Flayer e il sacrificio eroico di Orphen, fino alla Corsa contro il Risveglio di Cthulhu nel Pozzo di Urd, il Vero Silenzio Divino di Víðarr e il Bivio di Koddak sulla Piana di Ida.
+                </p>
+            </div>
+
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Città Dorata di Serenia</span>
+                    <span class="loc-pill">Rifugio di Zerth e Immira</span>
+                    <span class="loc-pill">Laboratori della Ceremorfosi</span>
+                </div>
+                <h3>1. L'Approdo a Serenia, la Resistenza Githyanki, il Sacrificio di Orphen e Thrud</h3>
+                <p>
+                    Forti della benedizione di Baldr, gli eroi varcano i confini celesti e approdano ad <strong>Asgard</strong>, nella leggendaria città dorata di <strong>Serenia</strong>. Un secolo prima, dopo la caduta degli dèi, il popolo dei <strong>Githyanki</strong> (guidato un tempo da <strong>Vlaakith</strong> e dal loro dio caduto <strong>Gith</strong>) aveva trovato rifugio a Serenia; ma le forze di <span class="rovina-term">Rovina</span> avevano spalancato una breccia verso il <strong>Reame Remoto</strong> (<em>Far Realm</em>), permettendo a un'armata di <strong>Mind Flayer (Illithid)</strong> coordinata da una titanica mente alveare — <strong>L'Unico Grande Cervello Antico</strong> (<em>Elder Brain</em>) — di sterminare Vlaakith e ridurre i Githyanki in schiavitù psionica.
+                </p>
+                <p>
+                    Entrati in contatto con la cellula clandestina della <strong>Resistenza Githyanki</strong> guidata dal monaco <strong>Zerth</strong> e dalla comandante <strong>Immira</strong>, gli eroi si infiltrano nella <strong>Cittadella di Serenia</strong> e nei suoi <strong>Laboratori di Ceremorfosi</strong>, dove vasche biomeccaniche incubano i girini Illithid e gli <strong>Inquisitori Mind Flayer</strong> estraggono le memorie dei prigionieri.
+                </p>
+                <div class="danger-box">
+                    <strong>Il Sacrificio Eroico di Orphen e la Liberazione di Thrud:</strong><br>
+                    Durante le durissime battaglie contro le pattuglie psioniche, i divoratori di cervelli e gli Inquisitori della Cittadella, la compagnia paga un prezzo di sangue altissimo: per proteggere i propri compagni da un assalto psionico letale e garantire il successo dell'incursione, il nobile incantatore <strong>Orphen</strong> compie l'estremo sacrificio, <strong>cadendo eroicamente in battaglia</strong>. Nelle segrete più profonde del complesso, gli eroi liberano dalla sua cella di contenimento <strong>Thrud</strong>, figlia di Thor e <strong>Valchiria della Tempesta</strong>, il cui sangue divino è la chiave per risvegliare pienamente <strong>Mjölnir</strong>.
+                </div>
+            </article>
+
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Abisso del Pozzo di Urd</span>
+                    <span class="loc-pill">Squarcio del Reame Remoto</span>
+                    <span class="loc-pill">Nucleo d'Ambra di Víðarr</span>
+                </div>
+                <h3>2. Il Pozzo di Urd: La Corsa contro il Risveglio di Cthulhu e il Vero Silenzio di Víðarr</h3>
+                <p>
+                    Guidati da Thrud e coperti dall'insurrezione armata lanciata in superficie da <strong>Zerth</strong> e <strong>Immira</strong>, gli eroi discendono nelle viscere di Serenia fino al <strong>Pozzo di Urd</strong>, il santuario primordiale del destino degli Æsir, ora ricoperto di membrane neuronali pulsanti. Al centro della voragine si erge <strong>L'Unico Grande Cervello Antico</strong>, fuso alle radici del Pozzo con <strong>Víðarr</strong> (il <strong>Dio Silenzioso</strong> della Vendetta) incapsulato nel suo nucleo in una <strong>stasi d'ambra psionica</strong>. Sul fondo del pozzo si allarga una breccia verso il Reame Remoto da cui preme l'incommensurabile coscienza cosmica di <strong>Cthulhu</strong>.
+                </p>
                 <ul>
-                  <li><strong>Sigrun (1ª Valchiria):</strong> Purificata nel Tempio di Skadi e inviata da Mimir.</li>
-                  <li><strong>Re Boradol Bjarolf:</strong> Resuscitato da Orphen; liberato l'elfo <strong>Faust</strong>.</li>
+                    <li><strong>Cthulhu come Minaccia Ambientale Cosmica:</strong> Cthulhu non è un nemico materiale da colpire a terra, ma la coscienza del Reame Remoto che preme oltre la membrana dell'abisso. A ogni round di combattimento, lo squarcio si allarga generando <strong>effetti di tana aberranti</strong>: gravità distorta, <strong>tentacoli extradimensionali</strong> e <strong>onde di follia</strong>.</li>
+                    <li><strong>L'Abbattimento dell'Unico e il Vero Silenzio Divino:</strong> Abbattuto l'Unico Grande Cervello ed estratto <strong>Víðarr</strong> dal nucleo d'ambra, il Dio Silenzioso spalanca gli occhi e scatena il suo <strong>Vero Silenzio Divino</strong>: un'onda metafisica di quiete assoluta che <strong>sigilla per sempre la breccia dimensionale</strong> e ricaccia Cthulhu nel vuoto oltre il cosmo.</li>
+                    <li><strong>Il Collasso dell'Alveare:</strong> La morte dell'Unico provoca la <strong>morte cerebrale e il collasso immediato di tutti i Mind Flayer e Inquisitori</strong> di Serenia: la catena psionica si spezza, liberando per sempre la città.</li>
                 </ul>
-              </div>
-              <div class="legacy-col">
-                <h4>Svolta nel Conflitto</h4>
-                <ul>
-                  <li>Caduta della congiura di <strong>Roonark</strong> e morte del Progenitore dei Vampiri <strong>Caino</strong> grazie al sacrificio di <strong>Mikkel</strong>.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
+            </article>
 
-      <!-- CRONACA III -->
-      <article id="cronaca-3" class="chronicle-card">
-        <div class="chronicle-header" onclick="toggleCard(this)">
-          <div class="chronicle-header-left">
-            <span class="chronicle-eyebrow">Cronaca III</span>
-            <h2 class="chronicle-title">La Spedizione a Svartálfaheim e il Riscatto della Luce</h2>
-          </div>
-          <span class="chronicle-toggle-btn">▼</span>
-        </div>
-        <div class="chronicle-body">
-          <div class="sub-chapter">
-            <h3><span class="step-num">1.</span> I Lampi dell'Unione, la Prigione delle Spine e la Liberazione di Skogul</h3>
-            <p>
-              Guidati da <strong>Faust</strong> e dall'Eladrin dei ghiacci <strong>Airlik</strong>, insieme al barbaro <strong>Zormannu</strong>, gli eroi viaggiarono a <strong>Svartálfaheim</strong>, regno oppresso dal drago d'ombra <strong>Fafnir</strong> e dalla <strong>Rosa Nera</strong> (guidata da <strong>Lord Malazaar</strong> e dal necromante <strong>Txabaxle</strong>). Liberato il fabbro <strong>Sindri Ivaldi</strong> a Nidavellir e unitisi alla resistenza clandestina de <strong>I Lampi dell'Unione</strong> (<em>Dritzz, Catebree e Bruenor</em>) ad Aurvangar, i campioni usarono le arti mutaforma di Koddak per scoprire e distruggere il laboratorio dei cloni di Txabaxle nelle Cripte dei Mietitori, abbattendo poi il vampiro Varden e l'inquisitrice Mora.
-            </p>
-            <p>
-              Penetrati nella <strong>Prigione delle Spine</strong>, gli eroi sconfissero Groknar e Thorn, trassero in salvo <strong>Re Amendir</strong> degli Elfi Scuri e recuperarono la Resina dell'Yggdrasil Nero per risvegliare Zormannu e <strong>Mjölnir</strong>, pagando però il prezzo del sacrificio eroico di <strong>Faust</strong> e del cinghiale d'oro <strong>Gullinbursti</strong> contro le fauci di Fafnir. Successivamente, tra le rovine di <strong>Sylvandell</strong>, la compagnia affrontò e purificò la seconda Valchiria, <strong>Skogul</strong>, liberando nei cieli la colossale medusa di luce <strong>Hafgufa</strong>.
-            </p>
-          </div>
+            <article class="chronicle-card">
+                <div class="loc-pills">
+                    <span class="loc-pill">Torre del Bifröst</span>
+                    <span class="loc-pill">Piana di Ida</span>
+                    <span class="loc-pill">Eclissi dell'Occhio di Isacco</span>
+                </div>
+                <h3>3. La Riaccensione del Bifröst, la Piana di Ida e il Bivio di Koddak</h3>
+                <p>
+                    In superficie esplode il trionfo dei Githyanki liberati: <strong>Zerth</strong> e <strong>Immira</strong> prendono il comando del popolo di Serenia per ripulire la città e custodire il reame. Onorando il patto, la valchiria <strong>Thrud</strong> saluta la compagnia e Víðarr: discenderà a Svartálfaheim nella <strong>Fucina di Ivaldi</strong> per risvegliare <strong>Mjölnir</strong> con il proprio sangue divino e poi raggiungere le sorelle da Mimir. Con l'aiuto di <strong>Víðarr</strong>, gli eroi <strong>riaccendono solennemente il Bifröst</strong> e attraversano il ponte arcobaleno fino alla leggendaria <strong>Piana di Ida</strong>.
+                </p>
+                <p>
+                    Sulla Piana di Ida, nella volta celeste squarciata, troneggia l'<strong>Occhio di Isacco</strong> — il cuore corrotto di Preservazione — mentre l'Orologio dell'Apocalisse segna <strong>48 ore (2 giorni)</strong> allo scatenarsi del Terzo Ragnarok e all'orizzonte si stagliano i bastioni demoniaci di <strong>Legione</strong>. In quell'istante, una chiamata telepatica urgente scuote <strong>Koddak</strong>: la <strong>Patria dei Kandra</strong> è sotto assedio da parte delle forze di <strong>Kraz'ark</strong> e di <span class="rovina-term">Rovina</span>, che mirano a espugnare il <strong>Frassino Argentato</strong>, il <strong>Pozzo dell'Eternità</strong> e tutti <span class="ruin-term">i Ruin</span> custoditi fin dall'alba dei tempi.
+                </p>
 
-          <div class="sub-chapter">
-            <h3><span class="step-num">2.</span> I Cinque Bozzoli di Gnitaheith ("La Corsa Perfetta") e la Redenzione di Baldr</h3>
-            <p>
-              Mentre l'Hafgufa squarciava le tenebre di Fafnir e Zormannu lo affrontava nei cieli con Mjölnir, i campioni penetrarono in <strong>Gnitaheith</strong>, la tana vivente dentro il corpo del Dio Drago. Qui compirono <strong>"La Corsa Perfetta"</strong>, purificando con incantesimi di Cura tutti i <strong>cinque Bozzoli Viventi</strong> senza uccidere gli ostaggi che alimentavano il mostro:
-            </p>
-            <ul>
-              <li><strong>Bozzolo di Metallo e Fuoco:</strong> Liberato il mastro fabbro <strong>Brok Ivaldi</strong>, fratello di Sindri;</li>
-              <li><strong>Bozzolo di Luce Stellare:</strong> Liberato <strong>Re Gal'El</strong>, sovrano degli Elfi Chiari;</li>
-              <li><strong>Bozzolo di Luce Solare:</strong> Liberato e redento il dio della Luce <strong>Baldr</strong>;</li>
-              <li><strong>Bozzolo di Radici e Terra:</strong> Liberato l'antico costruttore nano <strong>Hreidmar</strong>;</li>
-              <li><strong>Bozzolo d'Oro e Cupidigia:</strong> Redenta la coscienza originale del <strong>nano Fafnir</strong>.</li>
-            </ul>
-            <p>
-              Privato delle sue batterie viventi, l'involucro draconico di Fafnir fu abbattuto da Zormannu nel deserto di Joruvellir, sancendo la nascita del <strong>Patto della Triade</strong> tra Nani (Re Timberdolf), Elfi Chiari (Re Gal'El) ed Elfi Scuri (Re Amendir).
-            </p>
-          </div>
+                <div class="dilemma-grid">
+                    <div class="choice-card kandra">
+                        <h4 style="color: var(--bifrost-cyan);">💠 Via A: La Chiamata del Primo Contratto (Patria dei Kandra)</h4>
+                        <p>
+                            Rispondere al richiamo della Prima Generazione e varcare il portale d'argento per difendere il <strong>Frassino Argentato</strong>, il <strong>Pozzo dell'Eternità</strong> e <span class="ruin-term">i Ruin</span> dall'assalto dell'arconte <strong>Kraz'ark</strong>, impedendo che l'energia primordiale dei Kandra cada nelle mani di Rovina.
+                        </p>
+                    </div>
+                    <div class="choice-card asgard">
+                        <h4 style="color: #f87171;">🔥 Via B: I Bastioni della Piana di Ida (Asgard)</h4>
+                        <p>
+                            Restare sulla <strong>Piana di Ida</strong> sotto lo sguardo dell'Occhio di Isacco per marciare immediatamente contro le legioni demoniache dell'arcidemone <strong>Legione</strong> e completare la liberazione degli ultimi Æsir prima che scadano le 48 ore del Ragnarok.
+                        </p>
+                    </div>
+                </div>
+            </article>
+        </section>
 
-          <div class="sub-chapter">
-            <h3><span class="step-num">3.</span> Il Risveglio di Nidavellir, il Sonno di Mjölnir e il Prezzo dell'Oro</h3>
-            <p>
-              Nella Fucina di Ivaldi, lo spirito di Zormannu fu improvvisamente richiamato nel suo mondo (Alfeimur), lasciando <strong>Mjölnir</strong> dormiente: Brok e Sindri rivelarono che solo il vero <strong>Sangue di Thor</strong> (i suoi figli <strong>Magni</strong>, <strong>Modi</strong> o la Valchiria <strong>Thrud</strong>) avrebbe potuto ridestare il martello. Nel Santuario di Quarzo sul Picco Silente, il dio <strong>Baldr</strong> svelò che Rovina stava torturando Magni (a Jotunheim) e Modi (a Muspelheim) per usare il loro sangue divino come carburante dell'<strong>Occhio di Isacco</strong> e scardinare le ancore planari che proteggono la Patria dei Kandra.
-            </p>
-            <p>
-              Superate le prove oniriche dell'anello maledetto <strong>Andvaranaut</strong> nella dimensione del tesoro di Fafnir (e amputato il braccio di Brok infettato dall'anello, attraverso cui il fabbro vide l'Altissimo strappare i cieli di Athlon), Sindri e Brok forgiarono per i campioni leggendari <strong>Manufatti in Metallo Stellare</strong>.
-            </p>
-          </div>
-
-          <div class="legacy-box">
-            <div class="legacy-box-header">🏆 Eredità della Cronaca III</div>
-            <div class="legacy-grid">
-              <div class="legacy-col">
-                <h4>Reliquie &amp; Forgiatura</h4>
-                <ul>
-                  <li><strong>Stella di Sylvandell</strong> (dono di Re Gal'El) e spada <strong>Gramr</strong>.</li>
-                  <li><strong>Manufatti in Metallo Stellare</strong> forgiati nella Fucina di Ivaldi.</li>
-                  <li><strong>Mjölnir</strong> dormiente nella fucina in attesa del Sangue di Thor.</li>
-                </ul>
-              </div>
-              <div class="legacy-col">
-                <h4>Liberazioni &amp; Alleanze</h4>
-                <ul>
-                  <li>Il dio <strong>Baldr</strong> al sicuro nel Santuario di Quarzo.</li>
-                  <li><strong>Skogul (2ª Valchiria)</strong> purificata e inviata al Pozzo di Mimir.</li>
-                  <li>Siglato il <strong>Patto della Triade</strong> (Nani, Elfi Chiari, Elfi Scuri) e promessa l'armata degli <em>Inevitabili</em>.</li>
-                </ul>
-              </div>
-              <div class="legacy-col">
-                <h4>Rivelazioni Cosmiche</h4>
-                <ul>
-                  <li><strong>Magni</strong> e <strong>Modi</strong> sono le ancore planari torturate per caricare l'Occhio di Isacco.</li>
-                  <li><strong>Víðarr</strong>, il Dio Silenzioso, è la variabile segreta temuta da Rovina.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- CRONACA IV -->
-      <article id="cronaca-4" class="chronicle-card">
-        <div class="chronicle-header" onclick="toggleCard(this)">
-          <div class="chronicle-header-left">
-            <span class="chronicle-eyebrow">Cronaca IV</span>
-            <h2 class="chronicle-title">Il Consiglio di Guerra e la Scelta dei Fronti</h2>
-          </div>
-          <span class="chronicle-toggle-btn">▼</span>
-        </div>
-        <div class="chronicle-body">
-          <div class="sub-chapter">
-            <h3><span class="step-num">1.</span> L'Equilibrio Spezzato e la Tessitura del Cielo a Iceburg</h3>
-            <p>
-              Tornati alle Guglie Spettrali su Athlon, gli eroi scoprirono dalla prole di <strong>Vedfolnir</strong> che l'Aquila Sacra era scomparsa dopo il duello con Thormund; nelle radici profonde, <strong>Ratatoskr</strong> e <strong>Mimir</strong> (affiancato da <strong>Sigrun e Skogul</strong>) mostrarono loro come l'assenza della luce di Vedfolnir stesse permettendo a <strong>Nidhorg</strong> di rigenerarsi in un lago di linfa nera corrotta.
-            </p>
-            <p>
-              Appena teletrasportati nel cortile reale di <strong>Iceburg</strong>, i campioni assistettero all'inizio della <strong>Grande Frattura</strong>: il firmamento si squarciò scaricando piogge di magma da Muspelheim, ghiacciai da Jotunheim e fulmini dorati da Asgard. Mentre <strong>Bjior, Victor e Airlik</strong> fungevano da ancore fisiche e <strong>Koddak</strong> imponeva l'ordine con la voce del comando, <strong>Orphen e Cyric</strong> lanciarono gomene di pura energia arcana, <strong>ricucendo le ferite del cielo</strong> sopra la capitale.
-            </p>
-          </div>
-
-          <div class="sub-chapter">
-            <h3><span class="step-num">2.</span> Il Grande Consiglio dei Re e la Rivelazione di Adrian</h3>
-            <p>
-              Nella Sala delle Mappe di Iceburg, davanti a <strong>Re Odor</strong> degli Orgrim, <strong>Re Jagah</strong> dei Jarris e <strong>Lord Bother</strong> dei Bjarolf, il <strong>Vescovo Rodrug</strong> portò l'ultimatum di resa intimato da Snowshade. Subito dopo, l'Elfo Chiaro <strong>Adrian</strong> rivelò ciò a cui aveva assistito spiando gli alloggi segreti del Vescovo Throka: il prelato si era strappato la pelle umana rivelandosi come l'Arcidemone <strong>Mammon</strong>, intento a bere dalla <em>Coppa dell'Immortalità</em> mentre lanciava l'armata dei Krivor in marcia forzata (a sole due settimane da Iceburg).
-            </p>
-            <p>
-              Inoltre, gli esploratori <strong>Kumir, Arimir e Oliver</strong> riferirono che l'immensa <strong>Orda dei Defunti</strong> a Nord era guidata dai <em>Signori del Buio</em> e da una titanica aquila d'ombra corrotta dritta verso i tunnel delle <strong>Vene di Ymir</strong>, mentre nella notte <strong>MelSor</strong> avvertì mentalmente Koddak dei tumulti dei <em>Dissidenti</em> attorno al Frassino Argentato e della misteriosa persistenza dello spirito di <strong>Mikkel</strong>.
-            </p>
-          </div>
-
-          <div class="sub-chapter">
-            <h3><span class="step-num">3.</span> L'Assegnazione dei Fronti Paralleli</h3>
-            <p>
-              Non potendo essere ovunque mentre gli eserciti mortali si preparavano a reggere l'urto sulle mura di Iceburg, il Consiglio di Guerra definì la strategia globale sui tre fronti divini:
-            </p>
-            <ul>
-              <li><strong>Fronte di Jotunheim (Est - The Spear):</strong> Affidato alle squadre di eroi alleati per liberare <strong>Magni</strong> e la Valchiria <strong>Göndul</strong>;</li>
-              <li><strong>Fronte di Muspelheim (Sud-Est - Spine di Cristallo):</strong> Affidato alle forze alleate per liberare <strong>Modi</strong> e la Valchiria <strong>Brunilde</strong>;</li>
-              <li><strong>Fronte di Asgard (Nord - L'Ultima Catena):</strong> Assegnato ai <strong>Sei Campioni protagonisti</strong> (<em>Koddak, Victor, Cyric, Orphen, Bjior e Doring</em>) per risalire le Vene di Ymir, spezzare il Silenzio di Asgard e liberare il Dio Silenzioso <strong>Víðarr</strong>.</li>
-            </ul>
-          </div>
-
-          <div class="legacy-box">
-            <div class="legacy-box-header">🏆 Eredità della Cronaca IV</div>
-            <div class="legacy-grid">
-              <div class="legacy-col">
-                <h4>Imprese &amp; Difesa</h4>
-                <ul>
-                  <li><strong>Tessitura dell'Etere:</strong> Ricucite le fratture celesti sopra Iceburg.</li>
-                  <li>Costituito il Comando Unificato del Nord (Odor, Jagah, Bother, Rodrug).</li>
-                </ul>
-              </div>
-              <div class="legacy-col">
-                <h4>Intelligence Svelata</h4>
-                <ul>
-                  <li>Smascherato pubblicamente Throka come l'Arcidemone <strong>Mammon</strong> grazie ad <strong>Adrian</strong>.</li>
-                  <li>Individuata la rotta dell'Orda dei Defunti verso le Vene di Ymir.</li>
-                </ul>
-              </div>
-              <div class="legacy-col">
-                <h4>Scelta Strategica</h4>
-                <ul>
-                  <li>Fronti di Jotunheim e Muspelheim affidati agli alleati; i <strong>Sei Campioni</strong> marciano verso <strong>Asgard</strong>.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- CRONACA V -->
-      <article id="cronaca-5" class="chronicle-card">
-        <div class="chronicle-header" onclick="toggleCard(this)">
-          <div class="chronicle-header-left">
-            <span class="chronicle-eyebrow">Cronaca V</span>
-            <h2 class="chronicle-title">L'Ascensione verso Asgard e le Vene di Ymir</h2>
-          </div>
-          <span class="chronicle-toggle-btn">▼</span>
-        </div>
-        <div class="chronicle-body">
-          <div class="sub-chapter">
-            <h3><span class="step-num">1.</span> Forte Sentinella e il Medaglione di Heimdall</h3>
-            <p>
-              Attraversato il Portale del Gelo fino a <strong>Forte Sentinella</strong>, bastione di basalto nero incastonato alla base dell'Ultima Catena, i sei protagonisti furono accolti dallo <strong>Yarl Hrolfgar</strong>, Lord Comandante dei <strong>Guardiani della Notte</strong> (Casata Othoganor). Mentre la guarnigione sigillava i cancelli inferiori contro l'avanguardia dei Defunti, Hrolfgar fece salire gli eroi sull'ascensore ciclopico de <em>La Gola dell'Ultima Catena</em> fino alla <strong>Terrazza Bianca</strong> e consegnò loro il <strong>Medaglione di Heimdall</strong>, reliquia ancestrale tramandata per aprire il Bifröst nell'ora del Ragnarök.
-            </p>
-          </div>
-
-          <div class="sub-chapter">
-            <h3><span class="step-num">2.</span> La Scalata nel Silenzio Bianco e la Zanna dei Cieli</h3>
-            <p>
-              I sei campioni si addentrarono da soli nelle <strong>Vene di Ymir Alte</strong>, risalendo i cunicoli di ghiaccio primordiale immersi nel <strong>Silenzio Bianco</strong>, dove il gelo innaturale attutiva ogni suono e congelava il respiro. Guidati dal battito caldo e dorato del Medaglione di Heimdall, superarono gli abissi interni della montagna fino a sbucare sopra il mare di nubi temporalesche, sulla vetta estrema della <strong>Zanna dei Cieli</strong>.
-            </p>
-          </div>
-
-          <div class="sub-chapter">
-            <h3><span class="step-num">3.</span> L'Ancora d'Ombra (Il Tentacolo Nero) e l'Approdo sulla Piana di Ida</h3>
-            <p>
-              Inserito il Medaglione di Heimdall nell'altare monolitico sulla cima del mondo, il cielo notturno si squarciò: ma al posto della luce iridata del Ponte Arcobaleno, dallo squarcio discese il <strong>Tentacolo Nero</strong>, un colossale condotto bio-meccanico di cartilagine scura e venature viola con cui l'impero psionico degli <strong>Illithid (Mind Flayer)</strong> e l'entità cosmica <strong>Cthulhu</strong> avevano parassitato il Bifröst. Alla base del ponte violato, una stele incisa in caratteri <strong>Qualith</strong> recitava:
-            </p>
-            <div class="lore-quote">
-              «Non è morto ciò che può attendere in eterno, e col volgere di strani eoni anche la morte può morire.»
-            </div>
-            <p>
-              Risalito il Tentacolo Nero, i sei campioni approdarono sulla <strong>Piana di Ida</strong> in un'<strong>Asgard caduta e immersa nel Silenzio assoluto</strong>, sotto un cielo magenta solcato da nubi neurali, dove l'emissaria Githyanki <strong>Immira</strong> e il misterioso dissidente <strong>Zerth</strong> li attendevano presso un Nautiloide per condurli a <strong>Serenia</strong>.
-            </p>
-          </div>
-
-          <div class="legacy-box">
-            <div class="legacy-box-header">🏆 Eredità della Cronaca V</div>
-            <div class="legacy-grid">
-              <div class="legacy-col">
-                <h4>Reliquie Chiave</h4>
-                <ul>
-                  <li><strong>Medaglione di Heimdall:</strong> Consegnato da Yarl Hrolfgar; chiave del Bifröst e bussola per le reliquie di Asgard.</li>
-                </ul>
-              </div>
-              <div class="legacy-col">
-                <h4>Nuovi Contatti</h4>
-                <ul>
-                  <li><strong>Yarl Hrolfgar</strong> e i Guardiani della Notte a presidio dell'Ultima Catena.</li>
-                  <li>Primo incontro con i Githyanki <strong>Immira</strong> e <strong>Zerth</strong> sulla Piana di Ida.</li>
-                </ul>
-              </div>
-              <div class="legacy-col">
-                <h4>Stato Attuale</h4>
-                <ul>
-                  <li>Approdo ad <strong>Asgard, il Regno del Silenzio</strong>, dominato dai Mind Flayer sotto l'ombra del Reame Remoto (<strong>Cthulhu</strong>) dove è imprigionato <strong>Víðarr</strong>.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- COMPENDIO RAPIDO INTERATTIVO -->
-      <section id="compendio" class="compendium-section">
-        <div class="chronicle-header-left">
-          <span class="chronicle-eyebrow">Archivio Tattico del Gruppo</span>
-          <h2 class="chronicle-title">Pannello Compendio Rapido</h2>
-        </div>
-
-        <div class="compendium-tabs" role="tablist">
-          <button class="compendium-tab active" onclick="switchTab(event, 'tab-campioni')">🛡️ I Sei Campioni</button>
-          <button class="compendium-tab" onclick="switchTab(event, 'tab-valchirie')">🪽 Stato delle Cinque Valchirie</button>
-          <button class="compendium-tab" onclick="switchTab(event, 'tab-reliquie')">⚡ Le Grandi Reliquie</button>
-        </div>
-
-        <!-- TAB 1: I SEI CAMPIONI -->
-        <div id="tab-campioni" class="compendium-panel active">
-          <div class="champions-grid">
-            <div class="entity-card">
-              <span class="entity-role">Kandra di Luce • Infiltratore &amp; Stratega</span>
-              <h3 class="entity-name">Koddak (Lord Seymour)</h3>
-              <p class="entity-desc">
-                Emanazione di Preservazione vincolata al Primo Contratto. Dopo aver operato sotto la maschera di Lord Seymour e aver svelato la sua vera forma luminosa a Nandùn invocando l'Arcangelo Mikkel, porta nel nucleo il peso dei segreti del Frassino Argentato e della Patria dei Kandra.
-              </p>
+        <!-- ==================== ATLANTE / STATO DEL COSMO ==================== -->
+        <section id="atlante" class="chapter-section">
+            <div class="chapter-banner">
+                <span class="chapter-tag">Registro Canonico • Riepilogo Strategico</span>
+                <h2>ATLANTE DEGLI DÈI LIBERATI, ALLEANZE, CADUTI E NEMICI SCONFITTI</h2>
+                <p class="chapter-lead">
+                    Lo stato complessivo delle forze schierate presso la Fonte di Mimir e nei Nove Regni alla vigilia delle ultime 48 ore prima del Terzo Ragnarok.
+                </p>
             </div>
 
-            <div class="entity-card">
-              <span class="entity-role">Predatore Nobile • Signore del Sangue</span>
-              <h3 class="entity-name">Victor</h3>
-              <p class="entity-desc">
-                Guerriero vampiro che ha piegato la propria maledizione oscura in uno scudo per i viventi. Ha sconfitto la paura della Morte nel Mausoleo Senza Fine e ha cavalcato al fianco del cinghiale divino Gullinbursti nelle battaglie più disperate di Svartálfaheim.
-              </p>
-            </div>
+            <article class="chronicle-card">
+                <h3>⚡ Gli Æsir Liberati e Adunati presso Mimir</h3>
+                <div class="grid-cards">
+                    <div class="status-card">
+                        <span class="status-badge badge-freed">Liberata — Atto I</span>
+                        <h4>Hel, Dea della Morte</h4>
+                        <p>Liberata nella Sala del Trono di <strong>Helgrind (Niflheim)</strong> spezzando le catene d'ombra di Mammon e abbattendo il suo Servitore d'Ombra.</p>
+                    </div>
+                    <div class="status-card">
+                        <span class="status-badge badge-freed">Liberato — Atto III</span>
+                        <h4>Baldr, Dio della Luce</h4>
+                        <p>Liberato a <strong>Svartálfaheim</strong> dopo l'uccisione di Fafnir e l'abbattimento dell'Yggdrasil Nero; ha concesso agli eroi l'accesso ad Asgard.</p>
+                    </div>
+                    <div class="status-card">
+                        <span class="status-badge badge-freed">Liberati — Atto IV</span>
+                        <h4>Magni &amp; Modi</h4>
+                        <p>Figli di Thor e dèi della Forza e del Coraggio; liberati dalle celle di ghiaccio runico del <strong>Castello di Brimir (Jötunheim)</strong>.</p>
+                    </div>
+                    <div class="status-card">
+                        <span class="status-badge badge-freed">Liberato — Atto V</span>
+                        <h4>Víðarr, Il Dio Silenzioso</h4>
+                        <p>Liberato dalla stasi d'ambra nel nucleo dell'Unico Grande Cervello nel <strong>Pozzo di Urd (Asgard)</strong>; ha sigillato la breccia di Cthulhu col suo Vero Silenzio Divino.</p>
+                    </div>
+                </div>
+            </article>
 
-            <div class="entity-card">
-              <span class="entity-role">Campione di Luce &amp; Ombra • Portatore di Gramr</span>
-              <h3 class="entity-name">Cyric</h3>
-              <p class="entity-desc">
-                Incantatore e combattente che ha fuso la propria eredità vampirica con la fiamma sacra in un'unica luce bianco-rossa. Con la leggendaria spada <em>Gramr</em> ha inferto il colpo fatale a Txabaxle e, insieme a Orphen, ha ricucito le fratture del cielo sopra Iceburg.
-              </p>
-            </div>
+            <article class="chronicle-card">
+                <h3>🪽 Le Valchirie Redente e Liberate</h3>
+                <div class="grid-cards">
+                    <div class="status-card">
+                        <span class="status-badge badge-freed">Redenta — Athlon</span>
+                        <h4>Sigrun</h4>
+                        <p>Liberata su Athlon e giunta presso la Fonte di Mimir; ha rivelato il potenziale dormiente di <em>Mjölnir</em> nel martello di Zormannu.</p>
+                    </div>
+                    <div class="status-card">
+                        <span class="status-badge badge-freed">Purificata — Svartálfaheim</span>
+                        <h4>Skogul</h4>
+                        <p>Liberata dalla corruzione di Rovina nel <strong>Cuore Silente di Sylvandell</strong> grazie alla <em>Parola del Potere: Uccidere</em> di Koddak.</p>
+                    </div>
+                    <div class="status-card">
+                        <span class="status-badge badge-freed">Redenta — Jötunheim</span>
+                        <h4>Kara</h4>
+                        <p>Sconfitta e purificata dall'influenza oscura lungo il <strong>Passo del Vento Gelido</strong>; ha indicato agli eroi l'oasi ribelle di Eliudnir.</p>
+                    </div>
+                    <div class="status-card">
+                        <span class="status-badge badge-freed">Liberata — Asgard</span>
+                        <h4>Thrud, Valchiria della Tempesta</h4>
+                        <p>Liberata nelle segrete della Cittadella di Serenia; ora in viaggio verso la <strong>Fucina di Ivaldi</strong> per risvegliare <em>Mjölnir</em> col proprio sangue divino.</p>
+                    </div>
+                </div>
+            </article>
 
-            <div class="entity-card">
-              <span class="entity-role">Gran Maestro Arcano &amp; Divino • Custode della Vita</span>
-              <h3 class="entity-name">Orphen</h3>
-              <p class="entity-desc">
-                Sapiente dominatore delle arti arcane e divine. Le sue magie di guarigione e resurrezione hanno strappato alla morte Re Boradol Bjarolf, purificato i cinque Bozzoli di Gnitaheith ("La Corsa Perfetta") e tessuto i fili d'etere per chiudere la Grande Frattura.
-              </p>
-            </div>
+            <article class="chronicle-card">
+                <h3>🕯️ I Caduti Eroici della Compagnia e degli Alleati</h3>
+                <div class="grid-cards">
+                    <div class="status-card">
+                        <span class="status-badge badge-fallen">Caduto ad Asgard — Atto V</span>
+                        <h4>Orphen</h4>
+                        <p>Incantatore della compagnia; si è sacrificato eroicamente nei laboratori psionici della Cittadella di Serenia per salvare i compagni dalla furia degli Inquisitori Mind Flayer.</p>
+                    </div>
+                    <div class="status-card">
+                        <span class="status-badge badge-fallen">Immolatosi a Nandun — Atto II</span>
+                        <h4>L'Arcangelo Mikkel</h4>
+                        <p>Generale della Prima Generazione dei Kandra; evocato da Lady Elara tramite <span class="ruin-term">il Ruin</span>, si è immolato in una supernova di luce per annientare Caino e purificare Nandun.</p>
+                    </div>
+                    <div class="status-card">
+                        <span class="status-badge badge-fallen">Caduto nella Guerra d'Inverno — Atto I</span>
+                        <h4>Re Branvir Krivor</h4>
+                        <p>Padre di Bjior e Ulog; caduto per aver esitato a uccidere il figlio Ulog posseduto. Il suo spirito ha dato l'ultimo saluto a Bjior sul Ponte di Modgud.</p>
+                    </div>
+                    <div class="status-card">
+                        <span class="status-badge badge-fallen">Martiri di Svartálfaheim — Atto III</span>
+                        <h4>Re Gal'El, Brok &amp; il Principe Soren</h4>
+                        <p>Re Gal'El e il fabbro Brok furono divorati da Fafnir (le loro anime sono state liberate alla morte del drago); il giovane principe Soren è spirato a Nandun generando <span class="ruin-term">il Ruin</span> di Elara.</p>
+                    </div>
+                </div>
+            </article>
 
-            <div class="entity-card">
-              <span class="entity-role">La Montagna che Cammina • Colosso del Clan Krivor</span>
-              <h3 class="entity-name">Bjior Krivor</h3>
-              <p class="entity-desc">
-                Guerriero nanico dalla resistenza adamantina, figlio di Re Branvir. Liberato dalle radici di Yggdrasil e assolto dallo spirito paterno a Helgrind, combatte a petto nudo come baluardo indistruttibile e ancora vivente per i suoi compagni.
-              </p>
-            </div>
-
-            <div class="entity-card">
-              <span class="entity-role">Mastro Artefice • Signore de "Il Pugnale"</span>
-              <h3 class="entity-name">Doring</h3>
-              <p class="entity-desc">
-                Geniale artefice e capitano della nave volante <em>Il Pugnale</em>. Il suo ingegno tecnico-arcano ha dato vita alle <em>Ampolle dei Ventifermanti</em> a Nandùn, alle protesi meccaniche di Faust e agli strumenti decisivi per decifrare le tecnologie aliene di Asgard.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- TAB 2: STATO DELLE CINQUE VALCHIRIE -->
-        <div id="tab-valchirie" class="compendium-panel">
-          <div class="valkyrie-list">
-            <div class="valkyrie-card">
-              <span class="status-badge status-free">✔ Libera • Pozzo di Mimir</span>
-              <h3 class="entity-name">1. Sigrun</h3>
-              <p class="entity-desc">
-                Prima delle Valchirie e antica sposa di Re Agnar Bjarolf. Sconfitta e purificata dalla nube nera di Rovina nel <strong>Tempio di Skadi</strong> (Cronaca II). Ora presidia la Fonte Primordiale con Mimir.
-              </p>
-            </div>
-
-            <div class="valkyrie-card">
-              <span class="status-badge status-free">✔ Libera • Pozzo di Mimir</span>
-              <h3 class="entity-name">2. Skogul</h3>
-              <p class="entity-desc">
-                Seconda Valchiria, posta a guardia dell'Hafgufa nelle rovine sommerse di <strong>Sylvandell</strong> a Svartálfaheim (Cronaca III). Purificata dagli eroi, ha raggiunto la sorella Sigrun presso Mimir.
-              </p>
-            </div>
-
-            <div class="valkyrie-card">
-              <span class="status-badge status-active">⚡ In Soccorso • Asgard</span>
-              <h3 class="entity-name">3. Thrud</h3>
-              <p class="entity-desc">
-                Figlia di Thor e Valchiria perduta nel Regno del Silenzio (<strong>Asgard</strong>). Nascosta tra le spire dell'alveare Illithid, possiede il Sangue del Tuono necessario a risvegliare <em>Mjölnir</em> nella Fucina di Ivaldi.
-              </p>
-            </div>
-
-            <div class="valkyrie-card">
-              <span class="status-badge status-captive">❄️ Fronte Alleato • Jotunheim</span>
-              <h3 class="entity-name">4. Göndul</h3>
-              <p class="entity-desc">
-                Quarta Valchiria, trattenuta nei deserti di ghiaccio di <strong>Jotunheim</strong> (<em>The Spear</em>) dove è incatenato anche Magni. Obiettivo della spedizione parallela degli alleati.
-              </p>
-            </div>
-
-            <div class="valkyrie-card">
-              <span class="status-badge status-danger">🔥 Fronte Alleato • Muspelheim</span>
-              <h3 class="entity-name">5. Brunilde (Gunnr)</h3>
-              <p class="entity-desc">
-                Quinta Valchiria, prigioniera tra le fornaci magmatiche di <strong>Muspelheim</strong> (sotto le Spine di Cristallo) dove è torturato Modi. Obiettivo del secondo fronte alleato per aprire la via verso Freya a Vanaheim.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- TAB 3: LE GRANDI RELIQUIE -->
-        <div id="tab-reliquie" class="compendium-panel">
-          <div class="champions-grid">
-            <div class="entity-card">
-              <span class="entity-role">Reliquia di Asgard • In Possesso del Gruppo</span>
-              <h3 class="entity-name">Medaglione di Heimdall</h3>
-              <p class="entity-desc">
-                Consegnato da Yarl Hrolfgar a Forte Sentinella. Amuleto d'oro pallido incrostato di frammenti del Bifröst: ha aperto il passaggio sulla Zanna dei Cieli e risuona in prossimità delle reliquie divine di Heimdall ad Asgard.
-              </p>
-            </div>
-
-            <div class="entity-card">
-              <span class="entity-role">Artefatto Cosmico • Obiettivo ad Asgard</span>
-              <h3 class="entity-name">Cuore del Bifröst</h3>
-              <p class="entity-desc">
-                Il nucleo cristallino primordiale del Ponte Arcobaleno, attualmente soffocato dall'Ancora d'Ombra e dal Tentacolo Nero Illithid. La sua purificazione è indispensabile per riaccendere il vero Bifröst e spezzare l'isolamento di Asgard.
-              </p>
-            </div>
-
-            <div class="entity-card">
-              <span class="entity-role">Arma Divina • Dormiente a Nidavellir</span>
-              <h3 class="entity-name">Mjölnir, il Martello del Tuono</h3>
-              <p class="entity-desc">
-                Capolavoro di Brok e Sindri Ivaldi. Brandito eroicamente da Zormannu per abbattere il Dio Drago Fafnir, riposa ora inerte nella Grande Fucina di Nidavellir in attesa di essere risvegliato dal Sangue di Thor (Thrud, Magni o Modi).
-              </p>
-            </div>
-
-            <div class="entity-card">
-              <span class="entity-role">Reliquia del Risveglio • Custodita ad Asgard</span>
-              <h3 class="entity-name">Gjallarhorn</h3>
-              <p class="entity-desc">
-                Il leggendario Corno di Heimdall il cui suono attraversa tutti i Nove Mondi. Nel Regno del Silenzio dominato dall'Unico Grande Cervello e dall'eco di Cthulhu, il suo squillo rappresenta l'arma suprema per infrangere l'incubo psionico.
-              </p>
-            </div>
-
-            <div class="entity-card">
-              <span class="entity-role">Doni della Triade &amp; Fucina di Ivaldi</span>
-              <h3 class="entity-name">Stella di Sylvandell, Gramr &amp; Metallo Stellare</h3>
-              <p class="entity-desc">
-                La gemma lunare donata da Re Gal'El, la spada ancestrale <em>Gramr</em> di Cyric e i Manufatti forgiati da Brok e Sindri con il Metallo Stellare estratto dal vero tesoro di Fafnir per ferire le entità divine.
-              </p>
-            </div>
-
-            <div class="entity-card">
-              <span class="entity-role">Strumenti Alchemici &amp; Cosmici</span>
-              <h3 class="entity-name">Ampolle dei Ventifermanti &amp; Rugiada di Mimir</h3>
-              <p class="entity-desc">
-                I recipienti alchemici creati da Doring per intrappolare le essenze corrotte di Rovina e la Benedizione della Fonte Primordiale di Mimir che scorre nel sangue dei campioni sin dal ritorno da Helheim.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+            <article class="chronicle-card">
+                <h3>💀 Principali Boss e Tiranni Abbattuti</h3>
+                <div class="grid-cards">
+                    <div class="status-card">
+                        <span class="status-badge badge-slain">Abbattuto — Frostforge Island</span>
+                        <h4>Tesla Stormgazer</h4>
+                        <p>Sconfitto nella sua Gabbia di Faraday insieme al Golem Canopico per recuperare l'Inversore Gravitazionale.</p>
+                    </div>
+                    <div class="status-card">
+                        <span class="status-badge badge-slain">Annientati — Nandun</span>
+                        <h4>Caino &amp; i Signori Vampiri</h4>
+                        <p>Caino disintegrato da Mikkel; Malachi, Vladen, Morwenna, Draven e Solomon abbattuti e bruciati nei Ventifermanti.</p>
+                    </div>
+                    <div class="status-card">
+                        <span class="status-badge badge-slain">Abbattuto — Joruvellir</span>
+                        <h4>Fafnir, il Divoratore d'Anime</h4>
+                        <p>Spogliato della sua immortalità dal canto dell'Hafgufa e decapitato dagli eroi; l'Yggdrasil Nero è stato sradicato.</p>
+                    </div>
+                    <div class="status-card">
+                        <span class="status-badge badge-slain">Abbattuti — Castello di Brimir</span>
+                        <h4>Re Thrym &amp; il Verme della Putrefazione</h4>
+                        <p>Sconfitti nelle viscere e nella Sala del Trono di Ghiaccio a Jötunheim con l'aiuto di Magni e Modi.</p>
+                    </div>
+                    <div class="status-card">
+                        <span class="status-badge badge-slain">Annientato — Pozzo di Urd</span>
+                        <h4>L'Unico Grande Cervello Antico</h4>
+                        <p>Ucciso nel Pozzo di Urd provocando la morte cerebrale istantanea di tutti i Mind Flayer di Serenia; Cthulhu ricacciato oltre il cosmo da Víðarr.</p>
+                    </div>
+                </div>
+            </article>
+        </section>
 
     </main>
-  </div>
 
-  <footer class="site-footer">
-    <p>ᛉ <strong>ATHLON - IL RAGNAROK</strong> • Cronache Ufficiali dei Giocatori • Custodito dal Libro delle Memorie ᛉ</p>
-  </footer>
+    <footer>
+        ATHLON: IL RAGNAROK — Cronaca Ufficiale della Campagna • Custode della Trama
+    </footer>
 
-  <script>
-    // Toggle single Chronicle Card
-    function toggleCard(headerEl) {
-      const card = headerEl.closest('.chronicle-card');
-      card.classList.toggle('collapsed');
-      updateToggleAllButtonState();
-    }
-
-    // Expand / Collapse All Chronicles
-    const toggleAllBtn = document.getElementById('toggleAllBtn');
-    const toggleAllLabel = document.getElementById('toggleAllLabel');
-    let allCollapsed = false;
-
-    toggleAllBtn.addEventListener('click', () => {
-      const cards = document.querySelectorAll('.chronicle-card');
-      allCollapsed = !allCollapsed;
-      cards.forEach(card => {
-        if (allCollapsed) {
-          card.classList.add('collapsed');
-        } else {
-          card.classList.remove('collapsed');
-        }
-      });
-      toggleAllLabel.textContent = allCollapsed ? 'Espandi Tutto' : 'Comprimi Tutto';
-    });
-
-    function updateToggleAllButtonState() {
-      const cards = Array.from(document.querySelectorAll('.chronicle-card'));
-      const everyCollapsed = cards.every(c => c.classList.contains('collapsed'));
-      allCollapsed = everyCollapsed;
-      toggleAllLabel.textContent = allCollapsed ? 'Espandi Tutto' : 'Comprimi Tutto';
-    }
-
-    // Immersive Reading Mode
-    const immersiveBtn = document.getElementById('immersiveBtn');
-    immersiveBtn.addEventListener('click', () => {
-      document.body.classList.toggle('immersive-mode');
-      immersiveBtn.classList.toggle('active');
-    });
-
-    // Compendium Tabs Switcher
-    function switchTab(event, panelId) {
-      document.querySelectorAll('.compendium-tab').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.compendium-panel').forEach(panel => panel.classList.remove('active'));
-      event.currentTarget.classList.add('active');
-      document.getElementById(panelId).classList.add('active');
-    }
-
-    // Active TOC Link on Scroll
-    const sections = document.querySelectorAll('.chronicle-card, .compendium-section');
-    const tocLinks = document.querySelectorAll('.toc-link');
-
-    window.addEventListener('scroll', () => {
-      let currentId = 'prologo';
-      sections.forEach(sec => {
-        const rect = sec.getBoundingClientRect();
-        if (rect.top <= 160) {
-          currentId = sec.id;
-        }
-      });
-      tocLinks.forEach(link => {
-        link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
-      });
-    });
-
-    // Live Text Search & Highlighting
-    const searchInput = document.getElementById('searchInput');
-    const searchClear = document.getElementById('searchClear');
-    const searchCount = document.getElementById('searchCount');
-    const searchableContainer = document.getElementById('searchableContent');
-
-    function clearHighlights() {
-      const marks = searchableContainer.querySelectorAll('mark.search-hit');
-      marks.forEach(mark => {
-        const parent = mark.parentNode;
-        parent.replaceChild(document.createTextNode(mark.textContent), mark);
-        parent.normalize();
-      });
-    }
-
-    function performSearch() {
-      const query = searchInput.value.trim();
-      clearHighlights();
-
-      if (!query || query.length < 2) {
-        searchClear.style.display = query ? 'block' : 'none';
-        searchCount.style.display = 'none';
-        return;
-      }
-
-      searchClear.style.display = 'block';
-      const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(`(${escaped})`, 'gi');
-      let totalMatches = 0;
-
-      // Expand all cards and search text nodes
-      const textElements = searchableContainer.querySelectorAll('p, li, h2, h3, h4');
-      textElements.forEach(el => {
-        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
-        const nodes = [];
-        while (walker.nextNode()) nodes.push(walker.currentNode);
-
-        nodes.forEach(node => {
-          if (regex.test(node.nodeValue)) {
-            const frag = document.createDocumentFragment();
-            let lastIdx = 0;
-            node.nodeValue.replace(regex, (match, p1, offset) => {
-              frag.appendChild(document.createTextNode(node.nodeValue.slice(lastIdx, offset)));
-              const mark = document.createElement('mark');
-              mark.className = 'search-hit';
-              mark.textContent = match;
-              frag.appendChild(mark);
-              lastIdx = offset + match.length;
-              totalMatches++;
+    <script>
+        function switchTab(sectionId, btnElement) {
+            document.querySelectorAll('.chapter-section').forEach(sec => {
+                sec.classList.remove('active');
             });
-            frag.appendChild(document.createTextNode(node.nodeValue.slice(lastIdx)));
-            node.parentNode.replaceChild(frag, node);
+            document.querySelectorAll('.nav-bar .nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            const target = document.getElementById(sectionId);
+            if (target) target.classList.add('active');
+            if (btnElement) btnElement.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-            const parentCard = el.closest('.chronicle-card');
-            if (parentCard) parentCard.classList.remove('collapsed');
-          }
+        function showAllChapters() {
+            document.querySelectorAll('.chapter-section').forEach(sec => {
+                sec.classList.add('active');
+            });
+            document.querySelectorAll('.nav-bar .nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+        }
+
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', function () {
+            const query = this.value.trim().toLowerCase();
+            const sections = document.querySelectorAll('.chapter-section');
+            const cards = document.querySelectorAll('.chronicle-card');
+
+            if (!query) {
+                cards.forEach(card => card.style.display = '');
+                return;
+            }
+
+            // Show all sections so matching cards across all acts are visible
+            sections.forEach(sec => sec.classList.add('active'));
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                card.style.display = text.includes(query) ? '' : 'none';
+            });
         });
-      });
-
-      searchCount.style.display = 'inline-block';
-      searchCount.textContent = `${totalMatches} risultat${totalMatches === 1 ? 'o' : 'i'}`;
-
-      const firstHit = searchableContainer.querySelector('mark.search-hit');
-      if (firstHit) {
-        firstHit.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-    }
-
-    searchInput.addEventListener('input', performSearch);
-    searchClear.addEventListener('click', () => {
-      searchInput.value = '';
-      clearHighlights();
-      searchClear.style.display = 'none';
-      searchCount.style.display = 'none';
-      searchInput.focus();
-    });
-  </script>
+    </script>
 </body>
 </html>
