@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Athlon - Il Ragnarok: Il Libro delle Memorie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;600;700;800&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-obsidian: #0b0e14;
+      --bg-deep: #101520;
+      --bg-card: #151c28;
+      --bg-card-hover: #1b2434;
+      --bg-elevated: rgba(21, 28, 40, 0.88);
+      --gold-runic: #d4af37;
+      --gold-light: #f3dc8a;
+      --gold-dim: rgba(212, 175, 55, 0.28);
+      --bifrost-cyan: #38bdf8;
+      --bifrost-violet: #a855f7;
+      --bifrost-magenta: #ec4899;
+      --crimson: #dc2626;
+      --crimson-glow: rgba(220, 38, 38, 0.25);
+      --emerald-free: #10b981;
+      --amber-warn: #f59e0b;
+      --text-main: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-bright: #f8fafc;
+      --border-subtle: rgba(212, 175, 55, 0.22);
+      --shadow-epic: 0 12px 32px -8px rgba(0, 0, 0, 0.75);
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --reading-size: 1.04rem;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-obsidian);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.75;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(56, 189, 248, 0.07) 0%, transparent 40%),
+        radial-gradient(circle at 85% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 50% 85%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+        var(--bg-obsidian);
+      overflow-x: hidden;
+      transition: all 0.35s ease;
+    }
+
+    /* Bifröst Top Shimmer Bar */
+    .bifrost-bar {
+      height: 4px;
+      width: 100%;
+      background: linear-gradient(90deg, var(--gold-runic), var(--bifrost-cyan), var(--bifrost-violet), var(--bifrost-magenta), var(--crimson), var(--gold-runic));
+      background-size: 300% 100%;
+      animation: bifrostFlow 12s ease infinite;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    @keyframes bifrostFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Sticky Top Utility Navbar */
+    .top-toolbar {
+      position: sticky;
+      top: 4px;
+      z-index: 900;
+      background: rgba(11, 14, 20, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .brand-mini {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      color: var(--gold-runic);
+      letter-spacing: 0.06em;
+      font-size: 0.95rem;
+      text-decoration: none;
+    }
+
+    .brand-mini span.rune {
+      font-size: 1.25rem;
+      color: var(--bifrost-cyan);
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+    }
+
+    /* Search & Controls */
+    .toolbar-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 1;
+      max-width: 780px;
+      justify-content: flex-end;
+    }
+
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+      max-width: 380px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-deep);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-bright);
+      padding: 0.55rem 2.4rem 0.55rem 2.2rem;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--gold-runic);
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.8rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold-runic);
+      font-size: 0.9rem;
+      pointer-events: none;
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .search-count {
+      font-size: 0.78rem;
+      color: var(--gold-light);
+      white-space: nowrap;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      background: rgba(212, 175, 55, 0.12);
+      display: none;
+    }
+
+    .btn-action {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-action:hover, .btn-action.active {
+      background: rgba(212, 175, 55, 0.16);
+      border-color: var(--gold-runic);
+      color: var(--gold-light);
+    }
+
+    /* Hero Header */
+    .hero-header {
+      position: relative;
+      padding: 4.5rem 1.5rem 3.5rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border-subtle);
+      background:
+        radial-gradient(ellipse at center top, rgba(212, 175, 55, 0.14), transparent 65%),
+        radial-gradient(ellipse at 80% 50%, rgba(168, 85, 247, 0.1), transparent 60%),
+        linear-gradient(180deg, rgba(16, 21, 32, 0.95) 0%, var(--bg-obsidian) 100%);
+      overflow: hidden;
+    }
+
+    .hero-runes {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.45em;
+      color: rgba(212, 175, 55, 0.45);
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-family: 'Cinzel Decorative', 'Cinzel', serif;
+      font-size: clamp(2rem, 4.8vw, 3.6rem);
+      font-weight: 900;
+      line-height: 1.18;
+      background: linear-gradient(135deg, #fff6d1 0%, var(--gold-runic) 50%, #b38728 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 8px 28px rgba(0, 0, 0, 0.6);
+      margin-bottom: 0.85rem;
+    }
+
+    .hero-subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1rem, 2.2vw, 1.35rem);
+      color: var(--bifrost-cyan);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      margin-bottom: 1.75rem;
+      text-shadow: 0 0 18px rgba(56, 189, 248, 0.25);
+    }
+
+    .hero-intro {
+      max-width: 820px;
+      margin: 0 auto 2rem;
+      font-size: 1.02rem;
+      color: var(--text-main);
+      background: rgba(21, 28, 40, 0.65);
+      border: 1px solid var(--border-subtle);
+      border-left: 4px solid var(--gold-runic);
+      padding: 1.35rem 1.75rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-epic);
+      text-align: left;
+    }
+
+    .hero-quote {
+      margin-top: 0.85rem;
+      font-style: italic;
+      color: var(--gold-light);
+      font-size: 0.93rem;
+      text-align: right;
+    }
+
+    /* Quick Jump Pills */
+    .quick-nav-pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .nav-pill {
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.25s ease;
+    }
+
+    .nav-pill:hover {
+      border-color: var(--gold-runic);
+      color: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+    }
+
+    /* Main Layout Grid */
+    .layout-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2.25rem;
+      align-items: start;
+    }
+
+    /* Immersive Reading Mode Overrides */
+    body.immersive-mode .sidebar-toc {
+      display: none;
+    }
+
+    body.immersive-mode .layout-container {
+      grid-template-columns: 1fr;
+      max-width: 900px;
+    }
+
+    body.immersive-mode {
+      --reading-size: 1.15rem;
+    }
+
+    /* Sticky Sidebar TOC */
+    .sidebar-toc {
+      position: sticky;
+      top: 4.5rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.35rem;
+      box-shadow: var(--shadow-epic);
+      max-height: calc(100vh - 6rem);
+      overflow-y: auto;
+    }
+
+    .toc-title {
+      font-family: 'Cinzel', serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--gold-runic);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding-bottom: 0.75rem;
+      margin-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .toc-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.55rem 0.75rem;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      border-left: 2px solid transparent;
+    }
+
+    .toc-link:hover, .toc-link.active {
+      background: rgba(212, 175, 55, 0.12);
+      color: var(--gold-light);
+      border-left-color: var(--gold-runic);
+    }
+
+    .toc-badge {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--gold-runic);
+      background: rgba(212, 175, 55, 0.14);
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      min-width: 28px;
+      text-align: center;
+    }
+
+    /* Content Column */
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      min-width: 0;
+    }
+
+    /* Chronicle Section Cards */
+    .chronicle-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-epic);
+      overflow: hidden;
+      transition: border-color 0.3s ease;
+      scroll-margin-top: 5rem;
+    }
+
+    .chronicle-card:hover {
+      border-color: rgba(212, 175, 55, 0.42);
+    }
+
+    .chronicle-header {
+      padding: 1.5rem 1.85rem;
+      background: linear-gradient(90deg, rgba(212, 175, 55, 0.12) 0%, rgba(21, 28, 40, 0.4) 100%);
+      border-bottom: 1px solid var(--border-subtle);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      user-select: none;
+    }
+
+    .chronicle-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .chronicle-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bifrost-cyan);
+    }
+
+    .chronicle-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.25rem, 2.2vw, 1.65rem);
+      font-weight: 700;
+      color: var(--gold-light);
+      line-height: 1.3;
+    }
+
+    .chronicle-toggle-btn {
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--border-subtle);
+      color: var(--gold-runic);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .chronicle-card.collapsed .chronicle-toggle-btn {
+      transform: rotate(-90deg);
+    }
+
+    .chronicle-card.collapsed .chronicle-body {
+      display: none;
+    }
+
+    .chronicle-body {
+      padding: 1.85rem;
+      font-size: var(--reading-size);
+      display: flex;
+      flex-direction: column;
+      gap: 1.65rem;
+    }
+
+    /* Subsections inside a Chronicle */
+    .sub-chapter {
+      padding-left: 1.15rem;
+      border-left: 2px solid rgba(212, 175, 55, 0.3);
+    }
+
+    .sub-chapter h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .sub-chapter h3 .step-num {
+      color: var(--gold-runic);
+      font-size: 0.95rem;
+    }
+
+    .sub-chapter p {
+      margin-bottom: 0.85rem;
+      color: var(--text-main);
+    }
+
+    .sub-chapter p:last-child {
+      margin-bottom: 0;
+    }
+
+    .sub-chapter ul {
+      margin: 0.65rem 0 0.85rem 1.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .sub-chapter li strong {
+      color: var(--gold-light);
+    }
+
+    p strong {
+      color: var(--text-bright);
+      font-weight: 600;
+    }
+
+    /* Runic / Qualith Quote Block */
+    .lore-quote {
+      background: rgba(168, 85, 247, 0.08);
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      border-left: 4px solid var(--bifrost-violet);
+      padding: 1.1rem 1.4rem;
+      border-radius: var(--radius-md);
+      font-style: italic;
+      color: #e9d5ff;
+      margin: 0.85rem 0;
+    }
+
+    /* Box Riassuntivo "Eredità della Cronaca" */
+    .legacy-box {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.11) 0%, rgba(16, 21, 32, 0.92) 100%);
+      border: 1px solid var(--gold-runic);
+      border-radius: var(--radius-md);
+      padding: 1.4rem 1.6rem;
+      margin-top: 0.5rem;
+      position: relative;
+    }
+
+    .legacy-box-header {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--gold-runic);
+      margin-bottom: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .legacy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .legacy-col {
+      background: rgba(11, 14, 20, 0.65);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 8px;
+      padding: 0.95rem 1.1rem;
+    }
+
+    .legacy-col h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.84rem;
+      color: var(--bifrost-cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.55rem;
+    }
+
+    .legacy-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      font-size: 0.92rem;
+    }
+
+    .legacy-col li {
+      position: relative;
+      padding-left: 1.1rem;
+    }
+
+    .legacy-col li::before {
+      content: "✦";
+      position: absolute;
+      left: 0;
+      color: var(--gold-runic);
+      font-size: 0.78rem;
+    }
+
+    /* Compendium Section (Tabs / Accordions / Cards) */
+    .compendium-section {
+      background: var(--bg-elevated);
+      border: 1px solid var(--gold-runic);
+      border-radius: var(--radius-lg);
+      padding: 1.85rem;
+      box-shadow: var(--shadow-epic);
+      scroll-margin-top: 5rem;
+    }
+
+    .compendium-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin: 1.25rem 0 1.65rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 1rem;
+    }
+
+    .compendium-tab {
+      background: var(--bg-deep);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 0.65rem 1.2rem;
+      border-radius: 10px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .compendium-tab.active, .compendium-tab:hover {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.22), rgba(56, 189, 248, 0.12));
+      border-color: var(--gold-runic);
+      color: var(--gold-light);
+    }
+
+    .compendium-panel {
+      display: none;
+    }
+
+    .compendium-panel.active {
+      display: block;
+    }
+
+    /* Champions Grid */
+    .champions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.15rem;
+    }
+
+    .entity-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .entity-card:hover {
+      border-color: var(--gold-runic);
+      transform: translateY(-3px);
+      background: var(--bg-card-hover);
+    }
+
+    .entity-role {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--bifrost-cyan);
+    }
+
+    .entity-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+
+    .entity-desc {
+      font-size: 0.92rem;
+      color: var(--text-main);
+    }
+
+    /* Valkyries Tracker */
+    .valkyrie-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .valkyrie-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      width: fit-content;
+    }
+
+    .status-free {
+      background: rgba(16, 185, 129, 0.16);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+
+    .status-active {
+      background: rgba(56, 189, 248, 0.16);
+      color: var(--bifrost-cyan);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+    }
+
+    .status-captive {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.4);
+    }
+
+    .status-danger {
+      background: rgba(220, 38, 38, 0.18);
+      color: #f87171;
+      border: 1px solid rgba(220, 38, 38, 0.4);
+    }
+
+    /* Search Highlight */
+    mark.search-hit {
+      background: rgba(212, 175, 55, 0.35);
+      color: #fff;
+      padding: 0.05rem 0.25rem;
+      border-radius: 4px;
+      border-bottom: 2px solid var(--gold-runic);
+    }
+
+    /* Footer */
+    .site-footer {
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      border-top: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-family: 'Cinzel', serif;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 980px) {
+      .layout-container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar-toc {
+        position: static;
+        max-height: none;
+      }
+      .toc-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .toc-link {
+        background: var(--bg-deep);
+        border: 1px solid var(--border-subtle);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .top-toolbar {
+        padding: 0.65rem 1rem;
+      }
+      .toolbar-controls {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .search-wrapper {
+        max-width: none;
+      }
+      .chronicle-header {
+        padding: 1.15rem 1.25rem;
+      }
+      .chronicle-body {
+        padding: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bifrost-bar"></div>
+
+  <!-- Top Interactive Toolbar -->
+  <header class="top-toolbar">
+    <a href="#top" class="brand-mini">
+      <span class="rune">ᛉ</span>
+      <span>ATHLON: IL LIBRO DELLE MEMORIE</span>
+    </a>
+
+    <div class="toolbar-controls">
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-input" placeholder="Cerca dèi, luoghi, eroi, reliquie (es. Mimir, Baldr, Koddak)..." aria-label="Cerca nelle cronache">
+        <button id="searchClear" class="search-clear" title="Cancella ricerca">✕</button>
+      </div>
+      <span id="searchCount" class="search-count">0 risultati</span>
+
+      <button id="toggleAllBtn" class="btn-action" title="Espandi o comprimi tutti i capitoli">
+        <span>↕</span> <span id="toggleAllLabel">Comprimi Tutto</span>
+      </button>
+
+      <button id="immersiveBtn" class="btn-action" title="Attiva o disattiva la Modalità Lettura Immersiva">
+        <span>📖</span> <span>Modalità Immersiva</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="top" class="hero-header">
+    <div class="hero-runes">ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ ᚷ ᚹ ᚺ ᚾ ᛁ ᛃ ᛇ ᛈ ᛉ ᛊ ᛏ ᛒ ᛖ ᛗ ᛚ ᛜ ᛞ ᛟ</div>
+    <h1 class="hero-title">Athlon - Il Ragnarok: Il Libro delle Memorie</h1>
+    <p class="hero-subtitle">Le Cronache dei Sei Campioni dal Buio di Helheim alle Soglie di Asgard</p>
+
+    <div class="hero-intro">
+      <p>
+        I Nove Mondi tremano sull'orlo della Grande Frattura. Dietro il manto dorato della Chiesa dell'Altissimo si cela <strong>Rovina</strong>, l'entità primordiale dell'entropia che ha incatenato gli antichi <strong>Dèi Æsir</strong> per caricare l'blasfemo <strong>Occhio di Isacco</strong> e violare il <strong>Pozzo dell'Eternità</strong>. Dalle nebbie gelide di Helgrind alle fucine stellari di Nidavellir, fino alle vette proibite del Silenzio Bianco, questo codice custodisce le gesta, i sacrifici e le conquiste dei Campioni che hanno osato sfidare la fine del creato.
+      </p>
+      <div class="hero-quote">
+        «Quando le radici del Frassino marciscono e il cielo si spezza come vetro antico, non sono gli dèi a decidere la sorte del creato, ma coloro che osano camminare nella cenere.» — <strong>Mimir</strong>
+      </div>
+    </div>
+
+    <nav class="quick-nav-pills" aria-label="Accesso rapido ai capitoli">
+      <a href="#prologo" class="nav-pill">🌌 Prologo</a>
+      <a href="#cronaca-1" class="nav-pill">❄️ Cronaca I: Helheim</a>
+      <a href="#cronaca-2" class="nav-pill">🩸 Cronaca II: Skadi &amp; Bjarolf</a>
+      <a href="#cronaca-3" class="nav-pill">⚒️ Cronaca III: Svartálfaheim</a>
+      <a href="#cronaca-4" class="nav-pill">⚡ Cronaca IV: Consiglio dei Re</a>
+      <a href="#cronaca-5" class="nav-pill">🌩️ Cronaca V: Verso Asgard</a>
+      <a href="#compendio" class="nav-pill">🛡️ Compendio &amp; Reliquie</a>
+    </nav>
+  </section>
+
+  <!-- Main Content Layout -->
+  <div class="layout-container">
+
+    <!-- Sticky Sidebar Navigation -->
+    <aside class="sidebar-toc" aria-label="Indice delle Cronache">
+      <div class="toc-title">
+        <span>Indice Canonico</span>
+        <span>ᛟ</span>
+      </div>
+      <ul class="toc-list">
+        <li><a href="#prologo" class="toc-link active"><span class="toc-badge">00</span> Prologo Cosmologico</a></li>
+        <li><a href="#cronaca-1" class="toc-link"><span class="toc-badge">I</span> Discesa ad Helheim</a></li>
+        <li><a href="#cronaca-2" class="toc-link"><span class="toc-badge">II</span> Tempio di Skadi &amp; Nandùn</a></li>
+        <li><a href="#cronaca-3" class="toc-link"><span class="toc-badge">III</span> Spedizione a Svartálfaheim</a></li>
+        <li><a href="#cronaca-4" class="toc-link"><span class="toc-badge">IV</span> Consiglio di Guerra</a></li>
+        <li><a href="#cronaca-5" class="toc-link"><span class="toc-badge">V</span> Ascensione ad Asgard</a></li>
+        <li><a href="#compendio" class="toc-link"><span class="toc-badge">★</span> Compendio Rapido</a></li>
+      </ul>
+    </aside>
+
+    <!-- Chronicles Feed -->
+    <main class="main-content" id="searchableContent">
+
+      <!-- PROLOGO -->
+      <article id="prologo" class="chronicle-card">
+        <div class="chronicle-header" onclick="toggleCard(this)">
+          <div class="chronicle-header-left">
+            <span class="chronicle-eyebrow">Genesi del Conflitto</span>
+            <h2 class="chronicle-title">Prologo: Il Crepuscolo del Mondo e il Doppio Inganno</h2>
+          </div>
+          <span class="chronicle-toggle-btn">▼</span>
+        </div>
+        <div class="chronicle-body">
+          <div class="sub-chapter">
+            <h3><span class="step-num">01.</span> Il Sacrificio di Preservazione e la Forgiatura dell'Occhio di Isacco</h3>
+            <p>
+              All'alba del cosmo, l'universo era retto dall'equilibrio tra due forze primordiali: <strong>Preservazione</strong>, custode della vita e della stabilità, e <strong>Rovina</strong>, incarnazione dell'entropia e della fine di ogni cosa. Per impedire al fratello oscuro di annientare il creato, Preservazione compì l'estremo sacrificio: consumò la propria coscienza divina per imprigionare Rovina e celare il <strong>Pozzo dell'Eternità</strong> dietro un velo impenetrabile, custodito nella segreta <strong>Patria dei Kandra</strong> attorno al sacro <strong>Frassino Argentato</strong>. Prima di spegnersi, donò una scintilla della propria luce ai <strong>Kandra</strong>, vincolandoli con il <strong>Primo Contratto</strong> a vegliare nell'ombra.
+            </p>
+            <p>
+              Tuttavia, nell'istante finale dello scontro primordiale, Rovina riuscì a strappare un frammento del cuore stesso di Preservazione. Per eoni, nel buio della sua prigione, lo nutrì con il proprio odio abissale fino a corromperlo in un artefatto di pura malvagità: l'<strong>Occhio di Isacco</strong>. Poiché l'Occhio è composto della stessa essenza di Preservazione, se caricato al massimo della potenza tramite la linfa vitale degli <strong>Dèi Æsir</strong>, esso può entrare in risonanza con il Velo della Patria dei Kandra e squarciarlo dall'interno.
+            </p>
+          </div>
+
+          <div class="sub-chapter">
+            <h3><span class="step-num">02.</span> Il Falso Culto dell'Altissimo e i Quattro Cavalieri</h3>
+            <p>
+              Per preparare il collasso dei Nove Mondi, Rovina orchestrò il più grande inganno della storia di <strong>Athlon</strong>: istituì tra gli uomini il culto dell'<strong>Altissimo</strong> e la potente <strong>Chiesa della Luce</strong>, facendosi venerare come unico dio salvatore e bollando gli antichi Æsir come falsi idoli o demoni. Al suo servizio pose i <strong>Quattro Cavalieri dell'Apocalisse</strong> (i supremi Arcidemoni degli Inferi):
+            </p>
+            <ul>
+              <li><strong>Mammon</strong>, Signore dell'Avidità, infiltrato ai vertici della Chiesa sotto la pelle umana del <strong>Vescovo Throka</strong> e detentore della blasfema <em>Coppa dell'Immortalità</em>;</li>
+              <li><strong>Asmodeus</strong>, Signore della Tirannia e degli inganni abissali;</li>
+              <li><strong>Legione</strong>, l'Orda vivente della devastazione bellica;</li>
+              <li><strong>Belzebù</strong>, Signore della Putrefazione e della Fame.</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- CRONACA I -->
+      <article id="cronaca-1" class="chronicle-card">
+        <div class="chronicle-header" onclick="toggleCard(this)">
+          <div class="chronicle-header-left">
+            <span class="chronicle-eyebrow">Cronaca I</span>
+            <h2 class="chronicle-title">La Discesa ad Helheim e la Rugiada di Mimir</h2>
+          </div>
+          <span class="chronicle-toggle-btn">▼</span>
+        </div>
+        <div class="chronicle-body">
+          <div class="sub-chapter">
+            <h3><span class="step-num">1.</span> La Guerra d'Inverno e la Caduta</h3>
+            <p>
+              Durante la sanguinosa <strong>Guerra d'Inverno</strong> tra il regno degli Orgrim e il clan nanico dei Krivor, il nobile <strong>Re Branvir Krivor</strong> affrontò in duello il proprio primogenito <strong>Ulog</strong>, la cui anima era stata segretamente posseduta da un demone di Rovina. Un solo istante di esitazione paterna costò la vita a Branvir, trafitto dal figlio. <strong>Bjior Krivor</strong>, colosso del clan e fratello di Ulog, reagì con furia cieca ma il trauma squassò la sua memoria; in cerca della verità, consultò la sibilla <strong>Vala</strong> (poi torturata dagli inquisitori di Throka) e si calò nelle <strong>Guglie Spettrali</strong>, finendo prigioniero nelle radici dell'Albero del Mondo.
+            </p>
+            <p>
+              Nel frattempo, gli eroi approdarono nella Distesa Glaciale a bordo de <em>Il Pugnale</em>, l'aeronave dell'artefice <strong>Doring</strong>, traendo in salvo la spedizione di <strong>Ross Royce</strong>. Accolti a <strong>Iceburg</strong> da <strong>Re Odor</strong> e dalla scienziata <strong>Rasha Dandot</strong> (che custodiva e studiava l'Occhio di Isacco nel proprio laboratorio), i campioni indagarono sul laboratorio di Tesla Stormgazer e marciarono verso le Guglie Spettrali per soccorrere Bjior e sventare le mire della Chiesa su Ross e Rasha.
+            </p>
+          </div>
+
+          <div class="sub-chapter">
+            <h3><span class="step-num">2.</span> Le Radici di Yggdrasil, Nidhorg e il Ponte di Modgud</h3>
+            <p>
+              Sulla vetta delle Guglie Spettrali, l'Aquila Sacra <strong>Vedfolnir</strong> permise agli eroi di discendere nel tronco cavo di <strong>Yggdrasil</strong>. Lungo la discesa, il gruppo trovò il cadavere avvelenato dello scoiattolo messaggero <strong>Ratatoskr</strong>, sterminò i cinque Linnorm che tenevano incatenato <strong>Bjior</strong> e raggiunse l'abisso radicale presidiato da <strong>Nidhorg</strong>, il Linnorm Supremo. Piegata in battaglia la ferocia del drago primordiale, Nidhorg lasciò passare i campioni fino alla <strong>Fonte Primordiale</strong> di <strong>Mimir</strong>, il quale aprì loro la soglia del <strong>Niflheim (Helheim)</strong>.
+            </p>
+            <p>
+              Elusa la guardia del segugio infernale a quattro occhi <strong>Garmr</strong> e attraversati il fiume di lame <strong>Gjöll</strong> e la Spiaggia dei Dannati (<strong>Nástrandir</strong>), la compagnia affrontò sul Ponte d'Oro la gigantessa guardiana <strong>Modgud</strong>, corrotta da un parassita d'ombra di Mammon. Sconfitta e purificata senza essere uccisa, Modgud si schierò a difesa dei cancelli, mentre lo spirito di <strong>Re Branvir</strong> apparve a Bjior assolvendolo da ogni colpa per la tragedia familiare.
+            </p>
+          </div>
+
+          <div class="sub-chapter">
+            <h3><span class="step-num">3.</span> L'Assalto a Helgrind, la Liberazione di Hel e la Fune di Mimir</h3>
+            <p>
+              Irrompendo nella sala del trono di <strong>Helgrind</strong>, gli eroi scoprirono la dea dei morti <strong>Hel</strong> incatenata da pesanti catene d'ombra forgiate da <strong>Mammon</strong> e sorvegliata da un <strong>Demone d'Ombra</strong>, mentre sulle rive spettrali veniva ultimata <strong>Naglfar</strong>, la nave costruita con le unghie dei defunti. Spezzate le catene in uno scontro furioso, Hel riacquistò il proprio potere divino, schiantò il Demone d'Ombra e scatenò la tempesta sul reame, intimando ai suoi liberatori di fuggire mentre Naglfar spiegava le vele.
+            </p>
+            <p>
+              Dal cielo squarciato del Niflheim, <strong>Mimir</strong> calò una <strong>fune di pura luce</strong> e trasse in salvo la compagnia presso il Pozzo della Conoscenza. Qui donò loro la <strong>Rugiada di Yggdrasil</strong> e svelò il conflitto cosmico tra Preservazione e Rovina. Durante il volo di ritorno verso Iceburg sul dorso delle aquile di Vedfolnir, il gruppo respinse infine la letale imboscata aerea di <strong>Thormund il Corvo Bianco</strong> (Gran Maestro del Quarto Ordine) e dei suoi quindici Purificati.
+            </p>
+          </div>
+
+          <div class="legacy-box">
+            <div class="legacy-box-header">🏆 Eredità della Cronaca I</div>
+            <div class="legacy-grid">
+              <div class="legacy-col">
+                <h4>Reliquie &amp; Doni</h4>
+                <ul>
+                  <li><strong>Benedizione di Mimir:</strong> Rugiada di Yggdrasil (+2 permanente a una caratteristica).</li>
+                  <li><strong>Lacrime di Isacco:</strong> Frammenti cristallizzati consegnati da Rasha Dandot a Iceburg.</li>
+                </ul>
+              </div>
+              <div class="legacy-col">
+                <h4>Alleati &amp; Liberazioni</h4>
+                <ul>
+                  <li><strong>Hel</strong> liberata dalle catene d'ombra di Mammon a Helgrind.</li>
+                  <li><strong>Modgud</strong> purificata sul Ponte d'Oro e <strong>Bjior Krivor</strong> liberato.</li>
+                </ul>
+              </div>
+              <div class="legacy-col">
+                <h4>Rivelazioni Sbloccate</h4>
+                <ul>
+                  <li>Svelato l'inganno dell'Altissimo (<strong>Rovina</strong>) e di Throka (<strong>Mammon</strong>).</li>
+                  <li>La nave dei morti <strong>Naglfar</strong> prende il largo dalle coste del Niflheim.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CRONACA II -->
+      <article id="cronaca-2" class="chronicle-card">
+        <div class="chronicle-header" onclick="toggleCard(this)">
+          <div class="chronicle-header-left">
+            <span class="chronicle-eyebrow">Cronaca II</span>
+            <h2 class="chronicle-title">La Piaga dei Bjarolf e il Tempio di Skadi</h2>
+          </div>
+          <span class="chronicle-toggle-btn">▼</span>
+        </div>
+        <div class="chronicle-body">
+          <div class="sub-chapter">
+            <h3><span class="step-num">1.</span> L'Allerta di MelSor e l'Usurpatore Roonark</h3>
+            <p>
+              Mentre il ranger <strong>Sverand</strong> portava a Iceburg i primi rapporti sull'avanzata dell'Orda dei Defunti oltre l'Ultima Catena, l'anziano della Prima Generazione Kandra <strong>MelSor</strong> contattò telepaticamente <strong>Koddak</strong> (celato sotto le spoglie di <strong>Lord Seymour</strong>). Un Kandra rinnegato della Seconda Generazione, <strong>Roonark</strong>, aveva infranto il Primo Contratto, assassinato in segreto <strong>Re Boradol Bjarolf</strong> e usurpato il trono di <strong>Nandùn</strong>.
+            </p>
+            <p>
+              Roonark aveva stretto un patto con <strong>Caino (L'Oscurità Innominata)</strong>, Progenitore dei Vampiri, e con i signori della Camarilla per contaminare il popolo con la <strong>Pietra Blu</strong> e far piovere sangue sulla capitale, così da distillare una <em>Rovina</em> artificiale. Soccorso e riportato in vita il generale <strong>Haldor Bjarolf</strong> (fratello del Re e guida delle <em>Asce della Corona</em>) e stretta alleanza con l'<strong>Ordine dell'Alba</strong> di Sir Alaric e Bander, gli eroi distrussero la fabbrica del Barone Solomon e, grazie a <strong>Doring</strong>, forgiarono le <strong>Ampolle dei Ventifermanti</strong>.
+            </p>
+          </div>
+
+          <div class="sub-chapter">
+            <h3><span class="step-num">2.</span> L'Infiltrazione Alpina al Tempio di Skadi e la Valchiria Sigrun</h3>
+            <p>
+              Per entrare nella roccaforte reale di <strong>Elleboro</strong>, Haldor guidò i campioni lungo le vette ghiacciate delle Montagne Thundar fino alle sorgenti del fiume Frosìn, dove sorgeva l'antico <strong>Tempio di Skadi</strong>, cripta del primo sovrano <strong>Agnar Bjarolf</strong>.
+            </p>
+            <p>
+              Nel santuario sepolto tra i ghiacci, il gruppo affrontò <strong>Sigrun</strong>, la Prima delle cinque Valchirie e antica sposa di Agnar, ridotta in schiavitù da Rovina. Sconfitta con onore senza essere uccisa, Sigrun espulse dal volto una <strong>nube nera e sulfurea</strong> e tornò alla luce: rivelò agli eroi che solo liberando tutte le cinque sorelle Valchirie e riunendole alla Fonte di Mimir sarebbe stato possibile varcare i confini di <strong>Vanaheim</strong> per salvare la regina <strong>Freya</strong>.
+            </p>
+          </div>
+
+          <div class="sub-chapter">
+            <h3><span class="step-num">3.</span> La Purificazione di Elleboro e il Sacrificio di Mikkel</h3>
+            <p>
+              Attraverso il passaggio segreto del Tempio di Skadi, i campioni irruppero a <strong>Elleboro</strong>. Al fianco della coraggiosa <strong>Regina Elara</strong>, smascherarono e abbatterono l'usurpatore <strong>Roonark</strong> e il suo complice <strong>Kork</strong>. Sebbene il giovane <strong>Principe Soren</strong> cadesse tragicamente nello scontro (generando dal dolore puro una suprema essenza di <em>Rovina</em>), l'incantesimo di <em>Resurrezione</em> di <strong>Orphen</strong> riportò in vita il vero <strong>Re Boradol Bjarolf</strong>.
+            </p>
+            <p>
+              Nella battaglia culminante presso la Cattedrale della Luce Perpetua di Nandùn, <strong>Koddak</strong> svelò la propria natura di Kandra di Luce e invocò <strong>Mikkel</strong>, l'Arcangelo della Prima Generazione: nei cieli sopra la città, Mikkel immolò la propria vita per disintegrare <strong>Caino</strong>, mutando la pioggia di sangue in neve purificatrice. Nelle segrete della cattedrale, sconfitti Malachi e Vladen, gli eroi liberarono infine l'Elfo Chiaro mutilato <strong>Faust</strong>.
+            </p>
+          </div>
+
+          <div class="legacy-box">
+            <div class="legacy-box-header">🏆 Eredità della Cronaca II</div>
+            <div class="legacy-grid">
+              <div class="legacy-col">
+                <h4>Reliquie &amp; Strumenti</h4>
+                <ul>
+                  <li><strong>Ampolle dei Ventifermanti:</strong> Create da Doring per imprigionare le essenze corrotte.</li>
+                  <li><strong>Rovina Pura di Soren:</strong> Essenza nata dal sacrificio del principe a Elleboro.</li>
+                </ul>
+              </div>
+              <div class="legacy-col">
+                <h4>Valchirie &amp; Sovrani</h4>
+                <ul>
+                  <li><strong>Sigrun (1ª Valchiria):</strong> Purificata nel Tempio di Skadi e inviata da Mimir.</li>
+                  <li><strong>Re Boradol Bjarolf:</strong> Resuscitato da Orphen; liberato l'elfo <strong>Faust</strong>.</li>
+                </ul>
+              </div>
+              <div class="legacy-col">
+                <h4>Svolta nel Conflitto</h4>
+                <ul>
+                  <li>Caduta della congiura di <strong>Roonark</strong> e morte del Progenitore dei Vampiri <strong>Caino</strong> grazie al sacrificio di <strong>Mikkel</strong>.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CRONACA III -->
+      <article id="cronaca-3" class="chronicle-card">
+        <div class="chronicle-header" onclick="toggleCard(this)">
+          <div class="chronicle-header-left">
+            <span class="chronicle-eyebrow">Cronaca III</span>
+            <h2 class="chronicle-title">La Spedizione a Svartálfaheim e il Riscatto della Luce</h2>
+          </div>
+          <span class="chronicle-toggle-btn">▼</span>
+        </div>
+        <div class="chronicle-body">
+          <div class="sub-chapter">
+            <h3><span class="step-num">1.</span> I Lampi dell'Unione, la Prigione delle Spine e la Liberazione di Skogul</h3>
+            <p>
+              Guidati da <strong>Faust</strong> e dall'Eladrin dei ghiacci <strong>Airlik</strong>, insieme al barbaro <strong>Zormannu</strong>, gli eroi viaggiarono a <strong>Svartálfaheim</strong>, regno oppresso dal drago d'ombra <strong>Fafnir</strong> e dalla <strong>Rosa Nera</strong> (guidata da <strong>Lord Malazaar</strong> e dal necromante <strong>Txabaxle</strong>). Liberato il fabbro <strong>Sindri Ivaldi</strong> a Nidavellir e unitisi alla resistenza clandestina de <strong>I Lampi dell'Unione</strong> (<em>Dritzz, Catebree e Bruenor</em>) ad Aurvangar, i campioni usarono le arti mutaforma di Koddak per scoprire e distruggere il laboratorio dei cloni di Txabaxle nelle Cripte dei Mietitori, abbattendo poi il vampiro Varden e l'inquisitrice Mora.
+            </p>
+            <p>
+              Penetrati nella <strong>Prigione delle Spine</strong>, gli eroi sconfissero Groknar e Thorn, trassero in salvo <strong>Re Amendir</strong> degli Elfi Scuri e recuperarono la Resina dell'Yggdrasil Nero per risvegliare Zormannu e <strong>Mjölnir</strong>, pagando però il prezzo del sacrificio eroico di <strong>Faust</strong> e del cinghiale d'oro <strong>Gullinbursti</strong> contro le fauci di Fafnir. Successivamente, tra le rovine di <strong>Sylvandell</strong>, la compagnia affrontò e purificò la seconda Valchiria, <strong>Skogul</strong>, liberando nei cieli la colossale medusa di luce <strong>Hafgufa</strong>.
+            </p>
+          </div>
+
+          <div class="sub-chapter">
+            <h3><span class="step-num">2.</span> I Cinque Bozzoli di Gnitaheith ("La Corsa Perfetta") e la Redenzione di Baldr</h3>
+            <p>
+              Mentre l'Hafgufa squarciava le tenebre di Fafnir e Zormannu lo affrontava nei cieli con Mjölnir, i campioni penetrarono in <strong>Gnitaheith</strong>, la tana vivente dentro il corpo del Dio Drago. Qui compirono <strong>"La Corsa Perfetta"</strong>, purificando con incantesimi di Cura tutti i <strong>cinque Bozzoli Viventi</strong> senza uccidere gli ostaggi che alimentavano il mostro:
+            </p>
+            <ul>
+              <li><strong>Bozzolo di Metallo e Fuoco:</strong> Liberato il mastro fabbro <strong>Brok Ivaldi</strong>, fratello di Sindri;</li>
+              <li><strong>Bozzolo di Luce Stellare:</strong> Liberato <strong>Re Gal'El</strong>, sovrano degli Elfi Chiari;</li>
+              <li><strong>Bozzolo di Luce Solare:</strong> Liberato e redento il dio della Luce <strong>Baldr</strong>;</li>
+              <li><strong>Bozzolo di Radici e Terra:</strong> Liberato l'antico costruttore nano <strong>Hreidmar</strong>;</li>
+              <li><strong>Bozzolo d'Oro e Cupidigia:</strong> Redenta la coscienza originale del <strong>nano Fafnir</strong>.</li>
+            </ul>
+            <p>
+              Privato delle sue batterie viventi, l'involucro draconico di Fafnir fu abbattuto da Zormannu nel deserto di Joruvellir, sancendo la nascita del <strong>Patto della Triade</strong> tra Nani (Re Timberdolf), Elfi Chiari (Re Gal'El) ed Elfi Scuri (Re Amendir).
+            </p>
+          </div>
+
+          <div class="sub-chapter">
+            <h3><span class="step-num">3.</span> Il Risveglio di Nidavellir, il Sonno di Mjölnir e il Prezzo dell'Oro</h3>
+            <p>
+              Nella Fucina di Ivaldi, lo spirito di Zormannu fu improvvisamente richiamato nel suo mondo (Alfeimur), lasciando <strong>Mjölnir</strong> dormiente: Brok e Sindri rivelarono che solo il vero <strong>Sangue di Thor</strong> (i suoi figli <strong>Magni</strong>, <strong>Modi</strong> o la Valchiria <strong>Thrud</strong>) avrebbe potuto ridestare il martello. Nel Santuario di Quarzo sul Picco Silente, il dio <strong>Baldr</strong> svelò che Rovina stava torturando Magni (a Jotunheim) e Modi (a Muspelheim) per usare il loro sangue divino come carburante dell'<strong>Occhio di Isacco</strong> e scardinare le ancore planari che proteggono la Patria dei Kandra.
+            </p>
+            <p>
+              Superate le prove oniriche dell'anello maledetto <strong>Andvaranaut</strong> nella dimensione del tesoro di Fafnir (e amputato il braccio di Brok infettato dall'anello, attraverso cui il fabbro vide l'Altissimo strappare i cieli di Athlon), Sindri e Brok forgiarono per i campioni leggendari <strong>Manufatti in Metallo Stellare</strong>.
+            </p>
+          </div>
+
+          <div class="legacy-box">
+            <div class="legacy-box-header">🏆 Eredità della Cronaca III</div>
+            <div class="legacy-grid">
+              <div class="legacy-col">
+                <h4>Reliquie &amp; Forgiatura</h4>
+                <ul>
+                  <li><strong>Stella di Sylvandell</strong> (dono di Re Gal'El) e spada <strong>Gramr</strong>.</li>
+                  <li><strong>Manufatti in Metallo Stellare</strong> forgiati nella Fucina di Ivaldi.</li>
+                  <li><strong>Mjölnir</strong> dormiente nella fucina in attesa del Sangue di Thor.</li>
+                </ul>
+              </div>
+              <div class="legacy-col">
+                <h4>Liberazioni &amp; Alleanze</h4>
+                <ul>
+                  <li>Il dio <strong>Baldr</strong> al sicuro nel Santuario di Quarzo.</li>
+                  <li><strong>Skogul (2ª Valchiria)</strong> purificata e inviata al Pozzo di Mimir.</li>
+                  <li>Siglato il <strong>Patto della Triade</strong> (Nani, Elfi Chiari, Elfi Scuri) e promessa l'armata degli <em>Inevitabili</em>.</li>
+                </ul>
+              </div>
+              <div class="legacy-col">
+                <h4>Rivelazioni Cosmiche</h4>
+                <ul>
+                  <li><strong>Magni</strong> e <strong>Modi</strong> sono le ancore planari torturate per caricare l'Occhio di Isacco.</li>
+                  <li><strong>Víðarr</strong>, il Dio Silenzioso, è la variabile segreta temuta da Rovina.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CRONACA IV -->
+      <article id="cronaca-4" class="chronicle-card">
+        <div class="chronicle-header" onclick="toggleCard(this)">
+          <div class="chronicle-header-left">
+            <span class="chronicle-eyebrow">Cronaca IV</span>
+            <h2 class="chronicle-title">Il Consiglio di Guerra e la Scelta dei Fronti</h2>
+          </div>
+          <span class="chronicle-toggle-btn">▼</span>
+        </div>
+        <div class="chronicle-body">
+          <div class="sub-chapter">
+            <h3><span class="step-num">1.</span> L'Equilibrio Spezzato e la Tessitura del Cielo a Iceburg</h3>
+            <p>
+              Tornati alle Guglie Spettrali su Athlon, gli eroi scoprirono dalla prole di <strong>Vedfolnir</strong> che l'Aquila Sacra era scomparsa dopo il duello con Thormund; nelle radici profonde, <strong>Ratatoskr</strong> e <strong>Mimir</strong> (affiancato da <strong>Sigrun e Skogul</strong>) mostrarono loro come l'assenza della luce di Vedfolnir stesse permettendo a <strong>Nidhorg</strong> di rigenerarsi in un lago di linfa nera corrotta.
+            </p>
+            <p>
+              Appena teletrasportati nel cortile reale di <strong>Iceburg</strong>, i campioni assistettero all'inizio della <strong>Grande Frattura</strong>: il firmamento si squarciò scaricando piogge di magma da Muspelheim, ghiacciai da Jotunheim e fulmini dorati da Asgard. Mentre <strong>Bjior, Victor e Airlik</strong> fungevano da ancore fisiche e <strong>Koddak</strong> imponeva l'ordine con la voce del comando, <strong>Orphen e Cyric</strong> lanciarono gomene di pura energia arcana, <strong>ricucendo le ferite del cielo</strong> sopra la capitale.
+            </p>
+          </div>
+
+          <div class="sub-chapter">
+            <h3><span class="step-num">2.</span> Il Grande Consiglio dei Re e la Rivelazione di Adrian</h3>
+            <p>
+              Nella Sala delle Mappe di Iceburg, davanti a <strong>Re Odor</strong> degli Orgrim, <strong>Re Jagah</strong> dei Jarris e <strong>Lord Bother</strong> dei Bjarolf, il <strong>Vescovo Rodrug</strong> portò l'ultimatum di resa intimato da Snowshade. Subito dopo, l'Elfo Chiaro <strong>Adrian</strong> rivelò ciò a cui aveva assistito spiando gli alloggi segreti del Vescovo Throka: il prelato si era strappato la pelle umana rivelandosi come l'Arcidemone <strong>Mammon</strong>, intento a bere dalla <em>Coppa dell'Immortalità</em> mentre lanciava l'armata dei Krivor in marcia forzata (a sole due settimane da Iceburg).
+            </p>
+            <p>
+              Inoltre, gli esploratori <strong>Kumir, Arimir e Oliver</strong> riferirono che l'immensa <strong>Orda dei Defunti</strong> a Nord era guidata dai <em>Signori del Buio</em> e da una titanica aquila d'ombra corrotta dritta verso i tunnel delle <strong>Vene di Ymir</strong>, mentre nella notte <strong>MelSor</strong> avvertì mentalmente Koddak dei tumulti dei <em>Dissidenti</em> attorno al Frassino Argentato e della misteriosa persistenza dello spirito di <strong>Mikkel</strong>.
+            </p>
+          </div>
+
+          <div class="sub-chapter">
+            <h3><span class="step-num">3.</span> L'Assegnazione dei Fronti Paralleli</h3>
+            <p>
+              Non potendo essere ovunque mentre gli eserciti mortali si preparavano a reggere l'urto sulle mura di Iceburg, il Consiglio di Guerra definì la strategia globale sui tre fronti divini:
+            </p>
+            <ul>
+              <li><strong>Fronte di Jotunheim (Est - The Spear):</strong> Affidato alle squadre di eroi alleati per liberare <strong>Magni</strong> e la Valchiria <strong>Göndul</strong>;</li>
+              <li><strong>Fronte di Muspelheim (Sud-Est - Spine di Cristallo):</strong> Affidato alle forze alleate per liberare <strong>Modi</strong> e la Valchiria <strong>Brunilde</strong>;</li>
+              <li><strong>Fronte di Asgard (Nord - L'Ultima Catena):</strong> Assegnato ai <strong>Sei Campioni protagonisti</strong> (<em>Koddak, Victor, Cyric, Orphen, Bjior e Doring</em>) per risalire le Vene di Ymir, spezzare il Silenzio di Asgard e liberare il Dio Silenzioso <strong>Víðarr</strong>.</li>
+            </ul>
+          </div>
+
+          <div class="legacy-box">
+            <div class="legacy-box-header">🏆 Eredità della Cronaca IV</div>
+            <div class="legacy-grid">
+              <div class="legacy-col">
+                <h4>Imprese &amp; Difesa</h4>
+                <ul>
+                  <li><strong>Tessitura dell'Etere:</strong> Ricucite le fratture celesti sopra Iceburg.</li>
+                  <li>Costituito il Comando Unificato del Nord (Odor, Jagah, Bother, Rodrug).</li>
+                </ul>
+              </div>
+              <div class="legacy-col">
+                <h4>Intelligence Svelata</h4>
+                <ul>
+                  <li>Smascherato pubblicamente Throka come l'Arcidemone <strong>Mammon</strong> grazie ad <strong>Adrian</strong>.</li>
+                  <li>Individuata la rotta dell'Orda dei Defunti verso le Vene di Ymir.</li>
+                </ul>
+              </div>
+              <div class="legacy-col">
+                <h4>Scelta Strategica</h4>
+                <ul>
+                  <li>Fronti di Jotunheim e Muspelheim affidati agli alleati; i <strong>Sei Campioni</strong> marciano verso <strong>Asgard</strong>.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- CRONACA V -->
+      <article id="cronaca-5" class="chronicle-card">
+        <div class="chronicle-header" onclick="toggleCard(this)">
+          <div class="chronicle-header-left">
+            <span class="chronicle-eyebrow">Cronaca V</span>
+            <h2 class="chronicle-title">L'Ascensione verso Asgard e le Vene di Ymir</h2>
+          </div>
+          <span class="chronicle-toggle-btn">▼</span>
+        </div>
+        <div class="chronicle-body">
+          <div class="sub-chapter">
+            <h3><span class="step-num">1.</span> Forte Sentinella e il Medaglione di Heimdall</h3>
+            <p>
+              Attraversato il Portale del Gelo fino a <strong>Forte Sentinella</strong>, bastione di basalto nero incastonato alla base dell'Ultima Catena, i sei protagonisti furono accolti dallo <strong>Yarl Hrolfgar</strong>, Lord Comandante dei <strong>Guardiani della Notte</strong> (Casata Othoganor). Mentre la guarnigione sigillava i cancelli inferiori contro l'avanguardia dei Defunti, Hrolfgar fece salire gli eroi sull'ascensore ciclopico de <em>La Gola dell'Ultima Catena</em> fino alla <strong>Terrazza Bianca</strong> e consegnò loro il <strong>Medaglione di Heimdall</strong>, reliquia ancestrale tramandata per aprire il Bifröst nell'ora del Ragnarök.
+            </p>
+          </div>
+
+          <div class="sub-chapter">
+            <h3><span class="step-num">2.</span> La Scalata nel Silenzio Bianco e la Zanna dei Cieli</h3>
+            <p>
+              I sei campioni si addentrarono da soli nelle <strong>Vene di Ymir Alte</strong>, risalendo i cunicoli di ghiaccio primordiale immersi nel <strong>Silenzio Bianco</strong>, dove il gelo innaturale attutiva ogni suono e congelava il respiro. Guidati dal battito caldo e dorato del Medaglione di Heimdall, superarono gli abissi interni della montagna fino a sbucare sopra il mare di nubi temporalesche, sulla vetta estrema della <strong>Zanna dei Cieli</strong>.
+            </p>
+          </div>
+
+          <div class="sub-chapter">
+            <h3><span class="step-num">3.</span> L'Ancora d'Ombra (Il Tentacolo Nero) e l'Approdo sulla Piana di Ida</h3>
+            <p>
+              Inserito il Medaglione di Heimdall nell'altare monolitico sulla cima del mondo, il cielo notturno si squarciò: ma al posto della luce iridata del Ponte Arcobaleno, dallo squarcio discese il <strong>Tentacolo Nero</strong>, un colossale condotto bio-meccanico di cartilagine scura e venature viola con cui l'impero psionico degli <strong>Illithid (Mind Flayer)</strong> e l'entità cosmica <strong>Cthulhu</strong> avevano parassitato il Bifröst. Alla base del ponte violato, una stele incisa in caratteri <strong>Qualith</strong> recitava:
+            </p>
+            <div class="lore-quote">
+              «Non è morto ciò che può attendere in eterno, e col volgere di strani eoni anche la morte può morire.»
+            </div>
+            <p>
+              Risalito il Tentacolo Nero, i sei campioni approdarono sulla <strong>Piana di Ida</strong> in un'<strong>Asgard caduta e immersa nel Silenzio assoluto</strong>, sotto un cielo magenta solcato da nubi neurali, dove l'emissaria Githyanki <strong>Immira</strong> e il misterioso dissidente <strong>Zerth</strong> li attendevano presso un Nautiloide per condurli a <strong>Serenia</strong>.
+            </p>
+          </div>
+
+          <div class="legacy-box">
+            <div class="legacy-box-header">🏆 Eredità della Cronaca V</div>
+            <div class="legacy-grid">
+              <div class="legacy-col">
+                <h4>Reliquie Chiave</h4>
+                <ul>
+                  <li><strong>Medaglione di Heimdall:</strong> Consegnato da Yarl Hrolfgar; chiave del Bifröst e bussola per le reliquie di Asgard.</li>
+                </ul>
+              </div>
+              <div class="legacy-col">
+                <h4>Nuovi Contatti</h4>
+                <ul>
+                  <li><strong>Yarl Hrolfgar</strong> e i Guardiani della Notte a presidio dell'Ultima Catena.</li>
+                  <li>Primo incontro con i Githyanki <strong>Immira</strong> e <strong>Zerth</strong> sulla Piana di Ida.</li>
+                </ul>
+              </div>
+              <div class="legacy-col">
+                <h4>Stato Attuale</h4>
+                <ul>
+                  <li>Approdo ad <strong>Asgard, il Regno del Silenzio</strong>, dominato dai Mind Flayer sotto l'ombra del Reame Remoto (<strong>Cthulhu</strong>) dove è imprigionato <strong>Víðarr</strong>.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- COMPENDIO RAPIDO INTERATTIVO -->
+      <section id="compendio" class="compendium-section">
+        <div class="chronicle-header-left">
+          <span class="chronicle-eyebrow">Archivio Tattico del Gruppo</span>
+          <h2 class="chronicle-title">Pannello Compendio Rapido</h2>
+        </div>
+
+        <div class="compendium-tabs" role="tablist">
+          <button class="compendium-tab active" onclick="switchTab(event, 'tab-campioni')">🛡️ I Sei Campioni</button>
+          <button class="compendium-tab" onclick="switchTab(event, 'tab-valchirie')">🪽 Stato delle Cinque Valchirie</button>
+          <button class="compendium-tab" onclick="switchTab(event, 'tab-reliquie')">⚡ Le Grandi Reliquie</button>
+        </div>
+
+        <!-- TAB 1: I SEI CAMPIONI -->
+        <div id="tab-campioni" class="compendium-panel active">
+          <div class="champions-grid">
+            <div class="entity-card">
+              <span class="entity-role">Kandra di Luce • Infiltratore &amp; Stratega</span>
+              <h3 class="entity-name">Koddak (Lord Seymour)</h3>
+              <p class="entity-desc">
+                Emanazione di Preservazione vincolata al Primo Contratto. Dopo aver operato sotto la maschera di Lord Seymour e aver svelato la sua vera forma luminosa a Nandùn invocando l'Arcangelo Mikkel, porta nel nucleo il peso dei segreti del Frassino Argentato e della Patria dei Kandra.
+              </p>
+            </div>
+
+            <div class="entity-card">
+              <span class="entity-role">Predatore Nobile • Signore del Sangue</span>
+              <h3 class="entity-name">Victor</h3>
+              <p class="entity-desc">
+                Guerriero vampiro che ha piegato la propria maledizione oscura in uno scudo per i viventi. Ha sconfitto la paura della Morte nel Mausoleo Senza Fine e ha cavalcato al fianco del cinghiale divino Gullinbursti nelle battaglie più disperate di Svartálfaheim.
+              </p>
+            </div>
+
+            <div class="entity-card">
+              <span class="entity-role">Campione di Luce &amp; Ombra • Portatore di Gramr</span>
+              <h3 class="entity-name">Cyric</h3>
+              <p class="entity-desc">
+                Incantatore e combattente che ha fuso la propria eredità vampirica con la fiamma sacra in un'unica luce bianco-rossa. Con la leggendaria spada <em>Gramr</em> ha inferto il colpo fatale a Txabaxle e, insieme a Orphen, ha ricucito le fratture del cielo sopra Iceburg.
+              </p>
+            </div>
+
+            <div class="entity-card">
+              <span class="entity-role">Gran Maestro Arcano &amp; Divino • Custode della Vita</span>
+              <h3 class="entity-name">Orphen</h3>
+              <p class="entity-desc">
+                Sapiente dominatore delle arti arcane e divine. Le sue magie di guarigione e resurrezione hanno strappato alla morte Re Boradol Bjarolf, purificato i cinque Bozzoli di Gnitaheith ("La Corsa Perfetta") e tessuto i fili d'etere per chiudere la Grande Frattura.
+              </p>
+            </div>
+
+            <div class="entity-card">
+              <span class="entity-role">La Montagna che Cammina • Colosso del Clan Krivor</span>
+              <h3 class="entity-name">Bjior Krivor</h3>
+              <p class="entity-desc">
+                Guerriero nanico dalla resistenza adamantina, figlio di Re Branvir. Liberato dalle radici di Yggdrasil e assolto dallo spirito paterno a Helgrind, combatte a petto nudo come baluardo indistruttibile e ancora vivente per i suoi compagni.
+              </p>
+            </div>
+
+            <div class="entity-card">
+              <span class="entity-role">Mastro Artefice • Signore de "Il Pugnale"</span>
+              <h3 class="entity-name">Doring</h3>
+              <p class="entity-desc">
+                Geniale artefice e capitano della nave volante <em>Il Pugnale</em>. Il suo ingegno tecnico-arcano ha dato vita alle <em>Ampolle dei Ventifermanti</em> a Nandùn, alle protesi meccaniche di Faust e agli strumenti decisivi per decifrare le tecnologie aliene di Asgard.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: STATO DELLE CINQUE VALCHIRIE -->
+        <div id="tab-valchirie" class="compendium-panel">
+          <div class="valkyrie-list">
+            <div class="valkyrie-card">
+              <span class="status-badge status-free">✔ Libera • Pozzo di Mimir</span>
+              <h3 class="entity-name">1. Sigrun</h3>
+              <p class="entity-desc">
+                Prima delle Valchirie e antica sposa di Re Agnar Bjarolf. Sconfitta e purificata dalla nube nera di Rovina nel <strong>Tempio di Skadi</strong> (Cronaca II). Ora presidia la Fonte Primordiale con Mimir.
+              </p>
+            </div>
+
+            <div class="valkyrie-card">
+              <span class="status-badge status-free">✔ Libera • Pozzo di Mimir</span>
+              <h3 class="entity-name">2. Skogul</h3>
+              <p class="entity-desc">
+                Seconda Valchiria, posta a guardia dell'Hafgufa nelle rovine sommerse di <strong>Sylvandell</strong> a Svartálfaheim (Cronaca III). Purificata dagli eroi, ha raggiunto la sorella Sigrun presso Mimir.
+              </p>
+            </div>
+
+            <div class="valkyrie-card">
+              <span class="status-badge status-active">⚡ In Soccorso • Asgard</span>
+              <h3 class="entity-name">3. Thrud</h3>
+              <p class="entity-desc">
+                Figlia di Thor e Valchiria perduta nel Regno del Silenzio (<strong>Asgard</strong>). Nascosta tra le spire dell'alveare Illithid, possiede il Sangue del Tuono necessario a risvegliare <em>Mjölnir</em> nella Fucina di Ivaldi.
+              </p>
+            </div>
+
+            <div class="valkyrie-card">
+              <span class="status-badge status-captive">❄️ Fronte Alleato • Jotunheim</span>
+              <h3 class="entity-name">4. Göndul</h3>
+              <p class="entity-desc">
+                Quarta Valchiria, trattenuta nei deserti di ghiaccio di <strong>Jotunheim</strong> (<em>The Spear</em>) dove è incatenato anche Magni. Obiettivo della spedizione parallela degli alleati.
+              </p>
+            </div>
+
+            <div class="valkyrie-card">
+              <span class="status-badge status-danger">🔥 Fronte Alleato • Muspelheim</span>
+              <h3 class="entity-name">5. Brunilde (Gunnr)</h3>
+              <p class="entity-desc">
+                Quinta Valchiria, prigioniera tra le fornaci magmatiche di <strong>Muspelheim</strong> (sotto le Spine di Cristallo) dove è torturato Modi. Obiettivo del secondo fronte alleato per aprire la via verso Freya a Vanaheim.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: LE GRANDI RELIQUIE -->
+        <div id="tab-reliquie" class="compendium-panel">
+          <div class="champions-grid">
+            <div class="entity-card">
+              <span class="entity-role">Reliquia di Asgard • In Possesso del Gruppo</span>
+              <h3 class="entity-name">Medaglione di Heimdall</h3>
+              <p class="entity-desc">
+                Consegnato da Yarl Hrolfgar a Forte Sentinella. Amuleto d'oro pallido incrostato di frammenti del Bifröst: ha aperto il passaggio sulla Zanna dei Cieli e risuona in prossimità delle reliquie divine di Heimdall ad Asgard.
+              </p>
+            </div>
+
+            <div class="entity-card">
+              <span class="entity-role">Artefatto Cosmico • Obiettivo ad Asgard</span>
+              <h3 class="entity-name">Cuore del Bifröst</h3>
+              <p class="entity-desc">
+                Il nucleo cristallino primordiale del Ponte Arcobaleno, attualmente soffocato dall'Ancora d'Ombra e dal Tentacolo Nero Illithid. La sua purificazione è indispensabile per riaccendere il vero Bifröst e spezzare l'isolamento di Asgard.
+              </p>
+            </div>
+
+            <div class="entity-card">
+              <span class="entity-role">Arma Divina • Dormiente a Nidavellir</span>
+              <h3 class="entity-name">Mjölnir, il Martello del Tuono</h3>
+              <p class="entity-desc">
+                Capolavoro di Brok e Sindri Ivaldi. Brandito eroicamente da Zormannu per abbattere il Dio Drago Fafnir, riposa ora inerte nella Grande Fucina di Nidavellir in attesa di essere risvegliato dal Sangue di Thor (Thrud, Magni o Modi).
+              </p>
+            </div>
+
+            <div class="entity-card">
+              <span class="entity-role">Reliquia del Risveglio • Custodita ad Asgard</span>
+              <h3 class="entity-name">Gjallarhorn</h3>
+              <p class="entity-desc">
+                Il leggendario Corno di Heimdall il cui suono attraversa tutti i Nove Mondi. Nel Regno del Silenzio dominato dall'Unico Grande Cervello e dall'eco di Cthulhu, il suo squillo rappresenta l'arma suprema per infrangere l'incubo psionico.
+              </p>
+            </div>
+
+            <div class="entity-card">
+              <span class="entity-role">Doni della Triade &amp; Fucina di Ivaldi</span>
+              <h3 class="entity-name">Stella di Sylvandell, Gramr &amp; Metallo Stellare</h3>
+              <p class="entity-desc">
+                La gemma lunare donata da Re Gal'El, la spada ancestrale <em>Gramr</em> di Cyric e i Manufatti forgiati da Brok e Sindri con il Metallo Stellare estratto dal vero tesoro di Fafnir per ferire le entità divine.
+              </p>
+            </div>
+
+            <div class="entity-card">
+              <span class="entity-role">Strumenti Alchemici &amp; Cosmici</span>
+              <h3 class="entity-name">Ampolle dei Ventifermanti &amp; Rugiada di Mimir</h3>
+              <p class="entity-desc">
+                I recipienti alchemici creati da Doring per intrappolare le essenze corrotte di Rovina e la Benedizione della Fonte Primordiale di Mimir che scorre nel sangue dei campioni sin dal ritorno da Helheim.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <p>ᛉ <strong>ATHLON - IL RAGNAROK</strong> • Cronache Ufficiali dei Giocatori • Custodito dal Libro delle Memorie ᛉ</p>
+  </footer>
+
+  <script>
+    // Toggle single Chronicle Card
+    function toggleCard(headerEl) {
+      const card = headerEl.closest('.chronicle-card');
+      card.classList.toggle('collapsed');
+      updateToggleAllButtonState();
+    }
+
+    // Expand / Collapse All Chronicles
+    const toggleAllBtn = document.getElementById('toggleAllBtn');
+    const toggleAllLabel = document.getElementById('toggleAllLabel');
+    let allCollapsed = false;
+
+    toggleAllBtn.addEventListener('click', () => {
+      const cards = document.querySelectorAll('.chronicle-card');
+      allCollapsed = !allCollapsed;
+      cards.forEach(card => {
+        if (allCollapsed) {
+          card.classList.add('collapsed');
+        } else {
+          card.classList.remove('collapsed');
+        }
+      });
+      toggleAllLabel.textContent = allCollapsed ? 'Espandi Tutto' : 'Comprimi Tutto';
+    });
+
+    function updateToggleAllButtonState() {
+      const cards = Array.from(document.querySelectorAll('.chronicle-card'));
+      const everyCollapsed = cards.every(c => c.classList.contains('collapsed'));
+      allCollapsed = everyCollapsed;
+      toggleAllLabel.textContent = allCollapsed ? 'Espandi Tutto' : 'Comprimi Tutto';
+    }
+
+    // Immersive Reading Mode
+    const immersiveBtn = document.getElementById('immersiveBtn');
+    immersiveBtn.addEventListener('click', () => {
+      document.body.classList.toggle('immersive-mode');
+      immersiveBtn.classList.toggle('active');
+    });
+
+    // Compendium Tabs Switcher
+    function switchTab(event, panelId) {
+      document.querySelectorAll('.compendium-tab').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.compendium-panel').forEach(panel => panel.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      document.getElementById(panelId).classList.add('active');
+    }
+
+    // Active TOC Link on Scroll
+    const sections = document.querySelectorAll('.chronicle-card, .compendium-section');
+    const tocLinks = document.querySelectorAll('.toc-link');
+
+    window.addEventListener('scroll', () => {
+      let currentId = 'prologo';
+      sections.forEach(sec => {
+        const rect = sec.getBoundingClientRect();
+        if (rect.top <= 160) {
+          currentId = sec.id;
+        }
+      });
+      tocLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
+      });
+    });
+
+    // Live Text Search & Highlighting
+    const searchInput = document.getElementById('searchInput');
+    const searchClear = document.getElementById('searchClear');
+    const searchCount = document.getElementById('searchCount');
+    const searchableContainer = document.getElementById('searchableContent');
+
+    function clearHighlights() {
+      const marks = searchableContainer.querySelectorAll('mark.search-hit');
+      marks.forEach(mark => {
+        const parent = mark.parentNode;
+        parent.replaceChild(document.createTextNode(mark.textContent), mark);
+        parent.normalize();
+      });
+    }
+
+    function performSearch() {
+      const query = searchInput.value.trim();
+      clearHighlights();
+
+      if (!query || query.length < 2) {
+        searchClear.style.display = query ? 'block' : 'none';
+        searchCount.style.display = 'none';
+        return;
+      }
+
+      searchClear.style.display = 'block';
+      const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(`(${escaped})`, 'gi');
+      let totalMatches = 0;
+
+      // Expand all cards and search text nodes
+      const textElements = searchableContainer.querySelectorAll('p, li, h2, h3, h4');
+      textElements.forEach(el => {
+        const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+
+        nodes.forEach(node => {
+          if (regex.test(node.nodeValue)) {
+            const frag = document.createDocumentFragment();
+            let lastIdx = 0;
+            node.nodeValue.replace(regex, (match, p1, offset) => {
+              frag.appendChild(document.createTextNode(node.nodeValue.slice(lastIdx, offset)));
+              const mark = document.createElement('mark');
+              mark.className = 'search-hit';
+              mark.textContent = match;
+              frag.appendChild(mark);
+              lastIdx = offset + match.length;
+              totalMatches++;
+            });
+            frag.appendChild(document.createTextNode(node.nodeValue.slice(lastIdx)));
+            node.parentNode.replaceChild(frag, node);
+
+            const parentCard = el.closest('.chronicle-card');
+            if (parentCard) parentCard.classList.remove('collapsed');
+          }
+        });
+      });
+
+      searchCount.style.display = 'inline-block';
+      searchCount.textContent = `${totalMatches} risultat${totalMatches === 1 ? 'o' : 'i'}`;
+
+      const firstHit = searchableContainer.querySelector('mark.search-hit');
+      if (firstHit) {
+        firstHit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    searchInput.addEventListener('input', performSearch);
+    searchClear.addEventListener('click', () => {
+      searchInput.value = '';
+      clearHighlights();
+      searchClear.style.display = 'none';
+      searchCount.style.display = 'none';
+      searchInput.focus();
+    });
+  </script>
+</body>
+</html>
