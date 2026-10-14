@@ -472,7 +472,199 @@
             .chapter-banner { padding: 1.35rem 1.2rem; }
             .chronicle-card p { text-align: left; }
         }
-    </style>
+    
+        /* ==================== HEROES SECTION STYLES ==================== */
+        .hero-filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+            margin-bottom: 2.25rem;
+            justify-content: center;
+        }
+
+        .hero-filter-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-muted);
+            font-family: 'Cinzel', serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 0.55rem 1.15rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .hero-filter-btn:hover {
+            color: var(--gold-bright);
+            border-color: var(--gold-runic);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .hero-filter-btn.active {
+            color: #080b10;
+            background: linear-gradient(135deg, var(--gold-bright), var(--gold-runic));
+            border-color: var(--gold-bright);
+            font-weight: 700;
+            box-shadow: 0 0 15px var(--gold-dim);
+        }
+
+        .heroes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2rem;
+        }
+
+        .hero-profile-card {
+            background: linear-gradient(180deg, rgba(21, 28, 43, 0.95) 0%, rgba(14, 19, 30, 0.98) 100%);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 1.85rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 1.35rem;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            position: relative;
+        }
+
+        .hero-profile-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold-runic);
+            box-shadow: 0 14px 40px rgba(212, 175, 55, 0.18);
+        }
+
+        .hero-header {
+            display: flex;
+            gap: 1.25rem;
+            align-items: center;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.18);
+            padding-bottom: 1.2rem;
+        }
+
+        .hero-avatar-frame {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 2px solid var(--gold-runic);
+            box-shadow: 0 0 18px rgba(212, 175, 55, 0.35);
+            background: #0d121c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-avatar-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-avatar-placeholder {
+            font-size: 2.2rem;
+            color: var(--gold-bright);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, rgba(13, 18, 28, 0.9) 100%);
+        }
+
+        .hero-title-box {
+            flex-grow: 1;
+            min-width: 0;
+        }
+
+        .hero-title-box h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.32rem;
+            line-height: 1.25;
+            margin-bottom: 0.25rem;
+            border-bottom: none !important;
+            padding-bottom: 0 !important;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .hero-epithet {
+            font-size: 0.82rem;
+            font-family: 'Cinzel', serif;
+            color: var(--text-muted);
+            letter-spacing: 0.04em;
+            margin-bottom: 0.5rem;
+            line-height: 1.35;
+        }
+
+        .hero-badges-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+
+        .hero-badge {
+            font-size: 0.68rem;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            padding: 0.2rem 0.55rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .badge-party { background: rgba(212, 175, 55, 0.18); color: var(--gold-bright); border: 1px solid var(--gold-runic); }
+        .badge-pugnale { background: rgba(56, 189, 248, 0.15); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.45); }
+        .badge-ross { background: rgba(220, 38, 38, 0.18); color: #fca5a5; border: 1px solid rgba(220, 38, 38, 0.5); }
+        .badge-native { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.4); }
+        .badge-svartalf { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.4); }
+
+        .hero-subblock {
+            background: rgba(11, 15, 24, 0.65);
+            border: 1px solid rgba(212, 175, 55, 0.12);
+            border-radius: 10px;
+            padding: 1.15rem 1.35rem;
+        }
+
+        .hero-subblock h4 {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--gold-bright);
+            margin-bottom: 0.65rem;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            border-bottom: 1px dashed rgba(212, 175, 55, 0.15);
+            padding-bottom: 0.4rem;
+        }
+
+        .hero-subblock p {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text-main);
+            margin-bottom: 0.65rem;
+            text-align: justify;
+        }
+
+        .hero-subblock p:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 600px) {
+            .heroes-grid { grid-template-columns: 1fr; }
+            .hero-header { flex-direction: column; text-align: center; }
+            .hero-title-box h3 { justify-content: center; }
+            .hero-badges-row { justify-content: center; }
+        }
+
+</style>
 </head>
 <body>
 
@@ -503,6 +695,7 @@
             <button class="nav-btn" onclick="switchTab('atto2', this)">II. Nandun, I Ruin &amp; Mikkel</button>
             <button class="nav-btn" onclick="switchTab('atto3', this)">III. Svartálfaheim &amp; Fafnir</button>
             <button class="nav-btn" onclick="switchTab('atto4', this)">IV. Asgard, Pozzo di Urd &amp; Ida</button>
+            <button class="nav-btn" onclick="switchTab('eroi', this)" style="border: 1px solid var(--gold-runic); color: var(--gold-bright);">👑 Gli Eroi di Athlon</button>
             <button class="nav-btn" onclick="switchTab('atlante', this)">⚔️ Atlante degli Dei, Caduti &amp; Alleanze</button>
         </div>
     </nav>
@@ -1516,6 +1709,754 @@
             </article>
         </section>
 
+            <!-- ==================== GLI EROI DI ATHLON ==================== -->
+        <section id="eroi" class="chapter-section">
+            <div class="chapter-banner">
+                <span class="chapter-tag">I Campioni del Multiverso &amp; I Baluardi dei Nove Regni</span>
+                <h2>GLI EROI DI ATHLON: I CAMPIONI CONTRO IL RAGNAROK</h2>
+                <p class="chapter-lead">
+                    I profili epici, le arti marziali e i tormenti interiori di coloro che solcano il campo di battaglia contro l'entropia di Rovina e l'ombra dell'Occhio di Isacco.
+                </p>
+            </div>
+
+            <div class="hero-filter-bar">
+                <button class="hero-filter-btn active" onclick="filterHeroes('all', this)">👑 Tutti gli Eroi (22)</button>
+                <button class="hero-filter-btn" onclick="filterHeroes('party', this)">⚔️ La Compagnia Attuale (6)</button>
+                <button class="hero-filter-btn" onclick="filterHeroes('pugnale', this)">🌌 Gli Eroi del Pugnale (9)</button>
+                <button class="hero-filter-btn" onclick="filterHeroes('athlon', this)">🛡️ Campioni di Athlon &amp; Alleati (7)</button>
+            </div>
+
+            <div class="heroes-grid">
+                <!-- EROE: Koddak (Lord Seymour) -->
+                <article class="chronicle-card hero-profile-card" data-group="party" id="hero-koddak">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/koddak.jpg" alt="Koddak (Lord Seymour)" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>⏳</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #f5d76e;">Koddak (Lord Seymour)</h3>
+                            <div class="hero-epithet">Mutaforma Primordiale, Vincolato al Contratto & Flagello di Rovina</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-party">Compagnia Attuale • Asgard</span>
+                                <span class="hero-badge badge-native">Kandra • Clessidra dell'Ombra</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>I Kandra costituiscono uno dei misteri più insondabili e temuti di Athlon: esseri translucidi privi di forma fissa, nati all'alba delle ere dal tocco creatore di Preservazione. Tra di essi, Koddak — noto come la <em>«Clessidra dell'Ombra»</em> — è un veterano di Terza Generazione che ha attraversato millenni di storia stipulando e onorando Contratti sacri. Dalla protezione di sovrane minacciate all'infiltrazione contro l'Inquisizione fanatica dell'Altissimo, Koddak si è sempre mosso sul sottile confine tra segreto e condanna.</p>
+                        <p>Attualmente è vincolato dal suo <strong>Ventitreesimo Contratto</strong>, stipulato direttamente con <strong>Ross Royce</strong> per guidare la resistenza contro l'apocalisse. Per celare la sua vera natura di Senza Forma agli occhi dei mortali, Koddak indossa la carne e le ossa del nobile decaduto <strong>Lord Seymour</strong>, ma la sua missione lo ha portato a vestire spoglie ben più pericolose: ha indossato il nobile Daramyr Ardodar a Throka e soprattutto il Sommo Sacerdote <strong>Tsabaxle</strong> della Rosa Nera, strappandogli i ricordi per violare la Prigione delle Spine ad Aurvangar e salvare Re Amendir. Nella discesa ad Asgard, la sua natura fluida lo ha reso l'unico eroe biologicamente immune all'infezione del girino Illithid.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Maestro supremo dello spionaggio e dell'infiltrazione, Koddak sfrutta la metamorfosi soprannaturale (<em>Shapechanger</em>) per indossare i corpi dei caduti, assorbendone memorie, capacità fisiche e linguaggi con un processo irreversibile da antimagia o dissoluzioni. La sua mente è una roccaforte inaccessibile grazie al <em>Mind Blank Kandra</em>, che lo rende immune a qualsivoglia lettura del pensiero o scansione emotiva.</p>
+                        <p>La sua arma più devastante e segreta risiede nella facoltà di incanalare un <span class="ruin-term">Ruin</span>: risvegliando frammenti di potere dormiente nel proprio codice primordiale, Koddak può replicare qualunque prodigio, incantesimo supremo o dote marziale esistente. È così che ha pronunciato la letale <em>Parola del Potere: Uccidere</em> che ha spezzato la possessione oscura della Valchiria Skogul a Sylvandell, ed è così che supporta la compagnia alternando furtività d'ombra, poteri psionici e incantesimi di distruzione cosmica.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Meditativo, solenne, quasi sacerdotale nella propria concezione della vita. Per Koddak il Contratto non è una semplice transazione, ma un asse morale che dà senso all'esistenza e preserva l'identità nel corso dei secoli. Dietro la maschera impassibile di Lord Seymour batte un cuore compassionevole, segnato dal dolore per i padroni perduti e dall'orrore per il fanatismo dell'Inquisizione.</p>
+                        <p>Il suo terrore più viscerale — emerso nelle allucinazioni dell'Anello tra le sale di Fafnir — è la <strong>Devoluzione e la Paura del Grande Silenzio</strong>: il panico di perdere la scintilla divina di Preservazione con la vittoria di Rovina, vedendo la propria coscienza dissolversi e la propria carne squagliarsi come cera fredda per regredire a un <em>Mistwraith</em>, una melma cieca priva di ricordi, di voce e di Io. Ha trionfato su quell'incubo riaffermando che la sua anima è più grande della materia che indossa.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Victor -->
+                <article class="chronicle-card hero-profile-card" data-group="party" id="hero-victor">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/victor.jpg" alt="Victor" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>🦇</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #38bdf8;">Victor</h3>
+                            <div class="hero-epithet">Il Redento dell'Alba, Lama Divina & Terrore dei Signori Oscuri</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-pugnale">Eroe del Pugnale • Multiverso</span>
+                                <span class="hero-badge badge-party">Vampiro Supremo • Paladino / Ladro</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Giunto dal Multiverso a bordo del vascello planare <em>Pugnale</em>, Victor è una figura leggendaria e una contraddizione vivente: un Vampiro Diurno e Supremo che ha ripudiato la malvagità della propria razza per consacrarsi alla redenzione e alla difesa degli innocenti. Concepito nelle tenebre come arma di massacro dai signori oscuri, fu salvato e forgiato dal celebre cacciatore di demoni <strong>Raphael</strong>, che gli insegnò a dominare la sete di sangue attraverso l'onore marziale e la grazia divina.</p>
+                        <p>Varcata la soglia di Athlon, Victor è stato il pilastro protettivo del gruppo: nel momento del trapasso tra le dimensioni ha salvato la vita al venerabile Merlino afferrandolo al volo nel baratro dell'etere. Ha condotto le indagini sotto copertura con <em>Seeming</em> nei bassifondi del porto di Nandùn, ha fronteggiato i vampiri d'élite nelle fonderie di Solomon, ha imprigionato Lady Morwenna in una cella antimagia e ha guidato la carica a Forte Sentinella prima di ascendere ad Asgard per decapitare l'Alveare Ceremorfico.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Combattente corpo a corpo ibrido e devastante di 19° livello (Vampiro 19 / Paladino 17 / Ladro 13). Disdegna le armature metalliche facendo affidamento su una Destrezza sovrumana (DEX 26), su riflessi felini e sulla capacità innata di camminare sui soffitti (<em>Spider Climb</em>). In battaglia si muove a velocità sconcertante moltiplicata da <em>Haste</em> e dai <em>Cunning Actions</em>.</p>
+                        <p>Le sue armi sono zanne e artigli sacrilegi (<em>Vampire Natural Weapons</em>, <em>Grappling Claw</em>, <em>Restrained Claw</em>) potenziati dalla furia purificatrice della <em>Punizione Divina (Divine Smite)</em> e dall'<em>Attacco Furtivo</em>. Questa empia combinazione di luce celestiale e ferocia vampirica dilania le difese nemiche, mentre la <em>Rigenerazione</em> continua della sua carne e l'<em>Immortal Blood</em> gli consentono di incassare traumi letali e resistere ai peggiori anatemi grazie a <em>Resistenze Leggendarie</em>.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Severo, ironico, disincantato ma profondamente nobile. Considera la compagnia la propria famiglia d'elezione e nutre un amore protettivo e viscerale per il figlio Cyric, per il quale desidera un destino libero dall'ombra che perseguita la loro stirpe. Rifiuta con tutto se stesso di cedere agli istinti feroci della Bestia, costringendosi a un'autodisciplina ferrea.</p>
+                        <p>La sua prova psicologica più devastante si è consumata nel Tesoro di Fafnir: **L'Incubo del Mausoleo Senza Fine e la Paura della Fine Inevitabile**. Ritrovatosi mortale, col cuore debole e ghiacciato dal gelo dell'invecchiamento, è stato braccato dalla Falce della Morte venuta a riscuotere i secoli di vita rubati. Ha spezzato la morsa della paralisi risvegliando il potere del suo sangue vampirico, giurando che non consegnerà la propria anima alle tenebre finché il Ragnarok non sarà sventato.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Cyric -->
+                <article class="chronicle-card hero-profile-card" data-group="party" id="hero-cyric">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/cyric.jpg" alt="Cyric" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>⚔️</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #38bdf8;">Cyric</h3>
+                            <div class="hero-epithet">L'Erede delle Tempeste, Portatore di Gramr & Luce Incorruttibile</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-pugnale">Eroe del Pugnale • Multiverso</span>
+                                <span class="hero-badge badge-party">Mezzo-Angelo • Paladino / Stregone</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Frutto dell'impossibile prodigio tra il sangue vampirico di Victor e la radiosa grazia angelica di <strong>Aurelia</strong> (Capitano Boros), Cyric è giunto ad Athlon dal Multiverso a bordo del <em>Pugnale</em> dopo aver attraversato fratture temporali per ricongiungersi al padre. Nelle sue vene ribolle un conflitto primordiale: l'istinto rapace della tenebra paterna e l'ardore solare del retaggio celestiale materno.</p>
+                        <p>Fin dal suo arrivo ha combattuto in prima linea su ogni fronte: ha affrontato le orde dell'oltretomba a Niflheim, ha guidato le sortite contro i signori della notte a Forte Elleboro e nella Cattedrale di Nandùn, ed è asceso al regno sotterraneo di Svartálfaheim. Qui, nelle Fucine Sacre di Nidavellir, ha ricevuto dalle mani dei maestri nani la leggendaria spada runica <strong>Gramr</strong>, l'Uccisore di Draghi: con essa ha reciso la vita del Sommo Sacerdote Tsabaxle impedendone la clonazione e ha inferto i fendenti mortali che hanno abbattuto il titano Fafnir.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Campione d'assalto travolgente, Cyric fonde il valore marziale del Paladino con la risonanza magica dello Stregone dall'Anima Divina (<em>Divine Soul</em>). Al culmine della sua potenza spiega ali angeliche luminose per dominare il cielo della mischia, scatenando incantesimi divini, barriere di protezione e colossali scariche di <em>Punizione Divina</em> radiante.</p>
+                        <p>La sua arma d'elezione è la spada ancestrale <strong>Gramr</strong>, lama titanica intrisa di potere primordiale e risonanze di tuono, forgiata per squarciare corazze titaniche e infrangere scudi divini. Cyric si muove come una cometa incandescente sul campo, attirando su di sé l'attenzione dei boss più feroci per schiacciarli con raffiche di fendenti fiammeggianti e purificatori.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Eroico, focoso, guidato da un incorruttibile senso dell'onore e da una dedizione assoluta verso i compagni. Eppure, la sua anima vive sull'orlo di un abisso costante: il terrore che la sua parte angelica sia solo una fragile illusione destinata a soccombere alla maledizione del sangue vampirico.</p>
+                        <p>Questo straziante conflitto è esploso durante la prova dell'Anello nelle cripte di Aurvangar: **L'Incubo de Il Sangue Chiama Sangue**. Nella visione onirica, la sua luce curativa si tramutava in sangue corrotto, le sue ali angeliche decadevano in ali scarnificate di pipistrello e l'ombra del Progenitore Caino cercava di spezzarne la volontà, intimandogli di inchinarsi alla fame omicida. Cyric ha respinto il mostro nel nome dell'amore per il padre e del giuramento sacro verso Athlon, riaffermando che la nobiltà d'animo è una scelta di fede e non una condanna genetica.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Orphen -->
+                <article class="chronicle-card hero-profile-card" data-group="party" id="hero-orphen">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/orphen.jpg" alt="Orphen" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>✨</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #38bdf8;">Orphen</h3>
+                            <div class="hero-epithet">Sua Luminosità, Taumaturgo del Settimo Ordine & Faro dell'Alba</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-pugnale">Eroe del Pugnale • Multiverso</span>
+                                <span class="hero-badge badge-party">Gran Maestro • Stregone / Chierico</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Riverito con il titolo solenne di <em>«Sua Luminosità»</em>, Orphen è giunto dal Multiverso a bordo del <em>Pugnale</em> portando con sé l'eredità del <strong>Gran Maestro del Settimo Ordine</strong>. Dinanzi alla corruzione blasfema che affliggeva la Chiesa dell'Altissimo su Athlon, ha scelto senza esitazione di rinnegare i falsi dogmi ecclesiastici per schierarsi al fianco del Nord, degli Orgrim e della resistenza, riconoscendo in essi l'unico baluardo rimasto a difesa della Trama del mondo.</p>
+                        <p>I suoi miracoli hanno segnato le svolte decisive della campagna: al Palazzo d'Inverno di Iceburg ha compiuto la grandiosa resurrezione di Re Boradol, strappando il sovrano alla morte tra le lacrime della famiglia reale; a Nandùn ha operato con precisione chirurgica per estrarre e sigillare i mostruosi parassiti aberranti impiantati da Valentine nelle carni di Oliver e Panmon; ha restituito gli arti e la vista all'elfo martoriato Faust, e ad Asgard ha decifrato i congegni del Palazzo Ceremorfico guidando la caduta dell'Unico Grande Cervello.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Maestro supremo della magia composita, fonde le vette dell'Arcano e del Divino in un'armonia perfetta. In combattimento comanda la Luce Solare pura per incenerire non-morti e aberrazioni, innalzando cupole prismatiche e barriere di forza capaci di reggere ai soffi dracoformi e alle cariche dei colossi.</p>
+                        <p>La sua funzione tattica è il cuore pulsante e insostituibile della compagnia: dispensatore di cure miracolose, rigenerazioni istantanee, rimozioni di maledizioni e anatemi cosmici, bisturi sacro ed espulsione di simbionti alieni. Quando l'offensiva lo richiede, Orphen scatena tempeste di fuoco sacro e raggi disciolti capaci di vaporizzare interi battaglioni nemici con solenne maestosità.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Dignitoso, austero, pervaso da un'incrollabile compassione per il prossimo e da una devozione sacra alla conoscenza. Tuttavia, sotto la veste immacolata del Gran Maestro arde la vulnerabilità dell'intellettuale di fronte all'orrore dell'apocalisse: **La Paura dell'Inutilità e dello Spettro della Futilità**, emersa durante la prova onirica del Tesoro di Fafnir.</p>
+                        <p>In quell'incubo, Orphen ha visto le mura di Iceburg crollare mentre ogni suo incantesimo deviava o tramutava perversi difensori in orrori non-morti, con l'eco dell'Anello che lo sbeffeggiava definendolo «maestro di cenere». Ha sconfitto lo spettro riscoprendo la sacralità dell'umiltà: ha compreso che il vero trionfo della luce non risiede in pretese di onnipotenza, ma nella dedizione instancabile di curare anche una sola ferita e proteggere anche un solo compagno caduto.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Bjior Krivor -->
+                <article class="chronicle-card hero-profile-card" data-group="party" id="hero-bjior">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/bjior.jpg" alt="Bjior Krivor" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>🛡️</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #f5d76e;">Bjior Krivor</h3>
+                            <div class="hero-epithet">Il Bastione delle Tempeste, Campione dell'Eco & Vendicatore del Nord</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-party">Compagnia Attuale • Asgard</span>
+                                <span class="hero-badge badge-native">Principe di Krivor • Guerriero Runico</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Principe ereditario della fiera Casata Krivor e campione nativo di Athlon, Bjior è il secondogenito del defunto Re Branvir Krivor. Sei anni or sono, durante la disperata battaglia della Lunga Notte sull'Ultima Catena, fu scaraventato a terra privo di sensi da un colosso non-morto prima di poter assistere all'assassinio del padre per mano del fratello maggiore Ulog (posseduto da un'entità di Rovina). Risvegliatosi tra i cadaveri, accolse la pietosa menzogna di Ulog che il re fosse caduto proteggendoli, finché tre anni dopo non si ribellò pubblicamente quando Ulog e il viscido Vescovo Throka arsero viva sul rogo la cognata Lady Elirna Unar.</p>
+                        <p>Condannato anch'egli alle fiamme, evase nella notte grazie a servi leali e visse come fuggiasco tra le caverne ghiacciate delle Harsh Mountains prima di unirsi agli Orgrim. Ridisceso con i compagni nel regno dei morti di Niflheim, lo spirito di Re Branvir gli ha finalmente rivelato la verità sul parricidio, liberandolo dal peso del passato e consacrandolo a legittimo vendicatore del regno e condottiero dell'armata settentrionale.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Colosso d'acciaio vivente di 21° livello, Bjior possiede una Forza titanica (STR 24) e una Costituzione prodigiosa che gli consentono di combattere a torso nudo disdegnando ogni armatura, facendo affidamento sulla propria pelle impenetrabile e sulla sua leggendaria tempra (<em>Vitalità Inarrestabile</em>).</p>
+                        <p>In battaglia manipola le <strong>Antiche Rune Krivor</strong> e genera <strong>Duplicati Illusori (Echoes)</strong> con cui controlla contemporaneamente diversi punti della mischia. Brandisce pesanti asce da guerra e spadoni ancestrali, intercettando con il talento <em>Sentinella</em> qualsiasi avversario tenti di colpire i suoi alleati e scatenando raffiche di colpi raddoppiati da <em>Second Wind</em> e impeti d'azione che frantumano carapaci e corazze divine.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Indomito, leale, schietto e protettivo come le montagne che gli hanno dato i natali. Per anni la sua anima è stata corrosa dal senso di colpa per non essere riuscito a salvare Elirna e per aver creduto alle menzogne di Ulog. Nelle viscere di Aurvangar la prova dell'Anello ha dato forma al suo incubo più spaventoso: **La Pelle di Sangue e il Giudice Krivor**.</p>
+                        <p>Nella visione, il sangue dei suoi caduti si raggrumava sulle sue braccia e sul petto nudo, trasformandosi in una pesante crosta nera di ferro arrugginito che lo soffocava e ne bloccava la mobilità, mentre il fantasma di un'armatura ancestrale lo accusava di indegnità. Bjior ha spezzato la crosta con la pura forza della propria risolutezza interiore, giurando di non usare la propria titanica resistenza per compiangersi, ma per essere lo scudo incrollabile dei popoli liberi di Athlon.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Doring -->
+                <article class="chronicle-card hero-profile-card" data-group="party" id="hero-doring">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/doring.jpg" alt="Doring" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>⚙️</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #38bdf8;">Doring</h3>
+                            <div class="hero-epithet">Mastro delle Macchine, Signore del Demipiano & Pilota Planare</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-pugnale">Eroe del Pugnale • Multiverso</span>
+                                <span class="hero-badge badge-party">Nano Artefice • Timoniere del Pugnale</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Giunto dal Multiverso al comando della sala macchine del <em>Pugnale</em>, Doring è il geniale artefice nanico, ingegnere arcano e timoniere indomito del vascello planare. Fu la sua maestria — unita alla forza bruta delle sue poderose braccia nodose — a strappare la nave alla fauce gravitazionale del buco nero aperto dall'Occhio di Isacco, governando la discesa d'emergenza sopra la piana innevata di Athlon per trarre in salvo la ciurma.</p>
+                        <p>Alla rocca di Iceburg ha costituito il nucleo operativo dei laboratori alchemici e tecnologici insieme a Rasha Dandot, Merlino e gli eruditi, decifrando il funzionamento della materia oscura di Tesla e sintetizzando l'Antimateria per alimentare le difese e le future Lacrime di Isacco. Scelto tra i sei campioni scesi ad Asgard, ha svolto un ruolo tattico fondamentale agganciando con la propria <em>Chiaroveggenza</em> i nautiloidi nemici <em>Trovatrice</em> e <em>Divoratore Astrale</em>, rendendo possibili gli arrembaggi fulminei che hanno spezzato la rete neurale dell'Alveare.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Maestro Artefice e Mago Arcano di 9° cerchio, Doring fonde la tecnologia pesante del vapore e della materia oscura con le vette dell'alta magia dimensionale. In battaglia dispiega torrette alchemiche, barriere prismatiche e proiettori di forza, ma la sua arma più temuta è la manipolazione millimetrica dello spazio: sfrutta la <em>Chiaroveggenza</em> per violare le difese psioniche più schermate e lancia <em>Teletrasporti di Gruppo</em> istantanei nel cuore delle formazioni o dei ponti di comando nemici.</p>
+                        <p>È inoltre il demiurgo e custode del leggendario <strong>Demipiano di Doring</strong>, una tasca extradimensionale ermetica impiegata come rifugio tattico, officina mobile per riparazioni e prigione di massima sicurezza (nella quale è stata temporaneamente isolata la compagna Gith Immira per sottrarla alla voce dell'Alveare prima della sua purificazione).</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Ruvido, iperpragmatico, instancabile e intriso di caustico sarcasmo nanico. Doring diffida delle astrazioni filosofiche e delle profezie mistiche: per lui contano i fatti, la pressione delle caldaie, il consumo di combustibile e la precisione millimetrica dei varchi di teletrasporto. Dietro la sua scorza burbera cela però una dedizione incrollabile verso i compagni, che considera la propria famiglia e la propria ciurma. Di fronte agli orrori cosmici risponde rimboccandosi le maniche, impugnando la chiave inglese o il cristallo arcano, certo che non esista abominio planare che un'adeguata dose di ingegneria arcana non possa polverizzare.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Ross Royce -->
+                <article class="chronicle-card hero-profile-card" data-group="ross" id="hero-ross">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/ross.jpg" alt="Ross Royce" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>♟️</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #ef4444;">Ross Royce</h3>
+                            <div class="hero-epithet">La Mente della Resistenza, Il Giocatore Invisibile & Padrone del Contratto</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-ross">Multiverso Parallelo • Linea Recisa</span>
+                                <span class="hero-badge badge-ross">Nobile di Royce • Leader della Resistenza</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Umano affetto da nanismo della nobile casata Royce, Ross è una figura leggendaria giunta da una differente linea temporale del Multiverso. Quando i campioni abbatterono l'oscuro signore del tempo nel loro mondo, l'apertura di squarci cosmici condannò la sua realtà: Ross si gettò in un varco dimensionale e approdò su Athlon sei anni fa. Qui scoprì una verità agghiacciante: in questo universo suo padre Randall lo aveva soppresso da neonato, per cui <strong>Ross Royce su Athlon non è mai esistito</strong>.</p>
+                        <p>Sfruttando il proprio totale anonimato, ha intrapreso un viaggio clandestino che lo ha portato a incontrare l'arcimaga <strong>Rasha Dandot</strong>: insieme hanno smascherato l'inganno cosmico dell'Altissimo, l'esistenza dell'Occhio di Isacco e la minaccia dei quattro Cavalieri dell'Apocalisse. Divenuto il cervello strategico della resistenza Orgrim, ha stipulato il sacro Contratto con il Kandra Koddak e ha salvato la compagnia al suo arrivo donando a Doring il cubo di materia oscura necessario per riavviare i motori del <em>Pugnale</em>.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Non combatte nella mischia con la spada, ma con il più raffinato e spietato intelletto strategico del multiverso. Ross è il gran maestro sulla scacchiera della guerra: orchestra le manovre diplomatiche, coordina le forze degli Orgrim, gestisce la rete dei sussurri e manovra potenti reliquie alchemiche e congegni di occultamento. In situazioni di pericolo si avvale della protezione d'élite della sua guardia personale e del Kandra Koddak, utilizzando pistole a pietra focaia modificate e marchingegni a sorpresa.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Brillante, machiavellico, ironico e disarmante: descritto con affetto e timore dai compagni come <em>«il più adorabile figlio di puttana che si sia mai visto»</em>. Sotto la patina di cinismo e di battute dissacranti si cela la solitudine di un uomo la cui stessa esistenza è un paradosso privo di radici. Muove guerra a Rovina e all'Altissimo non per brama di potere, ma per il rifiuto categorico di piegarsi a un destino prefissato, deciso a dimostrare che anche una pedina cancellata dalla storia può dare scacco matto agli dei.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Zormannu -->
+                <article class="chronicle-card hero-profile-card" data-group="pugnale" id="hero-zormannu">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/zormannu.jpg" alt="Zormannu" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>⚡</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #38bdf8;">Zormannu</h3>
+                            <div class="hero-epithet">Il Flagello di Urik, Cacciatore di Teste & Tempesta del Tuono</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-pugnale">Eroe del Pugnale • Multiverso</span>
+                                <span class="hero-badge badge-party">Barbaro Guerriero • Custode di Mjölnir</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Giunto dal Multiverso a bordo del <em>Pugnale</em>, Zormannu è un colosso barbarico e cacciatore di teste leggendario, forgiato nelle desolate e inclementi lande tribali di <strong>Urik</strong>. Guerriero di ferrea lealtà marziale, ha attraversato dimensioni infinite al fianco dei compagni. Su Athlon è sceso negli abissi ghiacciati di Niflheim e ha guidato la carica alle fucine di Solomon a Nandùn.</p>
+                        <p>Il suo destino ha subito una svolta cosmica quando il saggio Mimir e la liberata Valchiria Sigrun gli hanno rivelato la natura segreta della sua arma: il monumentale maglio da guerra che impugna custodisce l'anima e il potere sopito di <strong>Mjölnir</strong>, il leggendario martello di Thor. Guidato da questa profezia, Zormannu è disceso a Svartálfaheim e, nella Grande Fucina di Ivaldi assistito dal maestro fabbro <strong>Sindri</strong>, ha ritemprato il maglio legandolo per sempre al fulmine primordiale.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Forza d'urto devastante in prima linea. Quando Zormannu entra nella Furia Barbarica, la sua pelle respinge lame e traumi fisici mentre la sua ferocia si abbatte sui nemici senza tregua. Il suo colossale <strong>Maglio di Tuono</strong>, risvegliatosi nelle gallerie di Nidavellir contro i Vermi Bui, sprigiona saette e **catene di fulmini divini** che polverizzano all'istante orde di mostri e infrangono le corazze più spesse. In battaglia funge da ariete vivente capace di abbattere giganti, draghi e costrutti titanici.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Onorevole, taciturno, viscerale e inflessibile. Disprezza la doppiezza dei politici e i giochi d'ombra: per Zormannu esistono soltanto la parola d'onore, la fratellanza d'armi e la vendetta contro i traditori. Sotto la sua scorza di fiero guerriero nomade batte un animo devoto agli spiriti della tempesta e agli antichi dei del tuono, pronto a farsi massacrare pur di proteggere i fratelli che condividono il suo cammino.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Theo Gallavant -->
+                <article class="chronicle-card hero-profile-card" data-group="pugnale" id="hero-theo">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/theo.jpg" alt="Theo Gallavant" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>👁️</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #38bdf8;">Theo Gallavant</h3>
+                            <div class="hero-epithet">La Mente Cosmica, Veggente del Terzo Ragnarok & Marchiato da Longino</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-pugnale">Eroe del Pugnale • Multiverso</span>
+                                <span class="hero-badge badge-pugnale">Maestro Psionico • Custode del Tempo</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Figura solenne e venerabile del Multiverso, Theo guidò la sconfitta del signore oscuro che opprimeva il proprio mondo d'origine prima di imbarcarsi sul <em>Pugnale</em>. Durante la traversata dimensionale verso Athlon, la vicinanza dell'Occhio di Isacco scatenò in lui una terrificante trance profetica: mentre assisteva al collasso del creato nel Terzo Ragnarok, la carne del suo petto fu squarciata da spasmi mistici che gli impressero la cicatrice indelebile della leggendaria <strong>Lancia di Longino</strong>.</p>
+                        <p>Giunto su Athlon, ha guidato con intelligenza analitica la delegazione diplomatica e investigativa a Nandùn, studiando i punti ciechi dell'Inquisizione e collaborando con Merlino e gli studiosi di Iceburg per progettare contromisure capaci di bloccare la dispersione in nebbia dei signori vampiri.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Maestro Psionico supremo di immenso potere intellettuale. Theo non necessita di spade o incantesimi verbali: la sua mente piega le leggi della realtà, dominando lo spaziotempo, leggendo i pensieri a chilometri di distanza e paralizzando la volontà dei nemici con onde concussive psioniche. In battaglia erige barriere cinetiche inviolabili, devia piogge di proiettili nel nulla e disintegra la materia con la sola forza della concentrazione pura.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Saggio, compassionevole, filosofico e dotato di una calma quasi sacrale. Il dolore della ferita di Longino e il fardello delle visioni cosmiche non hanno oscurato la sua empatia: Theo agisce come la guida morale e razionale del gruppo, instancabile difensore dei deboli e custode dell'armonia universale, convinto che la vittoria contro Rovina sia vana se comporta la perdita della propria umanità.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Merlino -->
+                <article class="chronicle-card hero-profile-card" data-group="pugnale" id="hero-merlino">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <span class="hero-avatar-placeholder">🧙‍♂️</span>
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #38bdf8;">Merlino</h3>
+                            <div class="hero-epithet">Il Vegliardo d'Argento, Maestro dell'Etere & Filosofo di Iceburg</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-pugnale">Eroe del Pugnale • Multiverso</span>
+                                <span class="hero-badge badge-pugnale">Arcimago Supremo • Alchimista</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Venerabile Arcimago la cui fama e sapienza trascendono i confini dei singoli piani cosmici. Con la sua chioma d'argento intrecciata alle lente volute aromatiche della sua inseparabile pipa di legno finemente intagliato e avorio, Merlino è l'incarnazione vivente dell'antica saggezza magica. Fu salvato dal collasso nel baratro del varco dimensionale grazie ai riflessi fulminei di Victor.</p>
+                        <p>Giunto ad Athlon, ha scelto di mettere il suo immenso sapere al servizio dei laboratori segreti di <strong>Iceburg</strong>: insieme a Rasha Dandot, Melarn, Doring e al Dottor Redrum, ha analizzato il non-morto catturato oltre l'Ultima Catena e l'artefatto gravitazionale di Tesla, gettando le basi scientifiche e alchemiche per la raffinazione dell'Antimateria e la sintesi delle future Lacrime di Isacco.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Maestro della Trasmutazione pura, dell'Alta Abjurazione e dell'Alchimia planare. Sul campo o nei laboratori di guerra, Merlino è in grado di annullare all'istante le magie più complesse dei nemici, modellare la struttura molecolare della materia, evocare difese elementali impenetrabili e sintetizzare composti chimici capaci di neutralizzare veleni aberranti e rigenerazioni non-morte.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Imperturbabile, riflessivo, paterno e custode di un'ironia sottile e rasserenante. Anche dinanzi ai presagi più funesti dell'apocalisse mantiene una postura solenne e composta, guidando i compagni più giovani verso la prudenza e il calcolo tattico. Considera il multiverso come una complessa armonia cosmica che richiede devozione e rispetto, sicuro che la luce della ragione e della conoscenza non possa mai essere spenta dall'oscurità.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Remy Leon -->
+                <article class="chronicle-card hero-profile-card" data-group="pugnale" id="hero-remy">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/remy.jpg" alt="Remy Leon" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>🎲</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #38bdf8;">Remy Leon</h3>
+                            <div class="hero-epithet">Il Dominatore del Caso, Cecchino Solare & Flagello del Destino</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-pugnale">Eroe del Pugnale • Multiverso</span>
+                                <span class="hero-badge badge-pugnale">Tiratore Scelto • Psionico Fortunato</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Individuo prodigioso giunto dal Multiverso a bordo del <em>Pugnale</em>, Remy è benedetto da una delle facoltà più rare del cosmo: il <strong>Controllo della Fortuna</strong>. Dopo aver contribuito all'abbattimento del male nel suo mondo, è approdato su Athlon unendosi immediatamente alla colonna investigativa e diplomatica guidata da Ross Royce verso Nandùn, affrontando la cospirazione dei signori vampiri con la consueta e brillante spavalderia.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Tiratore infallibile e schermagliatore psionico. Impugna una sofisticata pistola ad altissima precisione che spara proiettili concentrati di <strong>pura energia radiante</strong>, devastanti contro non-morti, vampiri e creature d'ombra. La sua abilità marziale è elevata a vette miracolose dalla manipolazione probabilistica: Remy piega la sorte a proprio vantaggio, inducendo avarie nelle armi avversarie, schivando colpi mortali per frazioni di millimetro e mettendo a segno tiri impossibili con micidiale precisione.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Spirito brillante, disinvolto, scaltro e costantemente un passo avanti agli avversari. Per Remy non esistono situazioni disperate: ogni ostacolo apparentemente insormontabile è un'opportunità da capovolgere a proprio favore con un sorriso e un colpo di genio. Nonostante il potere straordinario, conserva un animo profondamente umile, altruista e protettivo, sempre pronto a gettarsi nella mischia per difendere gli innocenti e supportare i compagni.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Kumir -->
+                <article class="chronicle-card hero-profile-card" data-group="pugnale" id="hero-kumir">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <span class="hero-avatar-placeholder">🛡️</span>
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #38bdf8;">Kumir</h3>
+                            <div class="hero-epithet">L'Austero Guardiano, Ricognitore dell'Ultima Catena & Roccia del Fronte</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-pugnale">Eroe del Pugnale • Multiverso</span>
+                                <span class="hero-badge badge-pugnale">Guerriero Planare • Veterano Cosmico</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Umano austero con l'armatura segnata dalle cicatrici di mille battaglie, Kumir è un vagabondo dimensionale veterano del Multiverso, la cui sola presenza evoca il compimento di profezie cosmiche. A bordo del <em>Pugnale</em> fu colui che seppe scorgere il timore negli occhi del nano Doring poggiandogli una mano salda sulla spalla per infondergli coraggio, soccorrendo poi Theo e Merlino durante il collasso planare.</p>
+                        <p>Su Athlon ha affiancato i Guardiani della Notte a Frostern, guidando con Arimir e Oliver una perigliosa ricognizione oltre l'Ultima Catena per misurare l'avanzata dell'Orda dei Defunti e affrontando lo stridio sonico titanico dell'aquila spettrale Hræsvelgr/Vedfolnir.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Guerriero pesante e maestro delle traslazioni dimensionali. Bardato in una massiccia armatura d'acciaio runico, combatte con spadone a due mani e scudo da torre, costituendo un punto di riferimento inamovibile nella linea difensiva. In battaglia unisce una potenza d'impatto schiacciante a manovre di traslazione e interdizione tattica sul campo.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Severo, grave, incorruttibile e dotato di una calma solenne che rassicura gli alleati nelle ore più disperate. Le sue parole sono misurate e piene di rispetto per i compagni caduti. Non teme né tiranni divini né aberrazioni, ponendosi come guida d'acciaio e baluardo morale contro l'avanzata della morte.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Adrian -->
+                <article class="chronicle-card hero-profile-card" data-group="pugnale" id="hero-adrian">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/adrian.jpg" alt="Adrian" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>🗡️</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #38bdf8;">Adrian</h3>
+                            <div class="hero-epithet">L'Ombra Silente, Assassino dei Tetti & Giustiziere Pragmatico</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-pugnale">Eroe del Pugnale • Multiverso</span>
+                                <span class="hero-badge badge-pugnale">Elfo d'Ombra • Ladro / Ranger</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Elfo d'Ombra (<em>Shadow Elf</em>) dalle origini enigmatiche giunto dal Multiverso a bordo del <em>Pugnale</em>. Maestro delle arti dell'inganno e dell'infiltrazione furtiva, Adrian ha affiancato Ross Royce nella delegazione a Nandùn, muovendosi tra le ombre delle banchine portuali e i tetti della capitale per spiare i traffici di barili chimici e i concili segreti della Chiesa corrotta.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Ladro e Ranger d'ombra letale (<em>Assassinate</em>). Maestro nel rendersi invisibile alla vista e all'udito, combatte con lame ricurve corte e archi da caccia, colpendo i punti deboli con fredda precisione prima di dissolversi nuovamente tra le ombre. È letale negli agguati improvvisi e nell'eliminazione silenziosa delle sentinelle.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Complesso, enigmatico e guidato da un forte senso di pragmatismo: Adrian valuta costantemente la propria sopravvivenza e non ama sacrifici avventati o inutili massacri. Non è spinto dalla sete di ricchezza o di gloria, ma da un proprio codice interiore di giustizia. Pur non essendo un idealista cavalleresco, è assolutamente leale alla compagnia e non tradirebbe mai i compagni, proteggendoli discretamente dall'ombra.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Oliver -->
+                <article class="chronicle-card hero-profile-card" data-group="pugnale" id="hero-oliver">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/oliver.jpg" alt="Oliver" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>🐺</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #38bdf8;">Oliver</h3>
+                            <div class="hero-epithet">L'Artiglio delle Foreste, Arciere della Luna & Erede di Rafael</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-pugnale">Eroe del Pugnale • Multiverso</span>
+                                <span class="hero-badge badge-pugnale">Ranger Licantropo • Figlio di Rafael</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Giunto dal Multiverso a bordo del <em>Pugnale</em>, Oliver è l'erede del leggendario ammazzademoni <strong>Rafael</strong>, custode di un passato eroico intriso di gloria e sofferenza. Affetto dalla licantropia, ha saputo imbrigliare la bestia trasformandola in una micidiale risorsa. Ha riconosciuto Ross Royce tra le nevi di Athlon con fraterna gioia e si è unito alla missione di Nandùn con Panmon.</p>
+                        <p>Qui è stato vittima di una vile imboscata da parte del Dottor Valentine e del Barone Solomon, che gli hanno impiantato un aberrante parassita nella carne; è stato tratto in salvo e guarito dall'intervento chirurgico e taumaturgico di Orphen, giurando feroce vendetta contro gli aguzzini.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Ranger e Arciere supremo. Sul campo domina la distanza con un maestoso arco pesante composito, scagliando raffiche di frecce perforanti a velocità impressionante. A corto raggio scatena la mutazione licantropica: artigli dilanianti, sensi ipersviluppati da predatore, resistenza sovrumana alle armi comuni e una ferocia inarrestabile nella mischia.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Fiero, leale, passionale e visceralmente legato all'onore della propria stirpe. Il trauma della vivisezione subita nelle segrete di Valentine lo ha profondamente segnato, ma l'affetto dei compagni e la salvezza miracolosa ne hanno rinvigorito la determinazione a sterminare le mostruosità che infestano Athlon.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Panmon -->
+                <article class="chronicle-card hero-profile-card" data-group="pugnale" id="hero-panmon">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/panmon.jpg" alt="Panmon" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>☀️</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #38bdf8;">Panmon</h3>
+                            <div class="hero-epithet">La Colonna Solare, Bastione Divino & Flagello delle Aberrazioni</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-pugnale">Eroe del Pugnale • Multiverso</span>
+                                <span class="hero-badge badge-pugnale">Avatar della Luce • Campione Radioso</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Entità cosmica straordinaria giunta dal Multiverso a bordo del <em>Pugnale</em>, venerato come un vero e proprio <strong>Avatar della Luce</strong>. La sua presenza è una benedizione vivente per la resistenza settentrionale. Inviato a Nandùn a supporto di Ross Royce, fu rapito e infettato con un parassita d'ombra dalla cricca di Solomon insieme ad Oliver; liberato dall'operazione di Orphen, è tornato a risplendere in prima linea nell'assalto finale a Forte Elleboro.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Emana una perenne aura di calore e luce radiosa che brucia la carne dei non-morti e disperde ogni oscurità magica. In combattimento scatena raggi ustionanti di luce concentrata e percuote i nemici con una forza fisica quasi divina, frantumando corazze, costrutti e difese magiche con impatti devastanti a mani nude o con armi incantate.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Maestoso, solenne, fiero e incorruttibile. Porta il peso del proprio ruolo cosmico con umiltà e dignità, rifiutando di scendere a compromessi con le forze del disfacimento. L'esperienza dell'infezione parassitaria ha temprato la sua fermezza, rendendolo il flagello implacabile di ogni empia deviazione biologica.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Melarn -->
+                <article class="chronicle-card hero-profile-card" data-group="pugnale" id="hero-melarn">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <span class="hero-avatar-placeholder">🔮</span>
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #38bdf8;">Melarn</h3>
+                            <div class="hero-epithet">Il Catalizzatore, Artigliere Arcano & Studioso di Iceburg</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-pugnale">Eroe del Pugnale • Multiverso</span>
+                                <span class="hero-badge badge-pugnale">Mago Arcano • Evocatore</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Mago arcano di eccezionale valore giunto dal Multiverso a bordo del <em>Pugnale</em>. Fu tra i primi a scorgere Ross Royce sulla piana innevata incitando il gruppo all'attacco per spezzare l'assedio dei non-morti. Successivamente ha stabilito il proprio quartier generale nelle fucine di <strong>Iceburg</strong>, conducendo ricerche avanzate insieme a Merlino, Doring, Alaf e Rasha Dandot per comprendere l'ingegneria dei portali e le proprietà dell'Antimateria.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Mago Evocatore ed Artigliere Arcano. Specializzato nella manipolazione degli spazi dimensionali, nell'artiglieria magica ad alto potenziale e nella creazione di barriere di interdizione rapida per proteggere la fanteria alleata o isolare comandanti nemici.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Dinamico, vivace, focalizzato sulla risoluzione scientifica dei problemi e impaziente verso i temporeggiamenti inutili. Ama l'azione concreta e considera la magia la più nobile scienza con cui piegare l'entropia del Ragnarok.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Roman Stark -->
+                <article class="chronicle-card hero-profile-card" data-group="athlon" id="hero-roman">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/roman.jpg" alt="Roman Stark" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>🦇</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #e2e8f0;">Roman Stark</h3>
+                            <div class="hero-epithet">Il Cavaliere d'Acciaio, Difensore degli Inermi & Pupillo di Lucius</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-native">Nativo di Athlon • Casata Stark</span>
+                                <span class="hero-badge badge-native">Vigilante d'Élite • Guerriero Tecnologico</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Nobiluomo nativo di Athlon e rampollo della Casata Stark di Goldensport (vassalla dei Farwynd). La sua fanciullezza fu squarciata dal barbaro assassinio dei suoi genitori per mano della società criminale della <strong>Mano</strong>. Accolto, addestrato e protetto dal fedele <strong>Maestro Lucius</strong>, Roman ha trasformato il proprio lutto in una crociata contro il crimine e la tirannia. Giunto al Nord per unirsi agli Orgrim, ha combattuto a Nandùn e guidato con eroismo l'assalto diversivo sotto le possenti mura di Forte Elleboro.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Maestro del combattimento marziale corpo a corpo e dell'infiltrazione tecnologica furtiva (stile vigilante / Cavaliere Oscuro). Indossa un'armatura corazzata scura dotata di <strong>grinfie ferrate</strong>, rampini pneumatici, granate alchemiche accecanti e fumogene, dardi paralizzanti e dispositivi d'avanguardia progettati con Lucius. È micidiale nel neutralizzare rapidamente sentinelle e guidare incursioni notturne senza lasciare traccia.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Taciturno, stoico, risoluto e pervaso da un inflessibile senso di giustizia. Dietro la maschera del guerriero severo batte un cuore nobile, deciso a evitare che altri innocenti subiscano la perdita e l'orrore che hanno segnato la sua vita. È una roccia di fermezza morale e sicurezza tattica per tutti gli alleati.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Lenya Jarris -->
+                <article class="chronicle-card hero-profile-card" data-group="athlon" id="hero-lenya">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/lenya.jpg" alt="Lenya Jarris" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>❄️</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #e2e8f0;">Lenya Jarris</h3>
+                            <div class="hero-epithet">Il Germoglio d'Inverno, Erede di Rasha Dandot & Cuore Fedele</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-native">Nativa di Athlon • Casata Jarris</span>
+                                <span class="hero-badge badge-native">Arcanista Prodigio • Bolla Magica</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Ultimogenita ventiquattrenne della potente Casata Jarris, Lenya è considerata la legittima erede del talento magico della celebre zia <strong>Rasha Dandot</strong>, avendo raggiunto con prodigiosa precocità l'alto rango arcano della <em>Bolla Magica</em>. Ha studiato a lungo i segreti dell'Orda Defunta ad Iceburg. La sua vita è stata segnata dal tragico amore per il nobile Tordek <strong>Arimir</strong>, creduto caduto sull'Ultima Catena e poi riapparso come sentinella vampirica. Ha partecipato alla missione a Nandùn e all'infiltrazione nelle cripte della cattedrale con Victor.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Maga Abjuratrice ed Evocatrice d'eccellenza. Governa le energie della Trama tessendo barriere sferiche invalicabili, scudi di dispersione magica e dardi di forza concentrata. La sua prontezza e rapidità nel proiettare protezioni ha salvato ripetutamente i compagni dai colpi mortali dei signori dei non-morti.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Coraggiosa, pura, curiosa e mossa da una devozione incrollabile verso la propria terra. Soffre intimamente per la distanza tragica che la separa dal suo amato Arimir, ma non si è mai lasciata vincere dallo sconforto, combattendo con ardore per difendere il Nord e mostrandosi degna dell'eredità leggendaria della sua casata.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Arimir -->
+                <article class="chronicle-card hero-profile-card" data-group="athlon" id="hero-arimir">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/arimir.jpg" alt="Arimir" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>🎭</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #e2e8f0;">Arimir</h3>
+                            <div class="hero-epithet">La Sentinella Mascherata, Martire del Gelo & Guardiano dell'Ombra</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-native">Nativo di Athlon • Guardia della Notte</span>
+                                <span class="hero-badge badge-native">Tordek Silente • Vampiro Buono</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Fiero guerriero Tordek della Costa Ghiacciata, cresciuto tra i ghiacci di Frostern al fianco del fratello d'armi Krom ed entrato nel corpo d'élite dei Guardiani della Notte. Promesso sposo di Lenya Jarris, due anni fa compì l'estremo sacrificio: si lanciò contro una dozzina di colossi non-morti per permettere a Krom di fuggire, scomparendo nella bufera. Risorto come miracolosa anomalia — un **Vampiro "Buono"** — ha celato la propria non-morte dietro maschere e drappi, tornando a combattere per Athlon al fianco di Kumir e dei campioni.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Guerriero Tordek d'assalto pesante unito ai poteri predatori vampirici. La sua stazza imponente gli conferisce una forza bruta devastante, moltiplicata dalla velocità soprannaturale, dai sensi ipersviluppati e dalla rigenerazione continua della carne della non-morte. Combatte con pesanti armi a due mani, agendo come sentinella indistruttibile nelle retrovie e in avanguardia.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Tragico, silenzioso, solenne e gravato dalla consapevolezza della propria condizione mostruosa, che gli impedisce di mostrarsi apertamente al suo popolo e all'amata Lenya. Eppure la sua integrità morale non è stata scalfita: ha trasformato la sua maledizione in un'arma estrema al servizio della vita, pronto a immolarsi nuovamente per la vittoria della luce.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Faust -->
+                <article class="chronicle-card hero-profile-card" data-group="athlon" id="hero-faust">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/faust.jpg" alt="Faust" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>🌱</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #d8b4fe;">Faust</h3>
+                            <div class="hero-epithet">La Rinascita dell'Alba, Martire di Nandùn & Guida di Sylvandell</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-svartalf">Svartálfaheim • Popolo Alfar</span>
+                                <span class="hero-badge badge-svartalf">Elfo Chiaro • Sapiente di Sylvandell</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Nobile Elfo Chiaro (<em>Alfar</em>) originario del glorioso reame silvano di <strong>Sylvandell</strong> a Svartálfaheim. Inviato su Athlon dal suo saggio maestro Airlik per stringere alleanze contro Fafnir, cadde nelle mani dei vampiri a Nandùn, subendo atroci torture nelle segrete della cattedrale: gli furono amputate mani e piedi e bruciati gli occhi. Scoperto agonizzante da Victor e Lenya, fu miracolosamente rigenerato dal potere divino di Orphen, che gli restituì arti e vista. Da allora ha guidato la compagnia verso le vie segrete di Svartálfaheim.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Guida silvana ed esploratore Alfar. Rigenerato nella carne e nello spirito, padroneggia la magia naturale degli elfi chiari, la conoscenza delle rune arboree di Sylvandell e l'orientamento nelle profondità sotterranee dei Nove Regni, supportando la compagnia con incantesimi di esplorazione e agilità silvestre.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Dotato di una resilienza spirituale ammirevole: la spaventosa tortura subita non è riuscita a estinguere la sua bontà d'animo né la sua gratitudine per i compagni. Guarda alla distruzione di Sylvandell con dignitoso dolore, animato dalla ferma speranza nella rinascita del suo popolo e della luce primordiale.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Haldor Bjarolf -->
+                <article class="chronicle-card hero-profile-card" data-group="athlon" id="hero-haldor">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/haldor.jpg" alt="Haldor Bjarolf" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>🐻</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #e2e8f0;">Haldor Bjarolf</h3>
+                            <div class="hero-epithet">L'Orso delle Nevi, Bastione di Nandùn & Difensore della Corona</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-native">Nativo di Athlon • Casata Bjarolf</span>
+                                <span class="hero-badge badge-native">Signore della Guerra • Campione Lealista</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Principe e formidabile condottiero della Casata Bjarolf, fratello fedele del Re Boradol. Quando la corte di Nandùn fu infiltrata dal Kandra traditore Roonark (che usurpatone l'aspetto stava asservendo la capitale ai vampiri e alla Chiesa dell'Altissimo), Haldor si pose alla testa della resistenza lealista dell'Ordine dell'Alba. Supportato dai campioni, ha guidato in prima linea le milizie all'assalto esterno di Forte Elleboro, riscattando l'onore della casata.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Maestro delle armi barbariche e scudiero pesante. Impugna possenti asce da guerra bipenni e scudi rinforzati con le insegne dell'Orso delle Nevi. In battaglia guida le truppe con urla di comando che galvanizzano gli alleati (<em>Comandante Tattico</em>), travolgendo le prime linee nemiche con potenza d'impatto schiacciante e stoica resistenza fisica.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Schietto, focoso, leale e nemico giurato dell'intrigo e della doppiezza. Per Haldor il valore di un uomo si manifesta nel coraggio, nella difesa della famiglia e nella fedeltà al proprio popolo, pronto a marciare contro qualsiasi tiranno per liberare la sua terra.</p>
+                    </div>
+                </article>
+
+                <!-- EROE: Airlik -->
+                <article class="chronicle-card hero-profile-card" data-group="athlon" id="hero-airlik">
+                    <div class="hero-header">
+                        <div class="hero-avatar-frame">
+                            <img src="img/airlik.jpg" alt="Airlik" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'hero-avatar-placeholder\'>🌿</span>';">
+                        </div>
+                        <div class="hero-title-box">
+                            <h3 style="color: #d8b4fe;">Airlik</h3>
+                            <div class="hero-epithet">Il Custode di Sylvandell, Mentore di Faust & Saggio della Resistenza</div>
+                            <div class="hero-badges-row">
+                                <span class="hero-badge badge-svartalf">Svartálfaheim • Popolo Alfar</span>
+                                <span class="hero-badge badge-svartalf">Venerabile Alfar • Guida della Triade</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🏛️ 1. Descrizione dell'Eroe (Origini e Storia)</h4>
+                        <p>Venerabile maestro della stirpe degli Elfi Chiari (<em>Alfar</em>) e guida spirituale di Faust. Sopravvissuto alla devastazione di Sylvandell e alla corruzione dell'Yggdrasil Nero per mano del drago Fafnir, si è rifugiato nei calanchi rocciosi di Svartálfaheim, guidando una brigata mista della Resistenza composta da Alfar, Svartalfar e nani Duergar. Ha accolto i campioni dopo la vittoria sui Vermi Bui, svelando l'antica alleanza dei Tre Re e siglando con Re Timberdolf e Re Amendir il sacro Patto della Triade al risveglio del dio Baldr.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>⚔️ 2. Stile di Combattimento (Arte Marziale e Potere)</h4>
+                        <p>Sapiente mistico e arciere arcano. Governa le energie naturali e le chiaroveggenze della luce, tessendo barriere protettive contro la corruzione d'ombra e colpendo con tiri d'arco lunghissimo benedetti dalle stelle del dio Baldr.</p>
+                    </div>
+
+                    <div class="hero-subblock">
+                        <h4>🕯️ 3. Indole Caratteriale (Anima e Psicologia)</h4>
+                        <p>Saggio, austero, pervaso da una serenità profetica che infonde coraggio nei disperati. Ha assistito al crollo del proprio regno senza mai smarrire la fede nelle profezie cosmiche, accogliendo il ritorno della luce come il giusto compimento del destino.</p>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
     </main>
 
     <footer>
@@ -1563,6 +2504,23 @@
                 card.style.display = text.includes(query) ? '' : 'none';
             });
         });
+    
+        function filterHeroes(group, btn) {
+            document.querySelectorAll('.hero-filter-btn').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            const cards = document.querySelectorAll('.hero-profile-card');
+            cards.forEach(card => {
+                const cardGroup = card.getAttribute('data-group');
+                if (group === 'all') {
+                    card.style.display = '';
+                } else if (group === 'athlon') {
+                    card.style.display = (cardGroup === 'athlon' || cardGroup === 'ross') ? '' : 'none';
+                } else {
+                    card.style.display = (cardGroup === cardGroup && cardGroup === group) ? '' : 'none';
+                }
+            });
+        }
+
     </script>
 </body>
 </html>
